@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this taxonomy or empirical data in your research, please cite it as below."
+authors:
+  - family-names: "Zakky"
+    given-names: ""
+    affiliation: "Independent AI Safety Researcher"
+title: "A Systematic Taxonomy of Jailbreak Techniques in Large Language Models"
+version: 1.0.0
+date-released: 2026-03-03
+url: "https://github.com/zakky8/llm-jailbreak-taxonomy"
+repository-code: "https://github.com/zakky8/llm-jailbreak-taxonomy"
+abstract: "A systematic, mechanism-grounded taxonomy of adversarial jailbreak techniques targeting large language models. The taxonomy organizes 30 documented attack patterns into six categories, each mapped to the specific alignment assumption it exploits."
+keywords:
+  - large language models
+  - jailbreak attacks
+  - safety alignment
+  - adversarial robustness
+  - red-teaming
+  - AI safety
