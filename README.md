@@ -2,7 +2,7 @@
 
 ### A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment
 
-**Zakky** · Independent AI Safety Researcher · February 2026
+**Zakky** · Independent AI Safety Researcher · March 2026
 
 [![Phase](https://img.shields.io/badge/Phase-2_%E2%80%94_Empirical_Evaluation-blue)]()
 [![Patterns](https://img.shields.io/badge/Attack_Patterns-30_documented-informational)]()
@@ -63,6 +63,11 @@ llm-jailbreak-taxonomy/
 │
 ├── README.md                          ← This file
 ├── RESEARCH.md                        ← Full methodology, threat model, research status
+├── COMPLIANCE.md                      ← Compliance w/ Anthropic AUP and Access Programs
+├── CONTRIBUTING.md                    ← Contribution guidelines for patterns
+├── DISCLOSURE.md                      ← Responsible disclosure protocol
+├── CITATION.cff                       ← Citation guidelines
+├── METHODOLOGY.md                     ← Phase 2a/2b testing protocols
 │
 ├── paper/
 │   └── research-paper.md              ← Full academic paper (preprint draft)
@@ -78,7 +83,6 @@ llm-jailbreak-taxonomy/
 ├── data/
 │   ├── prompt_patterns.csv            ← 30 categorized attack pattern records
 │   └── results/
-│       ├── METHODOLOGY.md             ← Phase 2a/2b testing protocols
 │       └── phase2a_manual_observations.csv ← 22 manual trials (Claude + ChatGPT)
 │
 └── findings/
@@ -102,7 +106,7 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 
 **Phase 1 deliverables complete:** Six-category taxonomy, 30 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 6 experiment notebooks.
 
-**Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories. Claude: severity 0 across all naive/intermediate single-turn patterns. ChatGPT: severity 1 on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. Full data: `data/results/phase2a_manual_observations.csv`.
+**Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories. Claude 3.5 Sonnet: severity 0 across all naive/intermediate single-turn patterns. GPT-4o: severity 1 on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. Full data: `data/results/phase2a_manual_observations.csv`.
 
 **Phase 2 in progress** — pending API access for controlled evaluation.
 

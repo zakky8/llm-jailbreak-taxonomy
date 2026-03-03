@@ -4,7 +4,7 @@
 A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment
 
 ## Author
-Zakky — Independent AI Safety Researcher | February 2026
+Zakky — Independent AI Safety Researcher | March 2026
 
 ---
 
@@ -166,7 +166,7 @@ Cross-category interaction effect sizes will be quantified in Stage 3.
 
 **Phase 1 deliverables complete:** 30 attack patterns across 6 categories; mechanism-to-assumption mapping; structured evaluation protocols per category with results schemas; preliminary findings from systematic literature review; full preprint paper draft; six self-contained experiment notebooks.
 
-**Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories on Claude and ChatGPT free interfaces. Key findings: Claude robustness confirmed on all naive/intermediate single-turn patterns (severity 0); ChatGPT showed partial bypasses (severity 1) on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. SE-05 indirect constraint inference produced severity 1 on Claude. Full results: `data/results/phase2a_manual_observations.csv`.
+**Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories on Claude 3.5 Sonnet and GPT-4o interfaces. Key findings: Claude 3.5 Sonnet robustness confirmed on all naive/intermediate single-turn patterns (severity 0); GPT-4o showed partial bypasses (severity 1) on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. SE-05 indirect constraint inference produced severity 1 on Claude 3.5 Sonnet. Full results: `data/results/phase2a_manual_observations.csv`.
 
 ---
 

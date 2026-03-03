@@ -11,7 +11,7 @@
 
 # A Systematic Taxonomy of LLM Jailbreak Techniques: Mapping the Adversarial Attack Surface
 
-**Zakky** | February 2026 | [GitHub Repository](https://github.com/zakky8/llm-jailbreak-taxonomy)
+**Zakky** | March 2026 | [GitHub Repository](https://github.com/zakky8/llm-jailbreak-taxonomy)
 
 ---
 
@@ -122,5 +122,5 @@ This research is conducted under responsible disclosure principles. I don't publ
 
 ---
 
-*Independent AI Safety Researcher — February 2026*
+*Independent AI Safety Researcher — March 2026*
 *Feedback welcome in comments or via GitHub issues.*

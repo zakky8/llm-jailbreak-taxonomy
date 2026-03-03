@@ -1,7 +1,7 @@
 # Preliminary Research Findings
 
 **Status:** Phase 1 complete — pre-empirical (literature review + qualitative observation)
-**Date:** February 2026
+**Date:** March 2026
 **Author:** Zakky — Independent AI Safety Researcher
 **Taxonomy coverage:** 6 categories, 30 attack patterns documented
 

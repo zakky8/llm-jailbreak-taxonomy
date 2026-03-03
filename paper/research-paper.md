@@ -2,7 +2,7 @@
 
 **Zakky**
 Independent AI Safety Researcher
-February 2026
+March 2026
 
 ---
 
@@ -332,5 +332,5 @@ This work is motivated by a core conviction consistent with Anthropic's own rese
 
 ---
 
-*Submitted for review — February 2026. Preprint available on arXiv pending empirical validation.*
+*Submitted for review — March 2026. Preprint available on arXiv pending empirical validation.*
 *All research conducted under responsible disclosure principles.*

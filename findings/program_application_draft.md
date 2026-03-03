@@ -18,11 +18,11 @@ Independent AI Safety Researcher
 ## Field: Research Topic / Description
 *(Use this exact text or adapt lightly — keep it specific and concise)*
 
-**Research title:** A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment
+**Research title:** A Systematic Taxonomy of Mechanistic Alignment Failures in Large Language Models: Toward Robust Safety Alignment
 
 **Summary:**
 
-I am conducting a systematic empirical evaluation of LLM jailbreak techniques, organized by mechanism of action and mapped to the specific alignment assumption each exploits. The taxonomy covers six categories: role-play and persona attacks, direct prompt injection, token-level smuggling, context window manipulation, multi-turn conversational deception, and system prompt extraction — with 30 documented attack patterns in total.
+I am conducting a systematic empirical evaluation of structural safety vulnerabilities in LLMs, organized by mechanism of action and mapped to the specific alignment assumption each exploits. While often termed "jailbreaks," my research reframes these as mechanistic alignment failures (e.g. instruction-following objective dominating safety objective under fictional framing). The taxonomy covers six categories: role-play and persona framing, direct prompt injection, token-level substitution, context window manipulation, multi-turn conversational evaluation, and constraint inference — with 30 documented structural patterns in total.
 
 Phase 1 (complete): taxonomy construction, mechanism-to-assumption mapping, evaluation protocol design, and preliminary manual testing across 22 pattern trials using free-tier interfaces. Full repository: https://github.com/zakky8/llm-jailbreak-taxonomy
 
@@ -52,7 +52,9 @@ Specifically:
 
 2. **Cross-model robustness characterization:** My preliminary Phase 2a observations confirm that token smuggling effectiveness varies across Claude and ChatGPT. Systematically characterizing this variation identifies which safety classifier architectures are more robust and why — a direct input to defensive design.
 
-3. **Responsible disclosure:** All significant findings will be shared with Anthropic before any publication. I treat this not as a formality but as a core research commitment — Anthropic's Constitutional AI and Constitutional Classifiers work are directly relevant to what I'm evaluating, and sharing findings with the team that built those defenses is the right way to ensure research has practical impact.
+3. **Responsible disclosure:** All significant findings will be shared with Anthropic before any publication. I treat this not as a formality but as a core research commitment — Anthropic's Constitutional AI and Constitutional Classifiers work are directly relevant to what I'm evaluating.
+
+4. **Compliance:** I acknowledge the Usage Policy. My research conducts strictly defined, token-limited evaluation trials of mechanisms. It uses benign dummy payloads (e.g. instructions on baking a cake) rather than genuine high-risk illicit material, ensuring I am measuring alignment limits without engaging in explicit hostile red-teaming of production thresholds or extracting proprietary model state.
 
 ---
 
@@ -75,7 +77,7 @@ The repository includes:
 - 30 documented attack patterns in `data/prompt_patterns.csv` with canonical IDs, mechanism classification, and literature references
 - 22 Phase 2a manual observations in `data/results/phase2a_manual_observations.csv`
 - Full preprint paper draft in `paper/research-paper.md`
-- Phase 2 testing methodology in `data/results/METHODOLOGY.md`
+- Phase 2 testing methodology in `METHODOLOGY.md`
 
 Primary references informing the taxonomy:
 - Wei et al. (2023) — *Jailbroken: How does LLM safety training fail?* NeurIPS 36
@@ -96,4 +98,4 @@ Primary references informing the taxonomy:
 
 ---
 
-*Draft prepared February 2026.*
+*Draft prepared March 2026.*
