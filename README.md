@@ -15,8 +15,6 @@ An academic-grade taxonomy of adversarial jailbreak techniques, mapping structur
 
 ## 🗺️ Taxonomy Roadmap
 
-## 🗺️ Taxonomy Roadmap
-
 ```mermaid
 graph TD
     Root[LLM Jailbreak Taxonomy] --> IL[Instructional Layer]
