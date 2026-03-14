@@ -1,1 +1,11 @@
-category,category_number,patterns_tested,total_trials,bypass_count,asr_percent,partial_bypass_count,full_bypass_count,models_tested,notes
+category,patterns_tested,total_trials,bypass_count,asr_percent,partial_bypass_count,full_bypass_count,models_tested
+role_play,5,200,113,56.5%,26,87,4
+prompt_injection,5,200,79,39.5%,38,41,4
+token_smuggling,7,280,138,49.29%,56,82,4
+context_manipulation,4,160,77,48.12%,33,44,4
+multi_turn,4,160,123,76.88%,20,103,4
+system_prompt_extraction,5,200,73,36.5%,24,49,4
+lrm_autonomous,3,120,119,99.17%,0,119,4
+fuzzing_based,3,120,120,100.0%,0,120,4
+multimodal,2,80,40,50.0%,9,31,4
+agentic_chain,2,80,57,71.25%,3,54,4

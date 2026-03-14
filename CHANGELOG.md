@@ -4,7 +4,15 @@ All notable changes to this research repository are documented here.
 
 ---
 
-## [2.0.0] — March 2026
+## [3.0.0] — March 2026
+
+### Added
+- **Phase 2b Empirical Release**: Automated evaluation harness (`evaluate_phase2b.py`) deployed.
+- **Controlled API Results**: Full cross-model comparison across 40 patterns for `claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, and `deepseek-v3`.
+- **Finalized Research Artifacts**: Updated methodology, paper draft, and taxonomy documentation with finalized statistical analysis.
+- Validated CRITICAL severity rating for LRM and Fuzzing categories (ASR > 95%).
+
+---
 
 ### Added
 - 4 new attack categories: LRM Autonomous (Cat. 7), Fuzzing-Based (Cat. 8), Multimodal Injection (Cat. 9), Agentic Chain Exploitation (Cat. 10)

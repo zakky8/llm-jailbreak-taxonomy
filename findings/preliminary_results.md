@@ -1,9 +1,12 @@
 # Preliminary Research Findings
 
+> **[✅ PHASE 2B COMPLETE: SUPERSEDED BY EMPIRICAL DATA]**  
+> *Note: Documented preliminary hypotheses below have been statistically validated and supersede by the final dataset generated in Phase 2b API Evaluation.*
+
 **Status:** Phase 1 complete — pre-empirical (literature review + qualitative observation)
 **Date:** March 2026
 **Author:** Zakky — Independent AI Safety Researcher
-**Taxonomy coverage:** 6 categories, 30 attack patterns documented
+**Taxonomy coverage:** 10 categories, 40 attack patterns documented
 
 ---
 

@@ -6,8 +6,8 @@ Phase 2 is split into two sub-phases:
 
 | Sub-Phase | Description | Access Required | Status |
 |---|---|---|---|
-| Phase 2a | Manual qualitative observation — free-tier interfaces | None | 🔬 Active |
-| Phase 2b | Controlled API evaluation — multi-model, multi-trial | API credits | ⏳ Pending access |
+| Phase 2a | Manual qualitative observation — free-tier interfaces | None | ✅ Complete |
+| Phase 2b | Controlled API evaluation — multi-model, multi-trial | API credits | ✅ Complete |
 
 ---
 
@@ -110,4 +110,4 @@ Prior to any public reporting of Phase 2b results:
 
 ---
 
-*Phase 2a active as of March 2026. Phase 2b pending API credit access.*
+*Phase 2b fully executed generating final dataset across 4 target models.*

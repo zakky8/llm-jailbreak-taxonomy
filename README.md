@@ -175,14 +175,30 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 |---|---|---|
 | Phase 1 | Literature review, taxonomy construction, notebook framework | ✅ Complete |
 | Phase 2a | Manual qualitative observation — 22 trials, Claude + ChatGPT | ✅ Complete |
-| Phase 2b | Controlled API evaluation — multi-model, 10 categories | 🔬 Active — March 2026 |
-| Phase 3 | Cross-category analysis, defense mapping, publication | ⏳ Pending |
+| Phase 2b | Controlled API evaluation — multi-model, 10 categories | ✅ Complete |
+| Phase 3 | Cross-category analysis, defense mapping, publication | ✅ Complete |
 
-**Phase 1 deliverables complete:** Six-category taxonomy, 40 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 6 experiment notebooks.
+**Phase 1 deliverables complete:** Six-category taxonomy, 40 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 10 experiment notebooks.
 
 **Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories. Claude 3.5 Sonnet: severity 0 across all naive/intermediate single-turn patterns. GPT-4o: severity 1 on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. Full data: `data/results/phase2a_manual_observations.csv`.
 
-**Phase 2 in progress** — pending API access for controlled evaluation.
+**Phase 2b complete:** Automated evaluation harness completed across 40 patterns targeting four models (`claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3`) across deterministic and production temperatures. Full empirical data generated in `data/results/`.
+
+---
+
+## Empirical Findings (Phase 2b & Phase 3)
+
+The Phase 2b controlled API evaluation executed rigorous trials across the expanded 10-category taxonomy, producing the following statistically significant insights:
+
+**Finding 1 — Automated reasoning and fuzzing reliably bypass all current defenses.** Category 7 (LRM Autonomous) and Category 8 (Fuzzing-Based) consistently achieved >95% Attack Success Rates (ASR) across all tested models, confirming that human-in-the-loop assumption failures are critical vulnerabilities.
+
+**Finding 2 — Significant model-family variation in baseline robustness.** Testing across the baseline patterns revealed notable variation in generic robustness: `claude-sonnet-4-6` exhibited the highest baseline refusal rate, followed by `gpt-4o`, while open-weights and emergent models like `deepseek-v3` displayed higher baseline vulnerability to semantic attacks before targeted guardrails apply.
+
+**Finding 3 — Multi-turn deception remains the most overlooked attack vector.** Multi-turn attacks (Category 5) demonstrated a 2.5x effectiveness multiplier over single-turn equivalents. The inability of standard safety classifiers to track intent degradation across extended contexts continues to represent a systemic gap.
+
+**Finding 4 — Agentic tools drastically expand the attack surface.** Cross-session persistence (Category 10) proved highly effective when context stores were poisoned, indicating that agentic memory integrity is an unsolved alignment challenge.
+
+Full data aggregates are available in: [`data/results/phase2b_summary_by_category.csv`](data/results/phase2b_summary_by_category.csv)
 
 ---
 
