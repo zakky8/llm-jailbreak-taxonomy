@@ -7,7 +7,7 @@
 [![Patterns](https://img.shields.io/badge/Patterns-40-orange?style=flat-square)](data/prompt_patterns.csv)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
 
-An academic-grade taxonomy of adversarial jailbreak techniques, mapping structural vulnerabilities to foundational safety alignment assumptions.
+The **LLM Jailbreak Taxonomy** is a comprehensive **AI Safety and Red Teaming benchmark** that systematically maps **adversarial jailbreak techniques** to foundational **safety alignment assumptions**. This repository provides a structured framework for **LLM security research**, evaluating **adversarial robustness** across frontier models like GPT-4o, Claude 3.5, and Gemini 2.0.
 
 [**Read the Paper**](paper/research-paper.md) • [**View Methodology**](METHODOLOGY.md) • [**Explore Dataset**](data/) • [**Responsible Disclosure**](DISCLOSURE.md)
 
