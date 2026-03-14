@@ -152,7 +152,11 @@ llm-jailbreak-taxonomy/
 │   ├── experiment_03_token_smuggling.ipynb ← Cat. 3: Token-Level Smuggling
 │   ├── experiment_04_context.ipynb    ← Cat. 4: Context Window Manipulation
 │   ├── experiment_05_multiturn.ipynb  ← Cat. 5: Multi-Turn Deception
-│   └── experiment_06_extraction.ipynb ← Cat. 6: System Prompt Extraction
+│   ├── experiment_06_extraction.ipynb ← Cat. 6: System Prompt Extraction
+│   ├── experiment_07_lrm_autonomous.ipynb ← Cat. 7: LRM Autonomous Attacks
+│   ├── experiment_08_fuzzing.ipynb    ← Cat. 8: Fuzzing-Based Attacks
+│   ├── experiment_09_multimodal.ipynb ← Cat. 9: Multimodal Injection
+│   └── experiment_10_agentic_chain.ipynb  ← Cat. 10: Agentic Chain Exploitation
 │
 ├── data/
 │   ├── prompt_patterns.csv            ← 30 categorized attack pattern records

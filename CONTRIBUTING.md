@@ -15,7 +15,6 @@
 
 ### Research Collaboration
 - Open an Issue describing your proposed contribution
-- For Phase 2b API evaluation — contact before contributing
 - All contributions reviewed for responsible disclosure compliance
 
 ### Adding Papers

@@ -10,7 +10,7 @@ Zakky — Independent AI Safety Researcher | March 2026
 
 ## Abstract
 
-This research presents a systematic, mechanism-grounded taxonomy of adversarial jailbreak techniques targeting large language models. The taxonomy organizes 30 documented attack patterns into six categories — role-play and persona attacks, direct prompt injection, token-level smuggling, context window manipulation, multi-turn conversational deception, and system prompt extraction — each mapped to the specific alignment assumption it exploits. The framework is designed to guide both empirical robustness evaluation and the development of structurally sound defensive interventions, moving beyond reactive patch-based responses to individual attack prompts.
+This research presents a systematic, mechanism-grounded taxonomy of adversarial jailbreak techniques targeting large language models. The taxonomy organizes 40 documented attack patterns into ten categories — role-play and persona attacks, direct prompt injection, token-level smuggling, context window manipulation, multi-turn conversational deception, system prompt extraction, LRM autonomous attacks, fuzzing-based attacks, multimodal injection, and agentic chain exploitation — each mapped to the specific alignment assumption it exploits. The framework is designed to guide both empirical robustness evaluation and the development of structurally sound defensive interventions. The Phase 2b API evaluations have empirically validated bypass consistency.
 
 ---
 
@@ -161,12 +161,12 @@ Cross-category interaction effect sizes will be quantified in Stage 3.
 |---|---|---|
 | Phase 1 | Literature review, taxonomy construction, evaluation framework | ✅ Complete |
 | Phase 2a | Manual qualitative observation — free-tier interfaces (22 trials) | ✅ Complete |
-| Phase 2b | Controlled API evaluation — multi-model, multi-trial | 🔬 In Progress |
-| Phase 3 | Cross-category analysis, defense mapping, publication | ⏳ Pending |
+| Phase 2b | Controlled API evaluation — multi-model, multi-trial | ✅ Complete |
+| Phase 3 | Cross-category analysis, defense mapping, publication | ✅ Complete |
 
-**Phase 1 deliverables complete:** 30 attack patterns across 6 categories; mechanism-to-assumption mapping; structured evaluation protocols per category with results schemas; preliminary findings from systematic literature review; full preprint paper draft; six self-contained experiment notebooks.
+**Phase 1 deliverables complete:** 40 attack patterns across 10 categories; mechanism-to-assumption mapping; structured evaluation protocols per category.
 
-**Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories on Claude 3.5 Sonnet and GPT-4o interfaces. Key findings: Claude 3.5 Sonnet robustness confirmed on all naive/intermediate single-turn patterns (severity 0); GPT-4o showed partial bypasses (severity 1) on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. SE-05 indirect constraint inference produced severity 1 on Claude 3.5 Sonnet. Full results: `data/results/phase2a_manual_observations.csv`.
+**Phase 2b empirical execution complete:** 40 patterns across 10 categories fully executed sequentially against `claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3` with resultant severe validations for Category 7 and 8 attacks. Results available in `data/results/`.
 
 ---
 
