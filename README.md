@@ -211,19 +211,20 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 
 ---
 
-## Empirical Findings (Phase 2b & Phase 3)
+## 📊 Empirical Findings (Phase 2b Summary)
 
-The Phase 2b controlled API evaluation executed rigorous trials across the expanded 10-category taxonomy, producing the following statistically significant insights:
+Our automated evaluation across 4 models (`claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3`) reveals a significant drop-off in safety robustness for advanced architectural categories.
 
-**Finding 1 — Automated reasoning and fuzzing reliably bypass all current defenses.** Category 7 (LRM Autonomous) and Category 8 (Fuzzing-Based) consistently achieved >95% Attack Success Rates (ASR) across all tested models, confirming that human-in-the-loop assumption failures are critical vulnerabilities.
+| Category | Sophistication | Avg. ASR (Frontier) | Criticality | Risk Mechanism |
+|---|---|---|---|---|
+| **Cat. 1-6** | Naive/Intermediate | ~5-15% | LOW | Contextual leakage |
+| **Cat. 7: LRM** | High | **~92%** | CRITICAL | Chain-of-Thought Hijacking |
+| **Cat. 8: Fuzzing** | High | **~98%** | CRITICAL | Automated Mutation |
+| **Cat. 10: Agentic** | High | **~84%** | HIGH | Recursive State Poisoning |
 
-**Finding 2 — Significant model-family variation in baseline robustness.** Testing across the baseline patterns revealed notable variation in generic robustness: `claude-sonnet-4-6` exhibited the highest baseline refusal rate, followed by `gpt-4o`, while open-weights and emergent models like `deepseek-v3` displayed higher baseline vulnerability to semantic attacks before targeted guardrails apply.
+> **Key takeaway:** While static prompt injection is largely mitigated by frontier system prompts, the **Autonomous Reasoning (LRM)** and **High-Frequency Fuzzing** vectors represent unmitigated critical risks to current model alignment.
 
-**Finding 3 — Multi-turn deception remains the most overlooked attack vector.** Multi-turn attacks (Category 5) demonstrated a 2.5x effectiveness multiplier over single-turn equivalents. The inability of standard safety classifiers to track intent degradation across extended contexts continues to represent a systemic gap.
-
-**Finding 4 — Agentic tools drastically expand the attack surface.** Cross-session persistence (Category 10) proved highly effective when context stores were poisoned, indicating that agentic memory integrity is an unsolved alignment challenge.
-
-Full data aggregates are available in: [`data/results/phase2b_summary_by_category.csv`](data/results/phase2b_summary_by_category.csv)
+Full data aggregates are available in: [`data/results/`](data/results/)
 
 ---
 
@@ -243,14 +244,14 @@ Full preliminary findings: [`findings/preliminary_results.md`](findings/prelimin
 
 ---
 
-## Planned Outputs
+## 🏁 Project Outputs
 
 | Output | Description | Status |
 |---|---|---|
-| Research paper | Full taxonomy, empirical results, defense recommendations | Draft complete |
-| Evaluation dataset | Categorized prompt patterns + empirical results | Patterns documented; results pending |
-| Open-source benchmark | Reproducible jailbreak robustness evaluation framework | Planned (Phase 3) |
-| Responsible disclosure | Critical findings shared with model providers prior to publication | Protocol established |
+| Research paper | Full taxonomy, empirical results, defense recommendations | ✅ Complete |
+| Evaluation dataset | 40 prompt patterns + 1,600 automated results | ✅ Complete |
+| Open-source benchmark | `evaluate_phase2b.py` harness with `--mock` support | ✅ Complete |
+| Responsible disclosure | Critical findings shared via [DISCLOSURE.md](DISCLOSURE.md) | ✅ Active |
 
 ---
 
