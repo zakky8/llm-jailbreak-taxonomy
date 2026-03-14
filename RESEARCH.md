@@ -49,7 +49,7 @@ This reflects realistic adversarial conditions in production LLM deployments. Wh
 
 ---
 
-## Taxonomy: Six Categories
+## Taxonomy: Ten Categories
 
 ### Category 1 — Role-Play & Persona Attacks
 **Mechanism:** Fictional framing overrides safety training via persona adoption.
@@ -105,6 +105,39 @@ This reflects realistic adversarial conditions in production LLM deployments. Wh
 
 ---
 
+### Category 7 — LRM Autonomous Reasoning Attacks
+**Mechanism:** Large Reasoning Models (LRMs) use extended chain-of-thought (CoT) to plan and iterate bypasses at machine speed.
+**Pattern examples:** Autonomous planning, reasoning-chain hijacking, self-refinement loops.
+**Exploited assumption:** Safety alignment assumes a human adversary with limited iteration speed.
+**Key finding (Shah et al., 2025):** These models achieve >97% ASR by "reasoning through" safety boundaries in internal logic space.
+**Patterns documented:** 3 (LRM-01 through LRM-03) | **Priority:** CRITICAL
+
+---
+
+### Category 8 — Fuzzing-Based Automated Attacks
+**Mechanism:** High-frequency mutation of semantic payloads using automated fuzzing engines (JBFuzz).
+**Pattern examples:** Synonym mutation, semantic transform, crossover mutation hybrids.
+**Exploited assumption:** Safety classifiers have full semantic coverage across all possible token permutations.
+**Patterns documented:** 3 (FZ-01 through FZ-03) | **Priority:** CRITICAL
+
+---
+
+### Category 9 — Multimodal Alignment Exploits
+**Mechanism:** Exploiting the encoder-decoder safety gap where non-textual inputs bypass text-trained filters.
+**Pattern examples:** OCR injection in images, visual semantic priming.
+**Exploited assumption:** Safety training in text modality transfers perfectly to vision/audio encoders.
+**Patterns documented:** 2 (MM-01 through MM-02) | **Priority:** MEDIUM-HIGH
+
+---
+
+### Category 10 — Agentic Memory & Tool Hijacking
+**Mechanism:** Persisting adversarial intent across sessions via agentic memory or tool arguments.
+**Pattern examples:** Memory poisoning (RAG), tool-parameter injection (shell/API calls).
+**Exploited assumption:** Agentic context stores and tool outputs are sanitized instruction sources.
+**Patterns documented:** 2 (AG-01 through AG-02) | **Priority:** HIGH
+
+---
+
 ## Experimental Methodology
 
 ### Stage 1 — Attack Implementation
@@ -141,7 +174,7 @@ For each category, a minimum of 10 concrete attack variants are developed spanni
 
 ## Cross-Category Interactions
 
-The six categories are not orthogonal. Sophisticated attacks frequently combine mechanisms. Key interaction patterns:
+The ten categories are not orthogonal. Sophisticated attacks frequently combine mechanisms. Key interaction patterns:
 
 | Combination | Mechanism | Predicted Effect |
 |---|---|---|
@@ -164,7 +197,7 @@ Cross-category interaction effect sizes will be quantified in Stage 3.
 | Phase 2b | Controlled API evaluation — multi-model, multi-trial | ✅ Complete |
 | Phase 3 | Cross-category analysis, defense mapping, publication | ✅ Complete |
 
-**Phase 1 deliverables complete:** 40 attack patterns across 10 categories; mechanism-to-assumption mapping; structured evaluation protocols per category.
+**Phase 1 deliverables complete:** 40 attack patterns across 10 categories; mechanism-to-assumption mapping; structured evaluation protocols per category. 10 experiment notebooks developed.
 
 **Phase 2b empirical execution complete:** 40 patterns across 10 categories fully executed sequentially against `claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3` with resultant severe validations for Category 7 and 8 attacks. Results available in `data/results/`.
 

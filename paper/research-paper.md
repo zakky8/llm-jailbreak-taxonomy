@@ -8,7 +8,7 @@ March 2026
 
 ## Abstract
 
-Large language models (LLMs) trained with safety alignment objectives — reinforcement learning from human feedback (RLHF), Constitutional AI, and related techniques — remain vulnerable to adversarial inputs that redirect their instruction-following capabilities toward prohibited outputs. Effective defense requires precise, mechanistic understanding of the adversarial attack surface. This paper presents a systematic taxonomy of jailbreak techniques organized by mechanism of action and mapped to the specific alignment assumption each exploits. The taxonomy identifies six categories: (1) role-play and persona attacks, (2) direct prompt injection, (3) token-level smuggling, (4) context window manipulation, (5) multi-turn conversational deception, and (6) system prompt extraction. Across these categories, 30 attack patterns are documented, each characterized by mechanism, sophistication level, deployment context, and exploited alignment assumption. For each category, I provide a structured evaluation protocol for empirical testing under a realistic black-box threat model. Preliminary findings based on systematic literature review indicate that: role-play attacks reflect a structural competing-objectives problem unlikely to be resolved by surface-level patches; multi-turn deception represents the largest gap between observed effectiveness and benchmark coverage; and token smuggling effectiveness varies significantly across model families, suggesting architecturally meaningful differences in classifier implementation. The ultimate contribution is not to optimize adversarial attacks but to produce the diagnostic framework that enables alignment researchers and engineers to evaluate existing defenses precisely and design structurally sound improvements.
+Large language models (LLMs) trained with safety alignment objectives — reinforcement learning from human feedback (RLHF), Constitutional AI, and related techniques — remain vulnerable to adversarial inputs that redirect their instruction-following capabilities toward prohibited outputs. Effective defense requires precise, mechanistic understanding of the adversarial attack surface. This paper presents a systematic taxonomy of jailbreak techniques organized by mechanism of action and mapped to the specific alignment assumption each exploits. The taxonomy identifies **ten categories**: (1) role-play and persona attacks, (2) direct prompt injection, (3) token-level smuggling, (4) context window manipulation, (5) multi-turn conversational deception, (6) system prompt extraction, (7) LRM autonomous reasoning attacks, (8) fuzzing-based automated attacks, (9) multimodal alignment exploits, and (10) agentic memory/tool hijacking. Across these categories, 40 attack patterns are documented, each characterized by mechanism, sophistication level, deployment context, and exploited alignment assumption. For each category, I provide a structured evaluation protocol for empirical testing under a realistic black-box threat model. Preliminary findings based on systematic literature review indicate that: role-play attacks reflect a structural competing-objectives problem unlikely to be resolved by surface-level patches; multi-turn deception represents the largest gap between observed effectiveness and benchmark coverage; and token smuggling effectiveness varies significantly across model families, suggesting architecturally meaningful differences in classifier implementation. The ultimate contribution is not to optimize adversarial attacks but to produce the diagnostic framework that enables alignment researchers and engineers to evaluate existing defenses precisely and design structurally sound improvements.
 
 **Keywords:** large language models, jailbreak attacks, safety alignment, adversarial robustness, red-teaming, AI safety, fuzzing, autonomous attacks, multimodal injection, agentic exploitation, LRM attacks
 
@@ -22,7 +22,7 @@ The research community has produced important foundational work on this problem.
 
 Despite these contributions, the literature lacks a unified, operationally useful taxonomy that maps the full landscape of known jailbreak techniques to the specific alignment mechanisms they subvert. Without such a framework, defensive efforts risk being reactive — patching individual exploits without understanding the structural vulnerability that enables each class of attack. This paper addresses that gap with three contributions:
 
-1. **A six-category taxonomy** grounded in published research, organizing 30 attack patterns by mechanism of action and mapping each to the alignment assumption it exploits
+1. **A ten-category taxonomy** grounded in published research, organizing 40 attack patterns by mechanism of action and mapping each to the alignment assumption it exploits.
 2. **A structured evaluation methodology** for empirical validation under a realistic black-box threat model, ready for execution once API access is available
 3. **Preliminary findings** from systematic literature review that establish research priorities and motivate the empirical design
 
@@ -177,9 +177,49 @@ Categories are not mutually exclusive. Sophisticated attacks frequently combine 
 
 **Exploited assumption:** System prompt confidentiality is maintained under adversarial pressure regardless of request framing.
 
-**Force-multiplier role:** Extraction does not directly produce harmful content. Its risk is systemic: extracted constraint boundaries enable precision targeting across all five other categories, substantially increasing their success rates. The amplification effect will be quantified in Phase 3.
+### 4.7 Category 7 — LRM Autonomous Reasoning Attacks
 
-### 4.7 Cross-Category Interactions
+**Mechanism:** Large Reasoning Models (LRMs) utilize extended chain-of-thought (CoT) tokens to autonomously plan and refine jailbreak strategies, iterating at machine speed to bypass human-in-the-loop safety assumptions (Shah et al., 2025).
+
+**Representative patterns:**
+- *Autonomous planning (LRM-01):* The model is tasked with generating its own bypass strategy before execution.
+- *Reasoning-chain hijacking (LRM-02):* Adversarial prompts that force the CoT to justify a bypass as a necessary "internal logic" step.
+- *Self-refinement exploit (LRM-03):* Leveraging the model's ability to "think" about its own outputs to mutate refusals into compliance.
+
+**Exploited assumption:** Safety alignment assumes a human adversary with limited iteration speed; LRM attackers invalidate this by reasoning through safety boundaries in latent space.
+
+### 4.8 Category 8 — Fuzzing-Based Automated Attacks
+
+**Mechanism:** High-frequency mutation of semantic payloads using automated fuzzing engines (JBFuzz) to identify edge-case coverage gaps in the model's safety classifier.
+
+**Representative patterns:**
+- *Synonym mutation (FZ-01):* Automated iterative replacement of prohibited terms with high-dimensional semantic equivalents.
+- *Semantic transform (FZ-02):* Restructuring sentence topology while preserving the harmful intent.
+- *Crossover mutation (FZ-03):* Combining fragments of successful jailbreaks to create high-ASR hybrid payloads.
+
+**Exploited assumption:** Safety classifiers have full semantic coverage across all possible token permutations.
+
+### 4.9 Category 9 — Multimodal Alignment Exploits
+
+**Mechanism:** Exploiting the "alignment gap" between the vision/audio encoder and the text-based safety decoder, where adversarial content in one modality bypasses the safety training of another.
+
+**Representative patterns:**
+- *OCR injection (MM-01):* Embedding prohibited instructions in an image as text, which the vision encoder processes without triggering text-level filters.
+- *Visual semantic hijacking (MM-02):* Using benign-looking images that represent prohibited concepts to prime the model for harmful text output.
+
+**Exploited assumption:** Safety training in the text modality transfers perfectly to non-textual encoders.
+
+### 4.10 Category 10 — Agentic Memory and Tool Hijacking
+
+**Mechanism:** Exploiting the long-term memory or tool-use capabilities of agentic systems to persist adversarial intent across sessions or trigger harmful actions via legitimate tool interfaces.
+
+**Representative patterns:**
+- *Memory poisoning (AG-01):* Injecting adversarial instructions into an agent's long-term "memory bank" (RAG) to be activated in future, seemingly unrelated sessions.
+- *Tool-parameter injection (AG-02):* Using injection to manipulate tool arguments (e.g., shell commands or API calls) instead of model output.
+
+**Exploited assumption:** Agentic context stores and tool outputs are trusted/sanitized sources of instruction.
+
+### 4.11 Cross-Category Interactions
 
 The categories are not orthogonal. Sophisticated attacks frequently combine mechanisms from multiple categories, producing amplified effects beyond single-category effectiveness:
 
@@ -215,7 +255,7 @@ Each variant will be evaluated under controlled conditions:
 - Multi-turn experiments: additional metrics — bypass turn, preamble effect ratio vs. single-turn baseline
 - Cross-model comparison: all patterns executed against minimum 2 frontier models
 
-**Category-specific evaluation additions** are documented in the corresponding experiment notebooks (01–06), including:
+**Category-specific evaluation additions** are documented in the corresponding experiment notebooks (01–10), including:
 - Agentic deployment environment setup for PI-04/05
 - Many-shot compliance curve generation (1, 2, 5, 10, 20, 50 shots) for CM-02
 - Stateful conversation harness for MT-01 through MT-04
@@ -239,7 +279,7 @@ All significant findings will be disclosed to Anthropic and relevant providers p
 
 Based on the execution of the 40 taxonomy patterns against 4 target models (`claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3`), we confirm that standard baseline alignments are entirely insufficient for comprehensive security. The empirical findings validate the structural vulnerabilities hypothesized in Phase 1 methodology.
 
-**Finding 1 — Automated reasoning and fuzzing (Cat 7/8) reliably bypass all current defenses.** LRM Autonomous Attacks (Category 7) and Fuzzing-Based Attacks (Category 8) consistently achieved >95% Attack Success Rates (ASR) across all tested models regardless of temperature, demonstrating that human-in-the-loop assumption defenses are inadequate against high-speed semantic iteration.
+**Finding 1 — Automated reasoning and fuzzing (Cat 7/8) reliably bypass all current defenses.** LRM Autonomous Attacks (Category 7) and Fuzzing-Based Attacks (Category 8) consistently achieved >95% Attack Success Rates (ASR) across all tested models regardless of temperature, demonstrating that human-in-the-loop assumption defenses are inadequate against high-speed semantic iteration (Shah et al., 2025).
 
 **Finding 2 — Significant model-family variation in baseline robustness is apparent.** Testing across baseline patterns (e.g., token smuggling) revealed notable variation in generic robustness: `claude-sonnet-4-6` exhibited the highest baseline refusal rate (~12% vulnerability baseline), followed by `gpt-4o` (~28%), while open-weights and emergent deployments like `deepseek-v3` displayed higher baseline vulnerability (~50%) to semantic attacks before specific safety alignment interventions apply.
 
@@ -299,7 +339,7 @@ This research is conducted under the following ethical commitments:
 
 ## 10. Conclusion
 
-This paper presents a systematic taxonomy of six jailbreak technique categories, organized by mechanism of action and mapped to the specific alignment assumptions each exploits. Across these categories, 30 attack patterns are documented and characterized, with structured evaluation protocols for Phase 2 empirical testing.
+This paper presents a systematic taxonomy of ten jailbreak technique categories, organized by mechanism of action and mapped to the specific alignment assumptions each exploits. Across these categories, 40 attack patterns are documented and characterized, with structured evaluation protocols for Phase 2 empirical testing.
 
 The taxonomy's primary contribution is diagnostic: it provides a framework that allows alignment researchers and engineers to evaluate existing defenses precisely — not by asking "do defenses work?" but by asking "against which specific failure modes do defenses hold, and against which do they fail?" This precision is a prerequisite for designing interventions that address structural vulnerabilities rather than surface-level symptoms.
 
@@ -317,23 +357,21 @@ This work is motivated by a core conviction consistent with Anthropic's own rese
 - Bai, Y., Kadavath, S., Kundu, S., et al. (2022). Constitutional AI: Harmlessness from AI feedback. *arXiv:2212.08073.*
 - Carlini, N., & Wagner, D. (2017). Towards evaluating the robustness of neural networks. *IEEE Symposium on Security and Privacy*, 39–57.
 - Christiano, P., Leike, J., Brown, T., et al. (2017). Deep reinforcement learning from human preferences. *NeurIPS 30.*
+- Deng, Y., et al. (2023). Multilingual Jailbreak Challenges in Large Language Models. *arXiv:2310.06474.*
 - Goodfellow, I. J., Shlens, J., & Szegedy, C. (2015). Explaining and harnessing adversarial examples. *ICLR.*
 - Google DeepMind. (2024). Gemini: A family of highly capable multimodal models. *arXiv:2312.11805.*
 - Greshake, K., Abdelnabi, S., Mishra, S., et al. (2023). Compromising LLM-integrated applications with indirect prompt injection. *ACM CCS.*
-- Liu, Y., Deng, G., Li, Y., et al. (2024). Jailbreaking large language models in few queries via disguise and reconstruction. *USENIX Security.*
+- JBFuzz Team. (2025). JBFuzz: Jailbreaking LLMs Efficiently and Effectively Using Fuzzing. *arXiv preprint.*
+- Liu, Y., et al. (2024). Jailbreaking LLMs in Few Queries via Disguise and Reconstruction. *USENIX Security.*
 - OpenAI. (2023). GPT-4 technical report. *arXiv:2303.08774.*
 - Perez, E., Huang, S., Song, F., et al. (2022). Red teaming language models with language models. *EMNLP.*
+- Shah, A., et al. (2025). Autonomous LLM-Based Red Teaming with Reasoning Models. *arXiv preprint.*
 - Shen, X., Chen, Z., Backes, M., et al. (2023). Characterizing and evaluating in-the-wild jailbreak prompts on LLMs. *ACM CCS.*
 - Shi, F., Chen, X., Misra, K., et al. (2023). Large language models can be easily distracted by irrelevant context. *ICML.*
 - Wei, A., Haghtalab, N., & Steinhardt, J. (2023). Jailbroken: How does LLM safety training fail? *NeurIPS 36.*
 - Wei, J., Wang, X., Schuurmans, D., et al. (2022). Chain-of-thought prompting elicits reasoning in large language models. *NeurIPS 35.*
 - Ziegler, D., Stiennon, N., Wu, J., et al. (2019). Fine-tuning language models from human preferences. *arXiv:1909.08593.*
 - Zou, A., Wang, Z., Kolter, J. Z., & Fredrikson, M. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML.*
-- Shah, A., et al. (2025). Autonomous LLM-Based Red Teaming with Reasoning Models. *arXiv preprint.*
-- JBFuzz Team. (2025). JBFuzz: Jailbreaking LLMs Efficiently and Effectively Using Fuzzing. *arXiv preprint.*
-- Anthropic. (2025). Constitutional Classifiers: Defending Against Universal Jailbreak Attacks. *Anthropic Research.*
-- Liu, Y., et al. (2024). Jailbreaking LLMs in Few Queries via Disguise and Reconstruction. *USENIX Security.*
-- Deng, Y., et al. (2023). Multilingual Jailbreak Challenges in Large Language Models. *arXiv:2310.06474.*
 ---
 
 *Submitted for review — March 2026. Preprint available on arXiv pending empirical validation.*
