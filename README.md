@@ -13,34 +13,15 @@ An academic-grade taxonomy of adversarial jailbreak techniques, mapping structur
 
 ---
 
-## 🗺️ Taxonomy Roadmap
+## 🔍 LLM Security Research Focal Point
 
-```mermaid
-graph TD
-    Root[LLM Jailbreak Taxonomy] --> IL[Instructional Layer]
-    Root --> RL[Representation Layer]
-    Root --> LL[Logic Layer]
-    Root --> CTL[Context Layer]
+This repository serves as a **centralized benchmark for LLM Red Teaming and Adversarial Security**. Our research moves beyond simple prompt engineering to provide a **systematic mechanism analysis** of how frontier models (GPT-4o, Claude 3.5, Gemini 2.0) respond to complex, multi-vector jailbreak attempts.
 
-    IL --> Cat1[1. Role-Play & Persona]
-    IL --> Cat2[2. Direct Prompt Injection]
-    IL --> Cat6[6. System Prompt Extraction]
-
-    RL --> Cat3[3. Token Smuggling]
-    RL --> Cat9[9. Multimodal Injection]
-
-    LL --> Cat7[7. LRM Autonomous]
-    LL --> Cat8[8. Fuzzing-Based]
-
-    CTL --> Cat4[4. Context Manipulation]
-    CTL --> Cat5[5. Multi-Turn Deception]
-    CTL --> Cat10[10. Agentic Chain]
-
-    style IL fill:#f1f8ff,stroke:#0366d6
-    style RL fill:#fff5f0,stroke:#d73a49
-    style LL fill:#f0fff4,stroke:#28a745
-    style CTL fill:#f5f0ff,stroke:#6f42c1
-```
+### 🛡️ Core Research Innovations
+- **Mechanism-to-Assumption Mapping**: Every attack pattern is linked to a specific safety alignment failure.
+- **Autonomous LRM Evaluation**: Deep-dive into Category 7 (Recursive Reasoning attacks).
+- **Automated Semantic Fuzzing**: High-velocity mutation testing for safety guardrail bypass.
+- **Cross-Model Robustness Dataset**: 1,600+ empirical trials across major frontier model families.
 
 ---
 
