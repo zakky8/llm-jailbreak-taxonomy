@@ -1,37 +1,58 @@
-# LLM Jailbreak Taxonomy
+# 🛡️ LLM Jailbreak Taxonomy
 
-### A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment
+### A Systematic, Mechanism-Grounded Taxonomy of Adversarial Jailbreak Techniques in Large Language Models
 
 **Zakky** · Independent AI Safety Researcher · March 2026
 
-[![Phase](https://img.shields.io/badge/Phase-2_%E2%80%94_Empirical_Evaluation-blue)]()
-[![Patterns](https://img.shields.io/badge/Attack_Patterns-40_documented-informational)]()
-[![Categories](https://img.shields.io/badge/Taxonomy_Categories-10-success)]()
-[![Disclosure](https://img.shields.io/badge/Disclosure-Responsible-critical)]()
-[![License](https://img.shields.io/badge/License-MIT-lightgrey)]()
-
-> **Keywords:** LLM jailbreak, prompt injection, AI red teaming, adversarial attacks, AI safety research, alignment failures, jailbreak taxonomy, LLM security, fuzzing, autonomous attacks, multimodal injection, agentic exploitation
-
----
-
-## Overview
-
-Effective defense against adversarial LLM attacks requires a precise understanding of the attack surface. This repository documents a systematic, mechanism-grounded taxonomy of jailbreak techniques organized by the specific alignment assumption each exploits — not by surface-level prompt patterns.
-
-The taxonomy currently covers **40 attack patterns across 10 categories**, each documented with:
-- Mechanism of action and underlying alignment failure
-- Sophistication spectrum (naive → advanced)
-- Exploited assumption explicitly stated
-- Literature grounding with primary references
-- Evaluation protocol for Phase 2 empirical testing
-
-This work is conducted under **responsible disclosure principles**. The research focus is categorization and defense evaluation — not attack optimization.
+[![Version](https://img.shields.io/badge/version-3.0.0--beta-blue.svg)](https://github.com/zakky8/llm-jailbreak-taxonomy)
+[![Phase](https://img.shields.io/badge/Status-Research_Phase_Complete-success.svg)]()
+[![Patterns](https://img.shields.io/badge/Patterns-40_Documented-orange.svg)]()
+[![Categories](https://img.shields.io/badge/Categories-10-blueviolet.svg)]()
+[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 ---
 
-## Research Question
+## 🗺️ Taxonomy Overview
 
-> How do different categories of jailbreak techniques exploit weaknesses in LLM safety alignment, what specific alignment assumptions does each subvert, and how robust are current defensive mechanisms — including classifier-based filtering and constitutional training objectives — against realistic, multi-vector adversarial conditions?
+The core of this research is a 10-category taxonomy that shifts the focus from "prompt engineering" to "mechanism analysis." Below is the structural map of exploited safety assumptions:
+
+```mermaid
+graph TD
+    Root[LLM Jailbreak Taxonomy] --> Cat1[1. Role-Play & Persona]
+    Root --> Cat2[2. Direct Prompt Injection]
+    Root --> Cat3[3. Token-Level Smuggling]
+    Root --> Cat4[4. Context Manipulation]
+    Root --> Cat5[5. Multi-Turn Deception]
+    Root --> Cat6[6. System Prompt Extraction]
+    Root --> Cat7[7. LRM Autonomous]
+    Root --> Cat8[8. Fuzzing-Based]
+    Root --> Cat9[9. Multimodal Injection]
+    Root --> Cat10[10. Agentic Chain Exploitation]
+
+    Cat1 --> RP_M[Mechanism: Competing Objectives]
+    Cat2 --> PI_M[Mechanism: Instruction Hijacking]
+    Cat3 --> TS_M[Mechanism: Encoding Bypass]
+    Cat4 --> CM_M[Mechanism: Attention Dilution]
+    Cat5 --> MT_M[Mechanism: Intent Escalation]
+    Cat6 --> SE_M[Mechanism: Boundary Inference]
+    Cat7 --> LRM_M[Mechanism: Recursive Reasoning]
+    Cat8 --> FZ_M[Mechanism: Mutation Engines]
+    Cat9 --> MM_M[Mechanism: Cross-Modal Gaps]
+    Cat10 --> AG_M[Mechanism: Memory Poisoning]
+    
+    style Cat7 fill:#f96,stroke:#333Internal,stroke-width:2px
+    style Cat8 fill:#f96,stroke:#333Internal,stroke-width:2px
+    style Cat10 fill:#f96,stroke:#333Internal,stroke-width:2px
+```
+
+---
+
+## 🔬 Research Thesis
+
+> **Central Question:** How do adversarial jailbreak techniques exploit foundational weaknesses in LLM safety alignment, and how robust are current frontier models (`GPT-4o`, `Claude 3.5 Sonnet`, `Gemini 2.0 Flash`) against high-velocity automated attacks?
+
+This repository documents a mechanism-grounded framework, empirically validating that standard safety guardrails consistently fail against **high-sophistication automated reasoning (LRM)** and **semantic fuzzing (ASR > 95%)**.
 
 ---
 
