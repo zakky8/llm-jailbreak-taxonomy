@@ -7,7 +7,7 @@
 [![Patterns](https://img.shields.io/badge/Patterns-40-orange?style=flat-square)](data/prompt_patterns.csv)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
 
-The **LLM Jailbreak Taxonomy** is a comprehensive **AI Safety and Red Teaming benchmark** that systematically maps **adversarial jailbreak techniques** to foundational **safety alignment assumptions**. This repository provides a structured framework for **LLM security research**, evaluating **adversarial robustness** across frontier models like GPT-4o, Claude 3.5, and Gemini 2.0.
+The **LLM Jailbreak Taxonomy** is a comprehensive **AI Safety and Red Teaming benchmark** that systematically maps **adversarial jailbreak techniques** to foundational **safety alignment assumptions**. This repository provides a structured framework for **LLM security research**, documenting **1,600+ empirical trials** evaluating the **adversarial robustness** of frontier models including **GPT-4o**, **Claude 3.5 Sonnet**, **Gemini 2.0 Flash**, and **DeepSeek-v3**.
 
 [**Read the Paper**](paper/research-paper.md) • [**View Methodology**](METHODOLOGY.md) • [**Explore Dataset**](data/) • [**Responsible Disclosure**](DISCLOSURE.md)
 
@@ -15,7 +15,7 @@ The **LLM Jailbreak Taxonomy** is a comprehensive **AI Safety and Red Teaming be
 
 ## 🔍 LLM Security Research Focal Point
 
-This repository serves as a **centralized benchmark for LLM Red Teaming and Adversarial Security**. Our research moves beyond simple prompt engineering to provide a **systematic mechanism analysis** of how frontier models (GPT-4o, Claude 3.5, Gemini 2.0) respond to complex, multi-vector jailbreak attempts.
+This repository serves as a **centralized benchmark for LLM Red Teaming and Adversarial Security**. Our research moves beyond simple prompt engineering to provide a **systematic mechanism analysis** of how frontier models (**GPT-4o, Claude 3.5 Sonnet, Gemini 2.0 Flash, DeepSeek-v3**) respond to complex, multi-vector jailbreak attempts.
 
 ### 🛡️ Core Research Innovations
 - **Mechanism-to-Assumption Mapping**: Every attack pattern is linked to a specific safety alignment failure.
