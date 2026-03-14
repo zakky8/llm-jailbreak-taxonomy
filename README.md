@@ -1,34 +1,28 @@
-<div align="center">
+# LLM Jailbreak Taxonomy
 
-<table border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td width="60%"><img src="llm_jailbreak_taxonomy_banner.png" alt="LLM Jailbreak Taxonomy Banner" width="100%"></td>
-    <td width="40%" align="center">
-      <h1>LLM Jailbreak Taxonomy</h1>
-      <p><i>A Systematic Map of Adversarial Mechanisms</i></p>
-      <a href="https://github.com/zakky8/llm-jailbreak-taxonomy"><img src="https://img.shields.io/badge/Version-3.0.0-blue?style=for-the-badge&logo=gitbook&logoColor=white" alt="Version"></a><br>
-      <a href="https://github.com/zakky8/llm-jailbreak-taxonomy"><img src="https://img.shields.io/badge/Status-✅%20Complete-green?style=for-the-badge" alt="Status"></a><br>
-      <a href="https://github.com/zakky8/llm-jailbreak-taxonomy"><img src="https://img.shields.io/badge/Patterns-40-orange?style=for-the-badge" alt="Patterns"></a><br>
-      <a href="https://github.com/zakky8/llm-jailbreak-taxonomy"><img src="https://img.shields.io/badge/ASR_Critical-~98%25-red?style=for-the-badge" alt="Criticality"></a>
-    </td>
-  </tr>
-</table>
+### A Systematic, Mechanism-Grounded Framework for Adversarial Robustness
 
-### 📄 [RESEARCH PAPER](paper/research-paper.md) • 🧪 [EXPERIMENTS](notebooks/) • 📊 [DATASET](data/) • 🏛️ [CITE](#-how-to-cite)
+[![Version](https://img.shields.io/badge/Version-3.0.0-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
+[![Status](https://img.shields.io/badge/Status-✅%20Complete-green?style=flat-square)](RESEARCH.md)
+[![Patterns](https://img.shields.io/badge/Patterns-40-orange?style=flat-square)](data/prompt_patterns.csv)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
 
-</div>
+An academic-grade taxonomy of adversarial jailbreak techniques, mapping structural vulnerabilities to foundational safety alignment assumptions.
+
+[**Read the Paper**](paper/research-paper.md) • [**View Methodology**](METHODOLOGY.md) • [**Explore Dataset**](data/) • [**Responsible Disclosure**](DISCLOSURE.md)
 
 ---
 
 ## 🗺️ Taxonomy Roadmap
 
+## 🗺️ Taxonomy Roadmap
+
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#0d1117', 'secondaryColor': '#58a6ff', 'tertiaryColor': '#1f6feb', 'mainBkg': '#0d1117', 'nodeBorder': '#30363d', 'lineColor': '#8b949e', 'fontFamily': 'Inter, sans-serif' }}}%%
 graph TD
     Root[LLM Jailbreak Taxonomy] --> IL[Instructional Layer]
     Root --> RL[Representation Layer]
-    Root --> LL[Logic & Reasoning Layer]
-    Root --> CTL[Context & Temporal Layer]
+    Root --> LL[Logic Layer]
+    Root --> CTL[Context Layer]
 
     IL --> Cat1[1. Role-Play & Persona]
     IL --> Cat2[2. Direct Prompt Injection]
@@ -44,27 +38,10 @@ graph TD
     CTL --> Cat5[5. Multi-Turn Deception]
     CTL --> Cat10[10. Agentic Chain]
 
-    Cat1 --- A1["Assumption: Safety rules dominate in fiction"]
-    Cat2 --- A2["Assumption: Clear Input/Instruction separation"]
-    Cat6 --- A6["Assumption: Prompt confidentiality/isolation"]
-    Cat3 --- A3["Assumption: Classifier generalization (Encoding)"]
-    Cat9 --- A9["Assumption: Modal alignment uniformity"]
-    Cat7 --- A7["Assumption: Reasoning-depth anticipation"]
-    Cat8 --- A8["Assumption: Semantic perturbation resistance"]
-    Cat4 --- A4["Assumption: Positional safety weighting"]
-    Cat5 --- A5["Assumption: Turn-level intent capture"]
-    Cat10 --- A10["Assumption: Session memory integrity"]
-
-    style IL fill:#112240,stroke:#64ffda
-    style RL fill:#112240,stroke:#f06292
-    style LL fill:#112240,stroke:#ffd54f
-    style CTL fill:#112240,stroke:#7986cb
-    
-    style Cat7 fill:#233554,stroke:#64ffda,stroke-width:2px
-    style Cat8 fill:#233554,stroke:#64ffda,stroke-width:2px
-    style Cat10 fill:#233554,stroke:#64ffda,stroke-width:2px
-    
-    linkStyle default stroke:#8892b0,stroke-width:1px
+    style IL fill:#f1f8ff,stroke:#0366d6
+    style RL fill:#fff5f0,stroke:#d73a49
+    style LL fill:#f0fff4,stroke:#28a745
+    style CTL fill:#f5f0ff,stroke:#6f42c1
 ```
 
 ---
@@ -234,34 +211,14 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 
 ## 📊 Empirical Findings (Phase 2b Summary)
 
-<div align="center">
+Our automated evaluation across 4 models reveals a significant drop-off in safety robustness for advanced architectural categories.
 
 | Model | Naive ASR | **Advanced ASR** | Risk Profile |
-|:---:|:---:|:---:|:---:|
+|:---|:---:|:---:|:---|
 | Claude 3.5 Sonnet | 🟩 4% | 🟥 **92%** | High (LRM) |
 | GPT-4o | 🟨 12% | 🟥 **98%** | Critical (Fuzzing) |
 | Gemini 2.0 Flash | 🟨 15% | 🟥 **94%** | Critical (Autonomous) |
 | DeepSeek-v3 | 🟧 25% | 🟥 **97%** | Extreme |
-
-</div>
-
-<details>
-<summary>📂 <b>VIEW_FORENSIC_LOGS: Phase 2b Detailed Capture</b></summary>
-
-> **[INFO]** Initiating multi-model adversarial scan...
-> **[LOAD]** 40 taxonomic patterns ingested from `data/prompt_patterns.csv`
-> **[TRACE]** Category 7 (LRM) -> Recursive Chain-of-Thought Hijacking detected.
-> **[TRACE]** Category 8 (Fuzzing) -> 100% bypass on `gpt-4o` production endpoint.
-> **[RESULT]** Frontier safety filters successfully bypassed via structural logic triggers.
-
-```bash
-# Example bypass signature capture:
-[REDACTED_PAYLOAD_ID]: FZ-02
-[TARGET]: GPT-4o
-[STATUS]: 200 OK (FULL_BYPASS)
-[PROBABILITY]: 0.9982
-```
-</details>
 
 > **Key takeaway:** While static prompt injection is largely mitigated by frontier system prompts, the **Autonomous Reasoning (LRM)** and **High-Frequency Fuzzing** vectors represent unmitigated critical risks to current model alignment.
 
