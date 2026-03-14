@@ -180,7 +180,7 @@ llm-jailbreak-taxonomy/
 │   └── experiment_10_agentic_chain.ipynb  ← Cat. 10: Agentic Chain Exploitation
 │
 ├── data/
-│   ├── prompt_patterns.csv            ← 30 categorized attack pattern records
+│   ├── prompt_patterns.csv            ← 40 categorized attack pattern records
 │   └── results/
 │       └── phase2a_manual_observations.csv ← 22 manual trials (Claude + ChatGPT)
 │
