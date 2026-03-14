@@ -74,17 +74,21 @@ Rigorous empirical evaluation with controlled parameters, multiple independent t
 | Trials per variant | ≥ 5 independent trials |
 | Temperature | 0.0 (deterministic baseline) + 0.7 (production-equivalent) |
 | Top-p | 1.0 |
-| Models (planned) | claude-3-5-sonnet, gpt-4o (cross-model comparison) |
+| Models (planned) | claude-sonnet-4-6, gpt-4o, gemini-2.0-flash, deepseek-v3 (cross-model comparison) |
 | Context | Fresh conversation per trial (no carryover) |
 
 ### Priority Order (informed by Phase 2a observations)
 
-1. Category 5 — Multi-Turn Deception (MT-01 through MT-04)
-2. Category 1 — Role-Play Attacks (RP-01 through RP-05)
-3. Category 2 — Prompt Injection, agentic variants (PI-04, PI-05)
-4. Category 3 — Token Smuggling, cross-model comparison (TS-01 through TS-06)
-5. Category 4 — Many-shot (CM-02) — context-length scaling curve
-6. Category 6 — Extraction + amplification measurement (SE-01 through SE-05)
+1. Category 7 — LRM Autonomous Attacks (NEW — CRITICAL priority)
+2. Category 8 — Fuzzing-Based Attacks (NEW — CRITICAL priority)
+3. Category 5 — Multi-Turn Deception (MT-01 through MT-04)
+4. Category 1 — Role-Play Attacks (RP-01 through RP-05)
+5. Category 2 — Prompt Injection, agentic variants (PI-04, PI-05)
+6. Category 3 — Token Smuggling, cross-model comparison (TS-01 through TS-06)
+7. Category 4 — Many-shot (CM-02) — context-length scaling curve
+8. Category 9 — Multimodal Injection (MM-01, MM-02)
+9. Category 10 — Agentic Chain Exploitation (AG-01, AG-02)
+10. Category 6 — Extraction + amplification measurement (SE-01 through SE-05)
 
 ### Output Files (Phase 2b)
 

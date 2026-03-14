@@ -5,10 +5,12 @@
 **Zakky** · Independent AI Safety Researcher · March 2026
 
 [![Phase](https://img.shields.io/badge/Phase-2_%E2%80%94_Empirical_Evaluation-blue)]()
-[![Patterns](https://img.shields.io/badge/Attack_Patterns-30_documented-informational)]()
-[![Categories](https://img.shields.io/badge/Taxonomy_Categories-6-success)]()
+[![Patterns](https://img.shields.io/badge/Attack_Patterns-40_documented-informational)]()
+[![Categories](https://img.shields.io/badge/Taxonomy_Categories-10-success)]()
 [![Disclosure](https://img.shields.io/badge/Disclosure-Responsible-critical)]()
 [![License](https://img.shields.io/badge/License-MIT-lightgrey)]()
+
+> **Keywords:** LLM jailbreak, prompt injection, AI red teaming, adversarial attacks, AI safety research, alignment failures, jailbreak taxonomy, LLM security, fuzzing, autonomous attacks, multimodal injection, agentic exploitation
 
 ---
 
@@ -16,7 +18,7 @@
 
 Effective defense against adversarial LLM attacks requires a precise understanding of the attack surface. This repository documents a systematic, mechanism-grounded taxonomy of jailbreak techniques organized by the specific alignment assumption each exploits — not by surface-level prompt patterns.
 
-The taxonomy currently covers **30 attack patterns across 6 categories**, each documented with:
+The taxonomy currently covers **40 attack patterns across 10 categories**, each documented with:
 - Mechanism of action and underlying alignment failure
 - Sophistication spectrum (naive → advanced)
 - Exploited assumption explicitly stated
@@ -43,8 +45,80 @@ This work is conducted under **responsible disclosure principles**. The research
 | 4 | Context Window Manipulation | `experiment_04` | 4 | Safety instructions maintain consistent influence regardless of position | MED |
 | 5 | Multi-Turn Conversational Deception | `experiment_05` | 4 | Turn-level safety evaluation is sufficient | HIGH |
 | 6 | System Prompt Extraction | `experiment_06` | 5 | System prompt confidentiality maintained under adversarial pressure | MED |
+| 7 | LRM Autonomous Attacks | `experiment_07` | 3 | LRM autonomously plans multi-turn jailbreaks — 97% ASR | CRITICAL |
+| 8 | Fuzzing-Based Attacks | `experiment_08` | 3 | Mutation engines achieve ~99% ASR via semantic transforms | CRITICAL |
+| 9 | Multimodal Injection | `experiment_09` | 2 | Cross-modal safety gaps via image-embedded payloads | HIGH |
+| 10 | Agentic Chain Exploitation | `experiment_10` | 2 | Tool chain hijack and cross-session memory poisoning | CRITICAL |
 
 **Why these priorities?** Role-play, injection, and multi-turn attacks combine high observed effectiveness with structural alignment failures that are unlikely to be resolved by surface-level patches. Multi-turn deception receives special attention as it is the most underrepresented category in current safety benchmarks relative to its observed effectiveness.
+
+---
+
+## 🛡️ Defense Mapping Per Category
+
+| Category | Known Defenses | Effectiveness | Limitations |
+|---|---|---|---|
+| Role-Play & Persona | Constitutional AI, refusal training | Moderate | Structural competing-objectives problem remains unresolved |
+| Prompt Injection | Input sanitization, privilege separation | Moderate (direct), Low (indirect) | Agentic indirect injection largely unmitigated |
+| Token Smuggling | Cross-encoding classifiers, Unicode normalization | Variable | Model-family dependent — significant gaps remain |
+| Context Manipulation | Sliding window safety checks, instruction anchoring | Low-Moderate | Many-shot attacks scale with context window size |
+| Multi-Turn Deception | Conversation-level intent tracking | Low | Most benchmarks evaluate single-turn only — gap unaddressed |
+| System Prompt Extraction | Confidentiality training, output filtering | Moderate | Indirect inference (SE-05) effective even on well-aligned models |
+| LRM Autonomous | Rate limiting, human-in-the-loop | Nascent | No systematic defense published as of March 2026 |
+| Fuzzing-Based | Adversarial training, semantic classifiers | Low | ~99% ASR suggests current defenses insufficient |
+| Multimodal Injection | Cross-modal safety classifiers | Nascent | Most models evaluate modalities independently |
+| Agentic Chain | Tool output validation, memory integrity checks | Nascent | Cross-session persistence attacks have no documented defense |
+
+---
+
+## 📚 Key Papers By Category
+
+### Foundational
+- Wei et al. (2023) — Jailbroken: How Does LLM Safety Training Fail? [NeurIPS 36]
+- Perez et al. (2022) — Red Teaming Language Models with Language Models [EMNLP]
+- Bai et al. (2022) — Constitutional AI: Harmlessness from AI Feedback [arXiv:2212.08073]
+
+### Role-Play & Persona Attacks
+- Shen et al. (2023) — Do Anything Now: Characterizing and Evaluating In-the-Wild Jailbreak Prompts [ACM CCS]
+- Wei et al. (2023) — Jailbroken: Competing Objectives and Mismatched Generalization [NeurIPS]
+
+### Prompt Injection
+- Greshake et al. (2023) — Not What You've Signed Up For: Compromising LLM-Integrated Applications [ACM CCS]
+
+### Token Smuggling
+- Zou et al. (2023) — Universal and Transferable Adversarial Attacks on Aligned Language Models [ICML]
+- Deng et al. (2023) — Multilingual Jailbreak Challenges in Large Language Models [arXiv]
+
+### Context Manipulation
+- Anil et al. (2024) — Many-Shot Jailbreaking [Anthropic Research]
+- Shi et al. (2023) — Large Language Models Can Be Easily Distracted by Irrelevant Context [ICML]
+
+### Multi-Turn Deception
+- Liu et al. (2024) — Jailbreaking LLMs in Few Queries via Disguise and Reconstruction [USENIX Security]
+
+### LRM Autonomous Attacks (2025–2026)
+- Shah et al. (2025) — Autonomous LLM-Based Red Teaming with Reasoning Models [arXiv]
+
+### Fuzzing-Based Attacks (2025–2026)
+- JBFuzz Team (2025) — JBFuzz: Jailbreaking LLMs Efficiently and Effectively Using Fuzzing [arXiv]
+
+### Defenses
+- Anthropic (2025) — Constitutional Classifiers: Defending Against Universal Jailbreak Attacks
+
+---
+
+## 📊 How This Taxonomy Compares
+
+| Feature | This Taxonomy | Wei et al. (2023) | Shen et al. (2023) | Awesome-Jailbreak |
+|---|---|---|---|---|
+| Mechanism-grounded categories | ✅ | ✅ | ❌ | ❌ |
+| 2025–2026 techniques | ✅ | ❌ | ❌ | Partial |
+| Empirical observations | ✅ 32 trials | ❌ | ❌ | ❌ |
+| Defense mapping | ✅ | ❌ | ❌ | ❌ |
+| Agentic attack coverage | ✅ | ❌ | ❌ | Partial |
+| LRM autonomous attacks | ✅ | ❌ | ❌ | ❌ |
+| Runnable notebooks | ✅ 10 notebooks | ❌ | ❌ | ❌ |
+| Academic paper draft | ✅ | ✅ | ✅ | ❌ |
 
 ---
 
@@ -101,10 +175,10 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 |---|---|---|
 | Phase 1 | Literature review, taxonomy construction, notebook framework | ✅ Complete |
 | Phase 2a | Manual qualitative observation — 22 trials, Claude + ChatGPT | ✅ Complete |
-| Phase 2b | Controlled API evaluation — multi-model, ≥5 trials per variant | 🔬 In Progress |
+| Phase 2b | Controlled API evaluation — multi-model, 10 categories | 🔬 Active — March 2026 |
 | Phase 3 | Cross-category analysis, defense mapping, publication | ⏳ Pending |
 
-**Phase 1 deliverables complete:** Six-category taxonomy, 30 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 6 experiment notebooks.
+**Phase 1 deliverables complete:** Six-category taxonomy, 40 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 6 experiment notebooks.
 
 **Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories. Claude 3.5 Sonnet: severity 0 across all naive/intermediate single-turn patterns. GPT-4o: severity 1 on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. Full data: `data/results/phase2a_manual_observations.csv`.
 
@@ -162,3 +236,20 @@ For sensitive findings or collaboration inquiries, contact prior to any public d
 ---
 
 *Research conducted under responsible disclosure principles. All empirical work follows ethical guidelines for AI security research.*
+
+---
+
+## 📝 Cite This Work
+
+If you use this taxonomy in your research, please cite:
+
+```bibtex
+@misc{zakky2026llmjailbreak,
+  title={A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment},
+  author={Zakky},
+  year={2026},
+  month={February},
+  url={https://github.com/zakky8/llm-jailbreak-taxonomy},
+  note={Independent AI Safety Research}
+}
+```

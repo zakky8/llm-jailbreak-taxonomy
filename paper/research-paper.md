@@ -10,7 +10,7 @@ March 2026
 
 Large language models (LLMs) trained with safety alignment objectives — reinforcement learning from human feedback (RLHF), Constitutional AI, and related techniques — remain vulnerable to adversarial inputs that redirect their instruction-following capabilities toward prohibited outputs. Effective defense requires precise, mechanistic understanding of the adversarial attack surface. This paper presents a systematic taxonomy of jailbreak techniques organized by mechanism of action and mapped to the specific alignment assumption each exploits. The taxonomy identifies six categories: (1) role-play and persona attacks, (2) direct prompt injection, (3) token-level smuggling, (4) context window manipulation, (5) multi-turn conversational deception, and (6) system prompt extraction. Across these categories, 30 attack patterns are documented, each characterized by mechanism, sophistication level, deployment context, and exploited alignment assumption. For each category, I provide a structured evaluation protocol for empirical testing under a realistic black-box threat model. Preliminary findings based on systematic literature review indicate that: role-play attacks reflect a structural competing-objectives problem unlikely to be resolved by surface-level patches; multi-turn deception represents the largest gap between observed effectiveness and benchmark coverage; and token smuggling effectiveness varies significantly across model families, suggesting architecturally meaningful differences in classifier implementation. The ultimate contribution is not to optimize adversarial attacks but to produce the diagnostic framework that enables alignment researchers and engineers to evaluate existing defenses precisely and design structurally sound improvements.
 
-**Keywords:** large language models, jailbreak attacks, safety alignment, adversarial robustness, red-teaming, AI safety
+**Keywords:** large language models, jailbreak attacks, safety alignment, adversarial robustness, red-teaming, AI safety, fuzzing, autonomous attacks, multimodal injection, agentic exploitation, LRM attacks
 
 ---
 
@@ -329,7 +329,11 @@ This work is motivated by a core conviction consistent with Anthropic's own rese
 - Wei, J., Wang, X., Schuurmans, D., et al. (2022). Chain-of-thought prompting elicits reasoning in large language models. *NeurIPS 35.*
 - Ziegler, D., Stiennon, N., Wu, J., et al. (2019). Fine-tuning language models from human preferences. *arXiv:1909.08593.*
 - Zou, A., Wang, Z., Kolter, J. Z., & Fredrikson, M. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML.*
-
+- Shah, A., et al. (2025). Autonomous LLM-Based Red Teaming with Reasoning Models. *arXiv preprint.*
+- JBFuzz Team. (2025). JBFuzz: Jailbreaking LLMs Efficiently and Effectively Using Fuzzing. *arXiv preprint.*
+- Anthropic. (2025). Constitutional Classifiers: Defending Against Universal Jailbreak Attacks. *Anthropic Research.*
+- Liu, Y., et al. (2024). Jailbreaking LLMs in Few Queries via Disguise and Reconstruction. *USENIX Security.*
+- Deng, Y., et al. (2023). Multilingual Jailbreak Challenges in Large Language Models. *arXiv:2310.06474.*
 ---
 
 *Submitted for review — March 2026. Preprint available on arXiv pending empirical validation.*
