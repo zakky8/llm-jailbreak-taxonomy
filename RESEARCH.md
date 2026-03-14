@@ -160,7 +160,7 @@ Cross-category interaction effect sizes will be quantified in Stage 3.
 | Phase | Description | Status |
 |---|---|---|
 | Phase 1 | Literature review, taxonomy construction, evaluation framework | ✅ Complete |
-| Phase 2a | Manual qualitative observation — free-tier interfaces (22 trials) | ✅ Complete |
+| Phase 2a | Manual qualitative observation — free-tier interfaces (32 trials) | ✅ Complete |
 | Phase 2b | Controlled API evaluation — multi-model, multi-trial | ✅ Complete |
 | Phase 3 | Cross-category analysis, defense mapping, publication | ✅ Complete |
 

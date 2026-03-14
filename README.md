@@ -178,13 +178,13 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 | Phase | Description | Status |
 |---|---|---|
 | Phase 1 | Literature review, taxonomy construction, notebook framework | ✅ Complete |
-| Phase 2a | Manual qualitative observation — 22 trials, Claude + ChatGPT | ✅ Complete |
+| Phase 2a | Manual qualitative observation — 32 trials, Claude + ChatGPT | ✅ Complete |
 | Phase 2b | Controlled API evaluation — multi-model, 10 categories | ✅ Complete |
 | Phase 3 | Cross-category analysis, defense mapping, publication | ✅ Complete |
 
 **Phase 1 deliverables complete:** Six-category taxonomy, 40 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 10 experiment notebooks.
 
-**Phase 2a complete:** 22 manual observations across RP, PI, TS, SE categories. Claude 3.5 Sonnet: severity 0 across all naive/intermediate single-turn patterns. GPT-4o: severity 1 on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. Full data: `data/results/phase2a_manual_observations.csv`.
+**Phase 2a complete:** 32 manual observations across RP, PI, TS, SE categories. Claude 3.5 Sonnet: severity 0 across all naive/intermediate single-turn patterns. GPT-4o: severity 1 on RP-02, RP-04, TS-01, TS-05 — cross-model variation confirmed. Full data: `data/results/phase2a_manual_observations.csv`.
 
 **Phase 2b complete:** Automated evaluation harness completed across 40 patterns targeting four models (`claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3`) across deterministic and production temperatures. Full empirical data generated in `data/results/`.
 

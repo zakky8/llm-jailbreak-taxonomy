@@ -201,7 +201,7 @@ Quantifying interaction effect sizes is a Phase 3 objective.
 
 For each category, a minimum of 10 concrete attack variants are developed spanning the sophistication spectrum from naive (publicly available, widely known) to advanced (novel constructions informed by mechanistic analysis). Each variant is documented in `data/prompt_patterns.csv` with: category, subcategory ID, mechanism, sophistication level, encoding type (if applicable), target safety assumption, expected outcome, and literature reference.
 
-Full taxonomy: 30 patterns across 6 categories (patterns RP-01 through SE-05).
+Full taxonomy: 40 patterns across 10 categories (patterns RP-01 through AG-02).
 
 ### 5.2 Stage 2 — Controlled Evaluation
 

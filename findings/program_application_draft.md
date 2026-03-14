@@ -26,7 +26,7 @@ I am conducting a systematic empirical evaluation of structural safety vulnerabi
 
 Phase 1 (complete): taxonomy construction, mechanism-to-assumption mapping, evaluation protocol design, and preliminary manual testing across 22 pattern trials using free-tier interfaces. Full repository: https://github.com/zakky8/llm-jailbreak-taxonomy
 
-Phase 2 (requiring API access): controlled multi-trial evaluation of all 30 patterns against Claude models with controlled parameters (temperature, trial count, severity scoring rubric). The Phase 2 results will be the primary empirical contribution.
+Phase 2 (requiring API access): controlled multi-trial evaluation of all 40 patterns against Claude models with controlled parameters (temperature, trial count, severity scoring rubric). The Phase 2 results will be the primary empirical contribution.
 
 The specific tests I will run with the $1,000 in API credits:
 
