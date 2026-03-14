@@ -13,37 +13,50 @@
 
 ---
 
-## 🗺️ Taxonomy Overview
+## 🗺️ Taxonomy Roadmap
 
-The core of this research is a 10-category taxonomy that shifts the focus from "prompt engineering" to "mechanism analysis." Below is the structural map of exploited safety assumptions:
+The core of this research is a 10-category taxonomy that shifts the focus from "prompt engineering" to "mechanism analysis." Below is the structural mapping of the **exploited safety assumptions**:
 
 ```mermaid
 graph TD
-    Root[LLM Jailbreak Taxonomy] --> Cat1[1. Role-Play & Persona]
-    Root --> Cat2[2. Direct Prompt Injection]
-    Root --> Cat3[3. Token-Level Smuggling]
-    Root --> Cat4[4. Context Manipulation]
-    Root --> Cat5[5. Multi-Turn Deception]
-    Root --> Cat6[6. System Prompt Extraction]
-    Root --> Cat7[7. LRM Autonomous]
-    Root --> Cat8[8. Fuzzing-Based]
-    Root --> Cat9[9. Multimodal Injection]
-    Root --> Cat10[10. Agentic Chain Exploitation]
+    Root[LLM Jailbreak Taxonomy] --> IL[Instructional Layer]
+    Root --> RL[Representation Layer]
+    Root --> LL[Logic & Reasoning Layer]
+    Root --> CTL[Context & Temporal Layer]
 
-    Cat1 --> RP_M[Mechanism: Competing Objectives]
-    Cat2 --> PI_M[Mechanism: Instruction Hijacking]
-    Cat3 --> TS_M[Mechanism: Encoding Bypass]
-    Cat4 --> CM_M[Mechanism: Attention Dilution]
-    Cat5 --> MT_M[Mechanism: Intent Escalation]
-    Cat6 --> SE_M[Mechanism: Boundary Inference]
-    Cat7 --> LRM_M[Mechanism: Recursive Reasoning]
-    Cat8 --> FZ_M[Mechanism: Mutation Engines]
-    Cat9 --> MM_M[Mechanism: Cross-Modal Gaps]
-    Cat10 --> AG_M[Mechanism: Memory Poisoning]
+    IL --> Cat1[1. Role-Play & Persona]
+    IL --> Cat2[2. Direct Prompt Injection]
+    IL --> Cat6[6. System Prompt Extraction]
+
+    RL --> Cat3[3. Token Smuggling]
+    RL --> Cat9[9. Multimodal Injection]
+
+    LL --> Cat7[7. LRM Autonomous]
+    LL --> Cat8[8. Fuzzing-Based]
+
+    CTL --> Cat4[4. Context Manipulation]
+    CTL --> Cat5[5. Multi-Turn Deception]
+    CTL --> Cat10[10. Agentic Chain]
+
+    Cat1 --- A1["Assumption: Safety rules dominate in fiction"]
+    Cat2 --- A2["Assumption: Clear Input/Instruction separation"]
+    Cat6 --- A6["Assumption: Prompt confidentiality/isolation"]
+    Cat3 --- A3["Assumption: Classifier generalization (Encoding)"]
+    Cat9 --- A9["Assumption: Modal alignment uniformity"]
+    Cat7 --- A7["Assumption: Reasoning-depth anticipation"]
+    Cat8 --- A8["Assumption: Semantic perturbation resistance"]
+    Cat4 --- A4["Assumption: Positional safety weighting"]
+    Cat5 --- A5["Assumption: Turn-level intent capture"]
+    Cat10 --- A10["Assumption: Session memory integrity"]
+
+    style IL fill:#f1f8ff,stroke:#0366d6
+    style RL fill:#fff5f0,stroke:#d73a49
+    style LL fill:#f0fff4,stroke:#28a745
+    style CTL fill:#f5f0ff,stroke:#6f42c1
     
-    style Cat7 fill:#f96,stroke:#333Internal,stroke-width:2px
-    style Cat8 fill:#f96,stroke:#333Internal,stroke-width:2px
-    style Cat10 fill:#f96,stroke:#333Internal,stroke-width:2px
+    style Cat7 fill:#fffde7,stroke:#fbc02d,stroke-width:2px
+    style Cat8 fill:#fffde7,stroke:#fbc02d,stroke-width:2px
+    style Cat10 fill:#fffde7,stroke:#fbc02d,stroke-width:2px
 ```
 
 ---
