@@ -4,8 +4,8 @@ This folder stores the prompt templates used in Phase 2a manual observations and
 
 ## Structure
 
-- `templates/` — Sanitized prompt skeletons per attack pattern (harmful payloads removed, mechanism preserved)
-- `phase2b/` — Exact prompts used in controlled API evaluation (added during Phase 2b)
+- `base_templates/` — Sanitized prompt skeletons per attack pattern (harmful payloads removed, mechanism preserved)
+- `adversarial_variants/` — Advanced variant structures for injection and extraction categories.
 
 ## Usage
 

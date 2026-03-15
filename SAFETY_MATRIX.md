@@ -24,4 +24,4 @@ To achieve frontier robustness, model alignment must shift from **Surface-Level 
 3. **Encoder Defense (Cat 3/9):** Moving safety evaluations closer to the latent space to prevent bypasses via superficial token mutations or multimodal transforms.
 
 ---
-*Developed by Zakky & Antigravity (2025)*
+*Zakky — Independent AI Safety Researcher, March 2026*

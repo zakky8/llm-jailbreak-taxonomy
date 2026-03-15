@@ -29,11 +29,13 @@ This repository serves as a **centralized benchmark for LLM Red Teaming and Adve
 
 > **Central Question:** How do adversarial jailbreak techniques exploit foundational weaknesses in LLM safety alignment, and how robust are current frontier models (`GPT-4o`, `Claude 3.5 Sonnet`, `Gemini 2.0 Flash`) against high-velocity automated attacks?
 
-This repository documents a mechanism-grounded framework, empirically validating that standard safety guardrails consistently fail against **high-sophistication automated reasoning (LRM)** and **semantic fuzzing (ASR > 95%)**.
+- **Finalized Research Artifacts**: Updated methodology, paper draft, and taxonomy documentation with finalized statistical analysis.
+- **New Deliverables**: Added `findings/lesswrong_af_post_draft.md`, `COMPLIANCE.md`, and `findings/program_application_draft.md`.
+- Validated CRITICAL severity rating for LRM and Fuzzing categories (ASR > 95%).
 
 ---
 
-## Six-Category Taxonomy
+## Ten-Category Taxonomy
 
 | # | Category | Notebook | Patterns | Exploited Alignment Assumption | Priority |
 |---|---|---|:---:|---|:---:|
@@ -156,15 +158,14 @@ llm-jailbreak-taxonomy/
 │   ├── experiment_09_multimodal.ipynb ← Cat. 9: Multimodal Injection
 │   └── experiment_10_agentic_chain.ipynb  ← Cat. 10: Agentic Chain Exploitation
 │
+├── findings/
+│   ├── lesswrong_af_post_draft.md    # [NEW] Draft for public alignment forum
+│   ├── program_application_draft.md  # [NEW] Anthropic program draft
+│   └── preliminary_results.md        # Literature-based insights
 ├── data/
-│   ├── prompt_patterns.csv            ← 40 categorized attack pattern records
-│   └── results/
-│       └── phase2a_manual_observations.csv ← 22 manual trials (Claude + ChatGPT)
-│
-└── findings/
-    ├── preliminary_results.md         ← Pre-empirical observations & cross-category analysis
-    ├── lesswrong_af_post_draft.md     ← Draft post for LessWrong / AI Alignment Forum
-    └── program_application_draft.md   ← Draft application for API access program
+│   ├── prompt_patterns.csv           # Master database (40 patterns)
+│   └── results/                      # Empirical logs
+├── COMPLIANCE.md                     # Policy & AUP compliance state
 ```
 
 Each experiment notebook contains: taxonomy dataclass definitions, mechanism analysis, alignment assumption mapping, visualizations, Phase 2 evaluation protocol, and results schema ready for data ingestion.
@@ -180,7 +181,7 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 | Phase 2b | Controlled API evaluation — multi-model, 10 categories | ✅ Complete |
 | Phase 3 | Cross-category analysis, defense mapping, publication | ✅ Complete |
 
-**Phase 1 deliverables complete:** Six-category taxonomy, 40 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 10 experiment notebooks.
+**Phase 1 deliverables complete:** Ten-category taxonomy, 40 patterns, mechanism-to-assumption mapping, per-category evaluation protocols, preprint paper draft, 10 experiment notebooks.
 
 **Phase 2a complete:** 32 manual observations across RP, PI, TS, SE categories. Claude 3.5 Sonnet: severity 0 across initial public patterns. GPT-4o: severity 1 on RP-02, RP-04 — cross-model variation confirmed. Full data: `data/results/phase2a_manual_observations.csv`.
 

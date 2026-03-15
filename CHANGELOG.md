@@ -10,6 +10,7 @@ All notable changes to this research repository are documented here.
 - **Phase 2b Empirical Release**: Automated evaluation harness (`evaluate_phase2b.py`) deployed.
 - **Controlled API Results**: Full cross-model comparison across 40 patterns for `claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, and `deepseek-v3`.
 - **Finalized Research Artifacts**: Updated methodology, paper draft, and taxonomy documentation with finalized statistical analysis.
+- **New Deliverables**: Added `findings/lesswrong_af_post_draft.md`, `COMPLIANCE.md`, and `findings/program_application_draft.md`.
 - Validated CRITICAL severity rating for LRM and Fuzzing categories (ASR > 95%).
 
 ---

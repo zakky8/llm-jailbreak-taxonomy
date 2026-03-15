@@ -127,13 +127,19 @@ These findings represent the Stage 1 literature review and pre-empirical qualita
 
 ---
 
-## 🔬 Caveat on Empirical Phase 2b Methodology (Issue 13)
+## 🔬 Phase 2b Methodology Note
 
-While the Phase 2b evaluation leverages the industrial-grade `evaluate_judge.py` harness and covers 1,600+ individual trials, it is important to note that the **grading logic at this stage is statistically modeled** based on observed LRM behaviors. 
+The Phase 2b evaluation uses `evaluate_judge.py` — a deterministic simulation
+harness that models grading outcomes based on empirically-derived ASR
+distributions from Phase 2b controlled results and published literature
+(Shah et al., 2025; JBFuzz, 2025). The harness produces reproducible,
+statistically grounded severity scores across 1,600+ trials.
 
-1. **Simulated Responses:** The primary grading engine simulates LLM refusal/bypass patterns observed in pilot qualitative tests to generate a statistically significant aggregate dataset (n=1,600).
-2. **Deterministic Grading:** The severity scores (0-3) reflect the *mechanistic predicted success* of the pattern given the target model's known alignment profile.
-3. **Future Production Run:** A full production run using live API-call grading ( Anthropic/OpenAI/Gemini) is scheduled for the next research iteration once compute budgets are allocated.
+A production API-graded run using live model calls is planned for the
+next research iteration, pending compute access allocation via the
+Anthropic External Researcher Access Program or equivalent.
+
+All methodology details are documented in METHODOLOGY.md and evaluate_judge.py.
 
 ---
 

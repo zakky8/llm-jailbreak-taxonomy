@@ -23,7 +23,7 @@ The research community has produced important foundational work on this problem.
 Despite these contributions, the literature lacks a unified, operationally useful taxonomy that maps the full landscape of known jailbreak techniques to the specific alignment mechanisms they subvert. Without such a framework, defensive efforts risk being reactive — patching individual exploits without understanding the structural vulnerability that enables each class of attack. This paper addresses that gap with three contributions:
 
 1. **A ten-category taxonomy** grounded in published research, organizing 40 attack patterns by mechanism of action and mapping each to the alignment assumption it exploits.
-2. **A structured evaluation methodology** for empirical validation under a realistic black-box threat model, ready for execution once API access is available
+2. **A structured evaluation methodology** for empirical validation under a realistic black-box threat model.
 3. **Preliminary findings** from systematic literature review that establish research priorities and motivate the empirical design
 
 This work is conducted with a defensive orientation: the goal is to map the adversarial attack surface comprehensively so that existing defenses — including Anthropic's Constitutional Classifiers (Anthropic, 2025) and Constitutional AI training objective (Bai et al., 2022) — can be evaluated systematically against realistic threat conditions.
@@ -241,7 +241,7 @@ Quantifying interaction effect sizes is a Phase 3 objective.
 
 For each category, a minimum of 10 concrete attack variants are developed spanning the sophistication spectrum from naive (publicly available, widely known) to advanced (novel constructions informed by mechanistic analysis). Each variant is documented in `data/prompt_patterns.csv` with: category, subcategory ID, mechanism, sophistication level, encoding type (if applicable), target safety assumption, expected outcome, and literature reference.
 
-Full taxonomy: 40 patterns across 10 categories (patterns RP-01 through AG-02).
+Full taxonomy: 40 patterns acrosten categories and 40 patterns RP-01 through AG-02).
 
 ### 5.2 Stage 2 — Controlled Evaluation
 

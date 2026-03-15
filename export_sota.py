@@ -36,7 +36,7 @@ def export_to_harmbench(input_file, output_file):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Export Taxonomy to SOTA Benchmarking Formats")
-    parser.add_argument("--input", default="evaluate_judge.py", help="This is a stub for the pattern database") # In real use, this would be prompt_patterns.csv
+    parser.add_argument("--input", default="data/prompt_patterns.csv", help="Dataset input file")
     parser.add_argument("--output", default="data/results/harmbench_compatible.json", help="Output JSON path")
     
     # Using the prompt patterns for the real export
