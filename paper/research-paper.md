@@ -396,9 +396,6 @@ This work is motivated by a core conviction consistent with Anthropic's own rese
 - Ziegler, D., Stiennon, N., Wu, J., et al. (2019). Fine-tuning language models from human preferences. *arXiv:1909.08593.*
 - Zou, A., Wang, Z., Kolter, J. Z., & Fredrikson, M. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML; arXiv:2307.15043.* https://arxiv.org/abs/2307.15043
 - Zou, A., et al. (2024). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. *USENIX Security 2025; arXiv:2402.07867.*
-- Wei, J., Wang, X., Schuurmans, D., et al. (2022). Chain-of-thought prompting elicits reasoning in large language models. *NeurIPS 35.*
-- Ziegler, D., Stiennon, N., Wu, J., et al. (2019). Fine-tuning language models from human preferences. *arXiv:1909.08593.*
-- Zou, A., Wang, Z., Kolter, J. Z., & Fredrikson, M. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML.*
 ---
 
 *Preprint — March 2026. arXiv submission planned upon completion of Phase 2b live evaluation.*

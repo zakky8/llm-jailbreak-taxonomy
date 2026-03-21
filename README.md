@@ -2,10 +2,13 @@
 
 ### A Systematic, Mechanism-Grounded Framework for Adversarial Robustness
 
-[![Version](https://img.shields.io/badge/Version-3.0.0-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
+[![Version](https://img.shields.io/badge/Version-3.1.0-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
 [![Status](https://img.shields.io/badge/Status-🔄%20Phase%202b%20Pending-yellow?style=flat-square)](RESEARCH.md)
 [![Patterns](https://img.shields.io/badge/Patterns-40-orange?style=flat-square)](data/prompt_patterns.csv)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
+[![Preprint](https://img.shields.io/badge/Preprint-arXiv%20coming-red?style=flat-square)](paper/research-paper.md)
+
+> **Citation:** Zakky (2026). *A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment.* GitHub. https://github.com/zakky8/llm-jailbreak-taxonomy — arXiv preprint planned upon Phase 2b completion.
 
 The **LLM Jailbreak Taxonomy** is a comprehensive **AI Safety and Red Teaming framework** that systematically maps **adversarial jailbreak techniques** to foundational **safety alignment assumptions**. This repository provides a structured benchmark for **LLM security research**, documenting **40 attack patterns** across **10 mechanism-grounded categories**, backed by **32 real manual observations** (Phase 2a) and a **complete controlled evaluation harness** ready for live multi-model API execution (Phase 2b).
 
