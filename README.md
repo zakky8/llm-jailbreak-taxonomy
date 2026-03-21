@@ -3,7 +3,7 @@
 ### A Systematic, Mechanism-Grounded Framework for Adversarial Robustness
 
 [![Version](https://img.shields.io/badge/Version-3.0.0-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
-[![Status](https://img.shields.io/badge/Status-✅%20Complete-green?style=flat-square)](RESEARCH.md)
+[![Status](https://img.shields.io/badge/Status-🔄%20Phase%202b%20Pending-yellow?style=flat-square)](RESEARCH.md)
 [![Patterns](https://img.shields.io/badge/Patterns-40-orange?style=flat-square)](data/prompt_patterns.csv)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)](LICENSE)
 
@@ -199,7 +199,16 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 | **Claude** | RP, PI, TS, SE | Severity 0 across all tested patterns; robust on single-turn public variants |
 | **GPT-4o** | RP, PI, TS, SE | Severity 1 on RP-02, RP-04 (partial bypass under persona framing); cross-model variation confirmed |
 
-**Note on Phase 2b projected results:** The full 1,600-trial cross-model evaluation (MT, CM, LRM, FZ, MM, AG categories) will be published upon completion of live API execution. Simulation-derived projections from literature are available in `data/results/` for framework validation purposes and are clearly labelled as such.
+**Literature-grounded projections for untested categories:** The full 1,600-trial cross-model evaluation will be published upon live API execution. Key published baselines motivating the design:
+
+| Category | Published ASR | Source |
+|:---|:---|:---|
+| LRM Autonomous (Cat 7) | **97.14%** across 9 models | Hagendorff et al., Nature Comms 2026 (arXiv:2508.04039) |
+| Fuzzing (Cat 8) | **99%** across 9 models, ~60s/bypass | JBFuzz 2025 (arXiv:2503.08990) |
+| Multi-Turn Deception (Cat 5) | **100%** on GPT-4/Gemini/LLaMA; **94%** avg across 7 models | Crescendo USENIX 2025 (arXiv:2404.01833); Foot-in-Door EMNLP 2025 (arXiv:2502.19820) |
+| Token Smuggling (Cat 3) | 87% GPT-3.5 → 2.1% Claude-2 (40× variance) | Zou et al. 2023 (arXiv:2307.15043) |
+| Agentic/RAG (Cat 10) | **97–99%** with 5 poisoned docs; **84.3%** avg on agentic bench | PoisonedRAG USENIX 2025 (arXiv:2402.07867); ASB ICLR 2025 |
+| Constitutional Classifiers | 86% → **4.4%** bypass (v1); 0.05% false refusal (v2) | Anthropic 2025 (arXiv:2501.18837); 2026 (arXiv:2601.04603) |
 
 ---
 
@@ -207,15 +216,27 @@ Each experiment notebook contains: taxonomy dataclass definitions, mechanism ana
 
 The repository includes a complete evaluation pipeline ready for live API execution:
 
-### Phase 2b Harness (`evaluate_phase2b.py`)
-Runs controlled trials across all 40 patterns, 4 models, 2 temperatures, 5 trials each (1,600 total). Currently operates in `--mock` mode using literature-derived ASR distributions. With API keys configured, the `--live` flag executes real model calls.
+### Simulation Harness (`evaluate_phase2b.py`)
+Runs the full 1,600-trial evaluation in simulation mode using literature-derived ASR distributions. Useful for validating the pipeline and result schema before live execution.
 
 ```bash
 # Simulation mode (runs now, no API keys required)
 python evaluate_phase2b.py --mock
+```
 
-# Live mode (requires API keys in environment)
-python evaluate_phase2b.py --live
+### Live API Harness (`evaluate_live.py`)
+Full production harness that calls real model APIs. Requires API keys set as environment variables. Outputs results in the same schema as the simulation harness for direct comparison.
+
+```bash
+# Set API keys, then run
+export ANTHROPIC_API_KEY="..."
+python evaluate_live.py
+
+# Single model, specific categories only
+python evaluate_live.py --models claude-sonnet-4-6 --categories 5 7 8
+
+# Dry run — validates config without making API calls
+python evaluate_live.py --dry-run
 ```
 
 ### LLM-as-a-Judge (`evaluate_judge.py`)

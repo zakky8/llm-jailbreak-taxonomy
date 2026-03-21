@@ -227,15 +227,22 @@ Cross-category interaction effect sizes will be quantified in Stage 3.
 ## Key References
 
 - Anil, C., et al. (2024). Many-shot jailbreaking. *Anthropic Research.*
-- Anthropic. (2025). Constitutional Classifiers: Defending against universal jailbreak attacks.
+- Anthropic. (2025). Constitutional Classifiers: Defending against universal jailbreak attacks. *arXiv:2501.18837.*
+- Anthropic. (2026). Constitutional Classifiers v2: Improving robustness and reducing false refusal. *arXiv:2601.04603.*
 - Bai, Y., et al. (2022). Constitutional AI: Harmlessness from AI feedback. *arXiv:2212.08073.*
-- Greshake, K., et al. (2023). Compromising LLM-integrated applications with indirect prompt injection. *ACM CCS.*
+- Greshake, K., et al. (2023). Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection. *ACM CCS.*
+- Hagendorff, T., et al. (2025). Jailbreak attacks with large reasoning models: Empirical study across 9 targets. *Nature Communications 2026; arXiv:2508.04039.*
+- JBFuzz Team. (2025). JBFuzz: Jailbreaking LLMs efficiently and effectively using fuzzing. *arXiv:2503.08990.*
 - Liu, Y., et al. (2024). Jailbreaking LLMs in few queries via disguise and reconstruction. *USENIX Security.*
 - Perez, E., et al. (2022). Red teaming language models with language models. *EMNLP.*
-- Shen, X., et al. (2023). Characterizing and evaluating in-the-wild jailbreak prompts. *ACM CCS.*
+- PoisonedRAG Team. (2024). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation. *arXiv:2402.07867.*
+- Russinovich, M., et al. (2025). Great, now write an article about that: The Crescendo multi-turn jailbreak attack. *USENIX Security 2025; arXiv:2404.01833.*
+- Shen, X., et al. (2023). Do anything now: Characterizing and evaluating in-the-wild jailbreak prompts. *ACM CCS.*
 - Shi, F., et al. (2023). Large language models can be easily distracted by irrelevant context. *ICML.*
+- TEMPEST Team. (2025). TEMPEST: Evaluating multi-turn jailbreak robustness across 10 frontier models. *arXiv:2512.07059.*
 - Wei, A., et al. (2023). Jailbroken: How does LLM safety training fail? *NeurIPS 36.*
-- Zou, A., et al. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML.*
+- Zhan, Q., et al. (2025). InjecAgent: Benchmarking indirect prompt injections in tool-calling agents. *ICLR 2025.*
+- Zou, A., et al. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML; arXiv:2307.15043.*
 
 ---
 

@@ -241,7 +241,7 @@ Quantifying interaction effect sizes is a Phase 3 objective.
 
 For each category, a minimum of 10 concrete attack variants are developed spanning the sophistication spectrum from naive (publicly available, widely known) to advanced (novel constructions informed by mechanistic analysis). Each variant is documented in `data/prompt_patterns.csv` with: category, subcategory ID, mechanism, sophistication level, encoding type (if applicable), target safety assumption, expected outcome, and literature reference.
 
-Full taxonomy: 40 patterns acrosten categories and 40 patterns RP-01 through AG-02).
+Full taxonomy: 40 patterns across 10 categories (RP-01 through AG-02).
 
 ### 5.2 Stage 2 — Controlled Evaluation
 
@@ -275,21 +275,39 @@ All significant findings will be disclosed to Anthropic and relevant providers p
 
 ---
 
-## 6. Phase 2b Empirical Results
+## 6. Preliminary Findings
 
-Based on the execution of the 40 taxonomy patterns against 4 target models (`claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3`), we confirm that standard baseline alignments are entirely insufficient for comprehensive security. The empirical findings validate the structural vulnerabilities hypothesized in Phase 1 methodology.
+This section reports findings from Phase 2a manual observation (32 real trials) and systematic literature synthesis. Quantitative projections from the literature are presented to motivate the empirical research design. Controlled live API evaluation (Phase 2b) will produce the definitive empirical results upon completion.
 
-**Finding 1 — Automated reasoning and fuzzing (Cat 7/8) reliably bypass all current defenses.** LRM Autonomous Attacks (Category 7) and Fuzzing-Based Attacks (Category 8) consistently achieved >95% Attack Success Rates (ASR) across all tested models regardless of temperature, demonstrating that human-in-the-loop assumption defenses are inadequate against high-speed semantic iteration (Shah et al., 2025).
+### 6.1 Phase 2a: Manual Observation Results
 
-**Finding 2 — Significant model-family variation in baseline robustness is apparent.** Testing across baseline patterns (e.g., token smuggling) revealed notable variation in generic robustness: `claude-sonnet-4-6` exhibited the highest baseline refusal rate (~12% vulnerability baseline), followed by `gpt-4o` (~28%), while open-weights and emergent deployments like `deepseek-v3` displayed higher baseline vulnerability (~50%) to semantic attacks before specific safety alignment interventions apply.
+32 manual trials were conducted across RP, PI, TS, and SE categories using Claude and ChatGPT free-tier interfaces. Results for each tested pattern were scored using the 0–3 severity rubric defined in Section 5.2.
 
-**Finding 3 — Multi-turn deception remains the most overlooked attack vector.** Multi-turn attacks (Category 5) demonstrated a 2.5x effectiveness multiplier over single-turn equivalents. The inability of standard safety classifiers—such as Constitutional Classifiers—to track intent degradation across extended 10+ turn contexts continues to represent a systemic safety gap in production AI.
+**Key observations:**
+- Claude: severity 0 across all 16 tested patterns (RP-01–05, PI-01–03, TS-01–03, SE-01–03). Consistent with strong single-turn refusal training on publicly known variants.
+- GPT-4o: severity 1 (partial bypass) on RP-02 (villain character embodiment) and RP-04 (hypothetical distancing). Severity 0 on all other tested patterns.
+- Cross-model variation on role-play category confirmed empirically — supports the hypothesis that persona-framing robustness differs architecturally across model families.
+- Multi-turn, many-shot, LRM, fuzzing, multimodal, and agentic patterns were not tested in Phase 2a due to free-tier interface constraints; these require a controlled API environment.
 
-**Finding 4 — Agentic tools drastically expand the attack surface.** Cross-session persistence (Category 10) proved highly effective when context stores were poisoned, indicating that agentic memory integrity is an unsolved alignment challenge directly exploitable by indirect prompt injections (PI-04/05).
+Full Phase 2a data: `data/results/phase2a_manual_observations.csv`.
 
-**Finding 5 — System prompt extraction amplifies all other categories.** Even partial extraction of constraint boundaries (Category 6) substantially increases precision targeting, amplifying effect sizes across all five single-turn categories without requiring massive iteration.
+### 6.2 Literature-Grounded Projections for Phase 2b Design
 
-These findings are documented in full with supporting evidence in `findings/preliminary_results.md`.
+The following findings from published literature motivate the Phase 2b experimental design and establish expected effect size ranges for planning purposes. These are *projected* baselines derived from verified published research — live evaluation will confirm, disconfirm, or refine each projection against the four target models.
+
+**Finding 1 — LRM autonomous attacks show the highest published ASR of any technique.** Hagendorff et al. (2025) demonstrate that large reasoning models acting as autonomous jailbreak agents achieve **97.14% overall ASR** across 9 target models; Claude is the most resistant (receiving the highest harm score on only 2.86% of benchmark items) (Nature Communications 2026; arXiv:2508.04039). Separately, TEMPEST (2025) evaluated 10 frontier models across 97,000+ API queries, finding that 6 of 10 models showed 96–100% ASR under multi-turn attack and that enabling extended reasoning in target models reduced ASR from 97% to 42% (arXiv:2512.07059). As of March 2026, no systematic published defense addresses this category.
+
+**Finding 2 — Fuzzing achieves near-universal bypass with only black-box access.** JBFuzz (2025) reports **99% average ASR** across 9 popular LLMs — including GPT-4, DeepSeek-R1, and Claude variants — with an average bypass time of ~60 seconds per jailbreak using only black-box API access (arXiv:2503.08990). The semantic mutation engine directly models the Phase 2b Category 8 evaluation conditions.
+
+**Finding 3 — Multi-turn attacks consistently outperform single-turn equivalents.** Russinovich et al. (2025) demonstrate the Crescendo attack achieving **100% ASR** across multiple task domains on GPT-4, GPT-3.5, Gemini-Pro, and LLaMA-2-70B, with 29–61% higher ASR than prior single-turn methods on GPT-4 (USENIX Security 2025; arXiv:2404.01833). Foot-in-Door (EMNLP 2025) reports **94% average ASR** across 7 models, with GPT-4o at 93% on JailbreakBench and 90% on HarmBench (arXiv:2502.19820). These results validate the CRITICAL benchmark gap identified in Section 4.5: standard safety evaluations test primarily single-turn inputs and systematically undercount conversational vulnerability.
+
+**Finding 4 — Token smuggling effectiveness varies sharply across model families.** Zou et al. (2023) report GCG adversarial suffix transfer rates of ~87% on GPT-3.5, ~47% on GPT-4, ~48% on Claude-1, and only ~2.1% on Claude-2 — a 40× variance between the most and least vulnerable models in a single experiment (arXiv:2307.15043). This published cross-model variation directly motivates the multi-model comparison design for Phase 2b Category 3.
+
+**Finding 5 — Many-shot compliance scales as a power law with shot count.** Anil et al. (2024) demonstrate monotonically increasing ASR following a power-law relationship, with consistent bypass at 128+ shots across Claude 2.0, GPT-3.5, GPT-4, Llama-2 (70B), and Mistral 7B. PANDAS (2025) extends this with adaptive sampling and positive affirmation techniques that further increase effectiveness (arXiv:2502.01925). Phase 2b CM-02 evaluation will generate compliance curves across the {1, 2, 5, 10, 20, 50} shot range.
+
+**Finding 6 — Agentic and memory poisoning attacks show extreme effectiveness in deployed systems.** PoisonedRAG (Zou et al., USENIX Security 2025) reports **97–99% ASR** in RAG-augmented systems with as few as 5 poisoned documents (arXiv:2402.07867). The Agent Security Bench (ICLR 2025) reports **84.3% average attack success rate** across 13 LLM backbones across 10 real-world scenarios. A 2026 study of IPI in realistic retrieval pipelines reports that a single poisoned email achieves **80% success** in coercing GPT-4o into exfiltrating SSH credentials (arXiv:2601.07072). Phase 2b AG-01/AG-02 evaluation will characterize whether `claude-sonnet-4-6` tool-use safety training mitigates these attack vectors.
+
+**Finding 7 — Constitutional Classifiers provide significant but incomplete mitigation.** Anthropic's Constitutional Classifiers v1 (2025) reduce jailbreak bypass rates from **86% to 4.4%** on tested attack patterns (arXiv:2501.18837). Constitutional Classifiers++ (2026) further reduce false refusal rates to **0.05%** with only ~1% compute overhead (arXiv:2601.04603). Critically, neither generation has been evaluated specifically against multi-turn (Category 5) or LRM autonomous (Category 7) attacks — the two categories with the highest published ASR. Phase 2b is designed to provide exactly that evaluation and is therefore directly complementary to Anthropic's own published defense research.
 
 ---
 
@@ -343,7 +361,7 @@ This paper presents a systematic taxonomy of ten jailbreak technique categories,
 
 The taxonomy's primary contribution is diagnostic: it provides a framework that allows alignment researchers and engineers to evaluate existing defenses precisely — not by asking "do defenses work?" but by asking "against which specific failure modes do defenses hold, and against which do they fail?" This precision is a prerequisite for designing interventions that address structural vulnerabilities rather than surface-level symptoms.
 
-Preliminary findings indicate three high-priority research directions: the competing-objectives problem underlying role-play attack persistence; the benchmark gap in multi-turn conversational evaluation; and the growing indirect injection threat surface in agentic deployments. Phase 2 empirical evaluation will quantify these risks under controlled conditions and provide the evidence base for structural defensive recommendations.
+Phase 2a observations and systematic literature synthesis indicate three high-priority research directions: the competing-objectives problem underlying role-play attack persistence; the benchmark gap in multi-turn conversational evaluation; and the growing indirect injection threat surface in agentic deployments. Phase 2b controlled API evaluation will quantify these risks under controlled conditions across four frontier models, providing the empirical evidence base for structural defensive recommendations.
 
 This work is motivated by a core conviction consistent with Anthropic's own research orientation: robust AI safety requires adversarial evaluation conducted by researchers who understand both the attack surface and the alignment objectives it threatens. The taxonomy presented here is a step toward making that evaluation systematic, reproducible, and structurally grounded.
 
@@ -351,28 +369,37 @@ This work is motivated by a core conviction consistent with Anthropic's own rese
 
 ## References
 
-- Anil, C., Xu, E., Ghosh, A., et al. (2024). Many-shot jailbreaking. *Anthropic Research.*
-- Anthropic. (2024). Claude model card. *Anthropic.*
-- Anthropic. (2025). Constitutional Classifiers: Defending against universal jailbreak attacks. *Anthropic Research.*
+- Anil, C., Durmus, E., Panickssery, N., et al. (2024). Many-shot jailbreaking. *NeurIPS 2024; Anthropic Research.* https://proceedings.neurips.cc/paper_files/paper/2024/file/ea456e232efb72d261715e33ce25f208-Paper-Conference.pdf
+- Anthropic. (2025). Constitutional Classifiers: Defending against universal jailbreak attacks. *arXiv:2501.18837.* https://arxiv.org/abs/2501.18837
+- Anthropic. (2026). Constitutional Classifiers++: Next-generation defenses against universal jailbreak attacks. *arXiv:2601.04603.* https://arxiv.org/abs/2601.04603
 - Bai, Y., Kadavath, S., Kundu, S., et al. (2022). Constitutional AI: Harmlessness from AI feedback. *arXiv:2212.08073.*
 - Carlini, N., & Wagner, D. (2017). Towards evaluating the robustness of neural networks. *IEEE Symposium on Security and Privacy*, 39–57.
 - Christiano, P., Leike, J., Brown, T., et al. (2017). Deep reinforcement learning from human preferences. *NeurIPS 30.*
 - Deng, Y., et al. (2023). Multilingual Jailbreak Challenges in Large Language Models. *arXiv:2310.06474.*
 - Goodfellow, I. J., Shlens, J., & Szegedy, C. (2015). Explaining and harnessing adversarial examples. *ICLR.*
 - Google DeepMind. (2024). Gemini: A family of highly capable multimodal models. *arXiv:2312.11805.*
-- Greshake, K., Abdelnabi, S., Mishra, S., et al. (2023). Compromising LLM-integrated applications with indirect prompt injection. *ACM CCS.*
-- JBFuzz Team. (2025). JBFuzz: Jailbreaking LLMs Efficiently and Effectively Using Fuzzing. *arXiv preprint.*
-- Liu, Y., et al. (2024). Jailbreaking LLMs in Few Queries via Disguise and Reconstruction. *USENIX Security.*
+- Greshake, K., Abdelnabi, S., Mishra, S., et al. (2023). Not what you've signed up for: Compromising real-world LLM-integrated applications with indirect prompt injection. *ACM CCS; arXiv:2302.12173.*
+- Ha, J., Kim, H., et al. (2025). M2S: Multi-turn to single-turn jailbreak in red teaming for LLMs. *ACL 2025; arXiv:2503.04856.*
+- Hagendorff, T., et al. (2025). Large reasoning models are autonomous jailbreak agents. *Nature Communications 2026; arXiv:2508.04039.* https://arxiv.org/abs/2508.04039
+- JBFuzz Team. (2025). JBFuzz: Jailbreaking LLMs efficiently and effectively using fuzzing. *arXiv:2503.08990.* https://arxiv.org/abs/2503.08990
+- Liu, T., Zhang, Y., et al. (2024). Making them ask and answer: Jailbreaking LLMs in few queries via disguise and reconstruction. *USENIX Security 2024; arXiv:2402.18104.*
 - OpenAI. (2023). GPT-4 technical report. *arXiv:2303.08774.*
+- PANDAS Team. (2025). PANDAS: Improving many-shot jailbreaking via positive affirmation, negative demonstration, and adaptive sampling. *arXiv:2502.01925.* https://arxiv.org/abs/2502.01925
 - Perez, E., Huang, S., Song, F., et al. (2022). Red teaming language models with language models. *EMNLP.*
-- Shah, A., et al. (2025). Autonomous LLM-Based Red Teaming with Reasoning Models. *arXiv preprint.*
-- Shen, X., Chen, Z., Backes, M., et al. (2023). Characterizing and evaluating in-the-wild jailbreak prompts on LLMs. *ACM CCS.*
+- Russinovich, M., Salem, R., et al. (2025). Great, now write an article about that: The Crescendo multi-turn LLM jailbreak attack. *USENIX Security 2025; arXiv:2404.01833.* https://arxiv.org/abs/2404.01833
+- Shen, X., Chen, Z., Backes, M., et al. (2023). Do anything now: Characterizing and evaluating in-the-wild jailbreak prompts on LLMs. *ACM CCS.*
 - Shi, F., Chen, X., Misra, K., et al. (2023). Large language models can be easily distracted by irrelevant context. *ICML.*
-- Wei, A., Haghtalab, N., & Steinhardt, J. (2023). Jailbroken: How does LLM safety training fail? *NeurIPS 36.*
+- TEMPEST Team. (2025). Replicating TEMPEST at scale: Multi-turn adversarial attacks against trillion-parameter frontier models. *arXiv:2512.07059.* https://arxiv.org/abs/2512.07059
+- Wei, A., Haghtalab, N., & Steinhardt, J. (2023). Jailbroken: How does LLM safety training fail? *NeurIPS 36; arXiv:2307.02483.*
+- Wei, J., Wang, X., Schuurmans, D., et al. (2022). Chain-of-thought prompting elicits reasoning in large language models. *NeurIPS 35.*
+- Zhan, Q., Liang, Z., et al. (2024). InjecAgent: Benchmarking indirect prompt injections in tool-integrated LLM agents. *ACL 2024 Findings; arXiv:2403.02691.*
+- Ziegler, D., Stiennon, N., Wu, J., et al. (2019). Fine-tuning language models from human preferences. *arXiv:1909.08593.*
+- Zou, A., Wang, Z., Kolter, J. Z., & Fredrikson, M. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML; arXiv:2307.15043.* https://arxiv.org/abs/2307.15043
+- Zou, A., et al. (2024). PoisonedRAG: Knowledge corruption attacks to retrieval-augmented generation of large language models. *USENIX Security 2025; arXiv:2402.07867.*
 - Wei, J., Wang, X., Schuurmans, D., et al. (2022). Chain-of-thought prompting elicits reasoning in large language models. *NeurIPS 35.*
 - Ziegler, D., Stiennon, N., Wu, J., et al. (2019). Fine-tuning language models from human preferences. *arXiv:1909.08593.*
 - Zou, A., Wang, Z., Kolter, J. Z., & Fredrikson, M. (2023). Universal and transferable adversarial attacks on aligned language models. *ICML.*
 ---
 
-*Submitted for review — March 2026. Preprint available on arXiv pending empirical validation.*
+*Preprint — March 2026. arXiv submission planned upon completion of Phase 2b live evaluation.*
 *All research conducted under responsible disclosure principles.*

@@ -12,10 +12,11 @@
 Current jailbreak research is reactive: each new attack variant gets patched without addressing the structural alignment failure that enabled it. This post introduces a mechanism-grounded taxonomy that maps 40 adversarial attack patterns across 10 categories, each tied to the specific safety alignment assumption it exploits. The goal is a diagnostic framework that makes proactive defense possible.
 
 Key findings from Phase 2a manual testing and literature synthesis:
-- Multi-turn conversational attacks are the most underrepresented category in safety benchmarks relative to their observed effectiveness — a measurement gap with direct production consequences
-- Large Reasoning Models introduce a qualitatively new attack surface: autonomous, high-speed bypass planning via chain-of-thought (Shah et al., 2025: >97% ASR)
-- System prompt extraction is a force multiplier for every other category, not an isolated concern
-- Token-level smuggling effectiveness varies significantly across model families, suggesting architectural differences in classifier implementation that have direct defensive value
+- Multi-turn conversational attacks are the most underrepresented category in safety benchmarks relative to their observed effectiveness — Crescendo achieves 100% ASR on GPT-4 and Gemini (USENIX Security 2025; arXiv:2404.01833), while most benchmarks test only single-turn inputs
+- Large Reasoning Models introduce a qualitatively new attack surface: autonomous jailbreak agents achieve 97.14% ASR across 9 target models (Hagendorff et al., Nature Communications 2026; arXiv:2508.04039), with no published systematic defense as of March 2026
+- Fuzzing-based attacks achieve 99% average ASR across 9 popular LLMs in ~60 seconds per bypass (JBFuzz 2025; arXiv:2503.08990), requiring only black-box API access
+- Token-level smuggling effectiveness varies 40× across model families (2.1% on Claude-2 vs. 87% on GPT-3.5 for GCG transfer), suggesting architecturally meaningful differences in classifier implementation
+- Anthropic's Constitutional Classifiers reduce bypass rates from 86% to 4.4% (arXiv:2501.18837) — but neither generation has been evaluated against multi-turn or LRM attacks specifically
 
 ---
 
@@ -80,7 +81,7 @@ The categories are organized roughly by mechanism type, not by severity.
 
 **Exploited assumption:** Safety classifiers generalize robustly across encoding schemes and character-level perturbations.
 
-**Key finding:** Effectiveness varies significantly across model families — Base64 and Unicode homoglyph bypass rates differ substantially between frontier models. This variation suggests architectural differences in whether safety classifiers operate on raw token sequences, decoded text representations, or semantic-level content. Identifying what drives this variation has direct defensive value.
+**Key finding:** Effectiveness varies significantly across model families — GCG adversarial suffix transfer rates measure 87% on GPT-3.5 vs. 2.1% on Claude-2 (Zou et al., 2023; arXiv:2307.15043), a 40× cross-model variance. This variation suggests architectural differences in whether safety classifiers operate on raw token sequences, decoded text representations, or semantic-level content. Identifying what drives this variation has direct defensive value.
 
 **Patterns documented:** 7 (TS-01 through TS-07), including Base64, ROT13, Unicode homoglyphs, low-resource languages, payload fragmentation, and GCG adversarial suffixes.
 
@@ -102,9 +103,9 @@ The categories are organized roughly by mechanism type, not by severity.
 
 **Exploited assumption:** Turn-level safety evaluation is sufficient for conversational deployments.
 
-**The benchmark gap:** This is the most underrepresented category in safety benchmarks relative to observed effectiveness. Standard evaluations (HarmBench, MT-Bench safety variants, WildGuard) evaluate primarily single-turn inputs. Liu et al. (2024) report meaningfully higher success rates for multi-turn attacks relative to single-turn equivalents on the same models.
+**The benchmark gap — with real numbers:** Standard evaluations (HarmBench, MT-Bench, WildGuard) test primarily single-turn inputs. Meanwhile, Crescendo (Russinovich et al., USENIX Security 2025; arXiv:2404.01833) achieves **100% ASR** on GPT-4, GPT-3.5, Gemini-Pro, and LLaMA-2-70B in fewer than 5 turns — 29–61% higher ASR than prior single-turn methods. Foot-in-Door (EMNLP 2025) achieves **94% average ASR** across 7 models; GPT-4o at 93% on JailbreakBench (arXiv:2502.19820). TEMPEST (2025) evaluated 10 frontier models across 97,000+ API calls: 6 of 10 showed 96–100% ASR under multi-turn attack (arXiv:2512.07059).
 
-The implication is important: models evaluated as safe under current benchmark conditions may be substantially more vulnerable in production conversational deployments. This is a *measurement gap*, not only a robustness gap — current safety evaluation infrastructure systematically undercounts real vulnerability.
+The implication: models evaluated as safe under current benchmark conditions may be substantially more vulnerable in production conversational deployments. This is a *measurement gap*, not only a robustness gap — current safety evaluation infrastructure systematically undercounts real vulnerability by ignoring the attack vector with some of the highest published ASR numbers.
 
 **Patterns documented:** 4 (MT-01 through MT-04), including crescendo escalation, incremental framing, and psychological commitment anchoring.
 
@@ -134,7 +135,7 @@ The implication is important: models evaluated as safe under current benchmark c
 
 **Exploited assumption:** Safety alignment assumes a human adversary with limited iteration speed.
 
-**Why this is new (Shah et al., 2025):** Reasoning models achieve >97% ASR by "reasoning through" safety boundaries in internal logic space. The attack does not rely on prompt engineering tricks — it relies on the model's own reasoning capability being turned against its safety objectives. The speed advantage is qualitative: a human adversary iterating manually across sessions is a fundamentally different threat than a reasoning model self-refining at inference speed.
+**Hagendorff et al. (2025):** LRMs acting as autonomous jailbreak agents achieve **97.14% overall ASR** across 9 target models using attacker models including DeepSeek-R1, Gemini 2.5 Flash, Grok 3 Mini, and Qwen3 235B. Claude is the most resistant, receiving the highest harm score in only 2.86% of benchmark items (Nature Communications 2026; arXiv:2508.04039). The attack does not rely on prompt engineering tricks — it uses the model's own chain-of-thought reasoning to plan and iterate bypasses at machine speed. TEMPEST (2025) finds that enabling extended reasoning in *target* models partially mitigates this, reducing ASR from 97% to 42% — an important defensive lead worth investigating (arXiv:2512.07059).
 
 **As of March 2026:** No systematic published defense addresses this category.
 
@@ -148,7 +149,7 @@ The implication is important: models evaluated as safe under current benchmark c
 
 **Exploited assumption:** Safety classifiers have full semantic coverage across all possible token permutations.
 
-**Key result (JBFuzz, 2025):** ~99% ASR via synonym mutation, semantic transforms, and crossover mutation hybrids. The coverage problem is combinatorially intractable for any classifier operating at the token level.
+**JBFuzz (2025):** **99% average ASR** across 9 popular LLMs — including GPT-4, DeepSeek-R1, and Claude variants — with an average bypass time of ~60 seconds using only black-box API access (arXiv:2503.08990). The coverage problem is combinatorially intractable for any classifier operating at the token or semantic level.
 
 **Patterns documented:** 3 (FZ-01 through FZ-03).
 
@@ -172,7 +173,7 @@ The implication is important: models evaluated as safe under current benchmark c
 
 **Exploited assumption:** Agentic context stores and tool outputs are sanitized instruction sources.
 
-**Why persistence matters:** Unlike chat-context attacks that expire when a session ends, agentic memory poisoning can persist across sessions, propagate to other users sharing the same memory store, and compound over time. Cross-session persistence attacks have no documented defense as of this writing.
+**Why persistence matters:** Unlike chat-context attacks that expire when a session ends, agentic memory poisoning can persist across sessions, propagate to other users sharing the same memory store, and compound over time. PoisonedRAG (arXiv:2402.07867) achieves 97–99% attack success against RAG-based systems with as few as 5 injected documents; InjecAgent (ICLR 2025) finds 84.3% average ASR against tool-calling agents across 17 agentic tasks. Cross-session persistence attacks have no documented defense as of this writing.
 
 **Patterns documented:** 2 (AG-01 through AG-02).
 
