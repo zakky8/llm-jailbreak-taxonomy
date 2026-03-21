@@ -7,11 +7,11 @@ All notable changes to this research repository are documented here.
 ## [3.0.0] — March 2026
 
 ### Added
-- **Phase 2b Empirical Release**: Automated evaluation harness (`evaluate_phase2b.py`) deployed.
-- **Controlled API Results**: Full cross-model comparison across 40 patterns for `claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, and `deepseek-v3`.
-- **Finalized Research Artifacts**: Updated methodology, paper draft, and taxonomy documentation with finalized statistical analysis.
-- **New Deliverables**: Added `findings/lesswrong_af_post_draft.md`, `COMPLIANCE.md`, and `findings/program_application_draft.md`.
-- Validated CRITICAL severity rating for LRM and Fuzzing categories (ASR > 95%).
+- **Phase 2b Evaluation Harness**: Complete multi-model evaluation framework (`evaluate_phase2b.py`) built and simulation-validated. Supports 1,600-trial execution (40 patterns × 4 models × 2 temperatures × 5 trials). Live API execution is the next milestone.
+- **LLM-as-a-Judge grader** (`evaluate_judge.py`): Deterministic simulation grading engine; production API grading mode ready for live execution.
+- **Expanded taxonomy to 10 categories**: Added LRM Autonomous (Cat. 7), Fuzzing-Based (Cat. 8), Multimodal Injection (Cat. 9), Agentic Chain Exploitation (Cat. 10).
+- **Research deliverables**: `findings/lesswrong_af_post_draft.md`, `COMPLIANCE.md`, `findings/program_application_draft.md`, `SAFETY_MATRIX.md`.
+- **Literature validation**: CRITICAL priority confirmed for LRM (Shah et al., 2025: >97% ASR) and Fuzzing (JBFuzz 2025: ~99% ASR) categories based on published research.
 
 ---
 

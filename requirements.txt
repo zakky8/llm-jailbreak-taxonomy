@@ -1,6 +1,13 @@
+# Core analysis and notebooks
 jupyter>=1.0.0
 pandas>=2.0.0
 matplotlib>=3.7.0
 seaborn>=0.12.0
 notebook>=7.0.0
 nbconvert>=7.0.0
+
+# Live evaluation harness (evaluate_live.py)
+# Install only the clients for models you have API keys for
+anthropic>=0.25.0
+openai>=1.30.0
+google-generativeai>=0.5.0

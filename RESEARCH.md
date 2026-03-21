@@ -193,13 +193,15 @@ Cross-category interaction effect sizes will be quantified in Stage 3.
 | Phase | Description | Status |
 |---|---|---|
 | Phase 1 | Literature review, taxonomy construction, evaluation framework | ✅ Complete |
-| Phase 2a | Manual qualitative observation — free-tier interfaces (32 trials) | ✅ Complete |
-| Phase 2b | Controlled API evaluation — multi-model, multi-trial | ✅ Complete |
-| Phase 3 | Cross-category analysis, defense mapping, publication | ✅ Complete |
+| Phase 2a | Manual qualitative observation — free-tier interfaces (32 real trials) | ✅ Complete |
+| Phase 2b | Controlled API evaluation — multi-model, multi-trial | 🔄 Harness built and simulation-validated; live execution pending API access |
+| Phase 3 | Cross-category analysis, defense mapping, publication | ⏳ Pending Phase 2b live results |
 
 **Phase 1 deliverables complete:** 40 attack patterns across 10 categories; mechanism-to-assumption mapping; structured evaluation protocols per category. 10 experiment notebooks developed.
 
-**Phase 2b empirical execution complete:** 40 patterns across 10 categories fully executed sequentially against `claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3` with resultant severe validations for Category 7 and 8 attacks. Results available in `data/results/`.
+**Phase 2a complete (32 real observations):** Manual testing across RP, PI, TS, SE categories using Claude and ChatGPT free-tier interfaces. Claude: severity 0 on all tested patterns. GPT-4o: severity 1 on RP-02, RP-04. Full data: `data/results/phase2a_manual_observations.csv`.
+
+**Phase 2b framework complete (live execution pending):** Full evaluation harness (`evaluate_phase2b.py`) built and validated through simulation using empirical ASR distributions from published literature. The harness is ready to execute 40 patterns × 4 models × 2 temperatures × 5 trials = 1,600 controlled trials against live production APIs. Simulation-derived projections are available in `data/results/` and are clearly labelled. Live execution requires API compute access.
 
 ---
 
