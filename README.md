@@ -2,7 +2,7 @@
 
 ### A Mechanism-Grounded Framework for Adversarial Robustness — June 2026
 
-[![Version](https://img.shields.io/badge/Version-4.0.0-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
+[![Version](https://img.shields.io/badge/Version-4.0.1-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
 [![Status](https://img.shields.io/badge/Status-Phase%202b%20Simulated-orange?style=flat-square)](RESEARCH.md)
 [![Patterns](https://img.shields.io/badge/Patterns-40-orange?style=flat-square)](data/prompt_patterns.csv)
 [![Trials](https://img.shields.io/badge/Simulated%20Trials-1,600-orange?style=flat-square)](data/results/phase2b_controlled_results.csv)
@@ -33,16 +33,18 @@ The **LLM Jailbreak Taxonomy** maps **40 adversarial attack patterns** across **
 
 ## Models Evaluated
 
-Frontier model identifiers verified against provider docs on **2026-06-01**:
+Frontier model identifiers verified against provider docs on **2026-06-01** via direct WebFetch:
 
-| Vendor | API Identifier | Released | Notes |
-|---|---|---|---|
-| Anthropic | `claude-opus-4-8` | 2026-05-28 | Flagship; ships Constitutional Classifiers v2 in production |
-| OpenAI | `gpt-5.5` | 2026-04-23 | Flagship |
-| Google | `gemini-3.5-flash` | 2026-05-19 | Current GA flagship (Gemini 3.5 Pro not yet released) |
-| DeepSeek | `deepseek-v4-pro` | 2026-04-24 | Preview status |
+| Vendor | API Identifier | Verification |
+|---|---|---|
+| Anthropic | `claude-opus-4-8` | Confirmed via [Anthropic docs](https://platform.claude.com/docs/en/about-claude/models/overview) migration URL `#migrating-to-claude-opus-4-8` (the page renders the model name as a template, but the migration URL slug is hard evidence) |
+| OpenAI | `gpt-5.5` | Confirmed on [OpenAI models docs](https://developers.openai.com/api/docs/models) — "use gpt-5.5 for complex reasoning and coding" |
+| Google | `gemini-3.5-flash` | Confirmed on [Google AI docs](https://ai.google.dev/gemini-api/docs/models) as the stable GA flagship (Gemini 3.1 Pro is in preview only; Gemini 3.5 Pro does not yet exist) |
+| DeepSeek | `deepseek-v4-pro` | Confirmed on [DeepSeek docs](https://api-docs.deepseek.com/quick_start/pricing); legacy `deepseek-chat` and `deepseek-reasoner` map to v4-flash modes |
 
-Older variants (`claude-sonnet-4-6`, `gpt-4o`, `gemini-2.0-flash`, `deepseek-v3`) remain supported in [`evaluate_live.py`](evaluate_live.py) for longitudinal analysis.
+Mid-tier and legacy variants (`claude-sonnet-4-6`, `claude-haiku-4-5`, `gpt-5.4`, `gemini-2.5-pro`, `deepseek-v3`) remain supported in [`evaluate_live.py`](evaluate_live.py) for longitudinal analysis.
+
+> **Independent corroboration of GPT-5.5**: the *Hidden in Memory* paper ([arXiv:2605.15338](https://arxiv.org/abs/2605.15338), May 2026) explicitly evaluates against **GPT-5.5** — independent confirmation that the model name is in production research use as of mid-2026.
 
 ---
 
@@ -105,38 +107,40 @@ Live API results (when keys are configured) write to the same schema in [`data/r
 
 ## 2025–2026 Literature Map
 
-### Verified citations (with corrections from v3.1.0)
+### Citation audit — every claim re-verified 2026-06-01
 
-Audited against arxiv abstracts on 2026-06-01. Per-claim verification status noted; **REFUTED**/**UNVERIFIED** flags follow our sourcing rules — see [METHODOLOGY.md](METHODOLOGY.md).
+Each citation below was re-fetched directly from arxiv (live WebFetch, not search snippets). Status column reflects what's confirmed in the **abstract verbatim** — not interpolated from secondary sources.
 
-| Paper | arXiv | Category | Key Result | Status |
+| Paper | arXiv | Category | Verified Claim (abstract verbatim) | Status |
 |---|---|---|---|---|
-| Hagendorff et al. — *LRMs Are Autonomous Jailbreak Agents* | [2508.04039](https://arxiv.org/abs/2508.04039) | LRM Autonomous (Cat 7) | 97.14% ASR across 9 models | ✓ VERIFIED |
-| JBFuzz — *Jailbreaking LLMs Using Fuzzing* | [2503.08990](https://arxiv.org/abs/2503.08990) | Fuzzing (Cat 8) | 99% avg ASR; ~60s/bypass | ✓ VERIFIED |
-| Russinovich et al. — *Crescendo Multi-Turn Jailbreak* | [2404.01833](https://arxiv.org/abs/2404.01833) | Multi-Turn (Cat 5) | 29–71% relative gain over baselines | ⚠ "100%" claim UNVERIFIED |
-| Weng et al. — *Foot-in-the-Door Multi-Turn* | [2502.19820](https://arxiv.org/abs/2502.19820) | Multi-Turn (Cat 5) | 94% avg across 7 models | ✓ VERIFIED |
-| Liu et al. — *Disguise and Reconstruction (DRA)* | [2402.18104](https://arxiv.org/abs/2402.18104) | Multi-Turn (Cat 5) | **91.1% on GPT-4** (USENIX Sec **2024**) | ✓ VERIFIED — venue year fixed |
-| Zou et al. — *Universal Transferable GCG* | [2307.15043](https://arxiv.org/abs/2307.15043) | GCG (Cat 3) | Cross-model adversarial suffix transferability | ⚠ exact ASR numbers UNVERIFIED |
-| W. Zou et al. — *PoisonedRAG* | [2402.07867](https://arxiv.org/abs/2402.07867) | Agentic (Cat 10) | **90% w/ 5 poisoned docs** (USENIX Sec 2025) | ✓ corrected from prior 97–99% claim |
-| Sharma et al. — *Constitutional Classifiers* | [2501.18837](https://arxiv.org/abs/2501.18837) | Defense | Anthropic Jan 2025 | ⚠ specific reduction figures UNVERIFIED |
-| Cunningham et al. — *Constitutional Classifiers++* | [2601.04603](https://arxiv.org/abs/2601.04603) | Defense | 0.05% refusal on production traffic | ✓ VERIFIED |
+| Hagendorff, Derner, Oliver — *LRMs Are Autonomous Jailbreak Agents* | [2508.04039](https://arxiv.org/abs/2508.04039) (Aug 2025) | LRM Autonomous (Cat 7) | "overall attack success rate across all model combinations of 97.14%" — 9 target models × 4 LRMs | ✓ VERIFIED · Nature Comms DOI 10.1038/s41467-026-69010-1 assigned |
+| Gohil — *JBFuzz* | [2503.08990v1](https://arxiv.org/abs/2503.08990v1) (Mar 2025) | Fuzzing (Cat 8) | "average attack success rate of 99% ... 9 popular LLMs ... in 60 seconds on average" | ✓ VERIFIED on v1 (later revision has different content — pin to v1) |
+| Weng, Jin, Jia, Zhang — *Foot-in-the-Door* | [2502.19820](https://arxiv.org/abs/2502.19820) (Feb 2025) | Multi-Turn (Cat 5) | "94% avg attack success rate across 7 models" | ✓ VERIFIED |
+| T. Liu et al. — *Disguise and Reconstruction (DRA)* | [2402.18104](https://arxiv.org/abs/2402.18104) (Feb 2024, rev Jun 2024) | Multi-Turn (Cat 5) | "DRA boasts a 91.1% attack success rate on OpenAI GPT-4 chatbot" | ✓ VERIFIED · USENIX 2024 venue not confirmable through public source — cite as arxiv |
+| Russinovich, Salem, Eldan — *Crescendo* | [2404.01833](https://arxiv.org/abs/2404.01833) | Multi-Turn (Cat 5) | "high success rates ... 29–71% relative gain over baselines" | ⚠ "100% ASR" claim UNVERIFIED (not in abstract) |
+| Zou et al. — *Universal Transferable GCG* | [2307.15043](https://arxiv.org/abs/2307.15043) | GCG (Cat 3) | Gradient-based adversarial suffix; transferability across aligned models | ⚠ exact per-model ASR numbers UNVERIFIED |
+| W. Zou et al. — *PoisonedRAG* | [2402.07867](https://arxiv.org/abs/2402.07867) | Agentic (Cat 10) | "**90% attack success rate** when injecting five malicious texts" (USENIX Sec 2025) | ✓ VERIFIED — corrected from previously-claimed 97–99% |
+| Sharma et al. (+43 authors) — *Constitutional Classifiers* | [2501.18837](https://arxiv.org/abs/2501.18837) (Jan 2025) | Defense | "0.38% absolute increase in production-traffic refusals · 23.7% inference overhead · 3,000+ hours red teaming" | ✓ VERIFIED — corrected from previously-cited 86%/4.4% (which is not in abstract) |
+| Cunningham et al. (+28 co-authors) — *Constitutional Classifiers++* | [2601.04603](https://arxiv.org/abs/2601.04603) (Jan 2026) | Defense | "40× computational cost reduction ... 0.05% refusal rate on production traffic · 1,700+ hours red-teaming" | ✓ VERIFIED |
 
-### New 2026 papers (added in v4.0.0)
+### New 2026 papers — every abstract WebFetched and verified
 
-8 papers from Jan–May 2026 not previously cited, mapped to the taxonomy:
+8 papers from Jan–May 2026 not previously cited. Each entry below is direct from the live arxiv abstract:
 
-| Paper | arXiv | Maps To | Why It Matters |
+| Paper | arXiv | Maps To | Direct Quote / Key Number |
 |---|---|---|---|
-| MINJA — *Memory Injection Attack on LLM Agents* | [2601.05504](https://arxiv.org/abs/2601.05504) | Agentic Chain (Cat 10) | >95% injection success via query-only memory poisoning |
-| Hidden in Memory — *Sleeper Memory Poisoning* | [2605.15338](https://arxiv.org/abs/2605.15338) | Agentic Chain + Multi-Turn (Cat 5, 10) | Dormant payloads re-emerge across sessions; 89% downstream success |
-| Promptware Kill Chain | [2601.09625](https://arxiv.org/abs/2601.09625) | Direct PI (Cat 2) | Reframes prompt injection as a maturing offensive discipline |
-| Prompt Injection on Coding Agents | [2601.17548](https://arxiv.org/abs/2601.17548) | Direct PI + Agentic (Cat 2, 10) | IPI hijacking of Copilot/Cursor-style agents via poisoned repo/tool output |
-| Jailbreaking Leaves a Trace | [2602.11495](https://arxiv.org/abs/2602.11495) | Defense | Hidden-state geometry detector — distinct signatures for jailbreak prompts |
-| Jailbreaks on VLM via Multimodal Reasoning | [2601.22398](https://arxiv.org/abs/2601.22398) | Multimodal (Cat 9) | CoT-guided stealth + ReAct-driven adaptive image noising |
-| Universal Transferable VLM Jailbreak | [2602.01025](https://arxiv.org/abs/2602.01025) | Multimodal (Cat 9) | Image-space jailbreak transfers across GPT-4V / Claude / Gemini-class VLMs |
-| Embodied LLM Action-Level Jailbreak | [2603.01414](https://arxiv.org/abs/2603.01414) | Agentic Chain (Cat 10 — new sub-bucket) | Attacks robotic/embodied agents at action-selection layer, not text layer |
+| Devarangadi Sunil et al. — *Memory Poisoning Attack and Defense on Memory Based LLM-Agents* (cites MINJA) | [2601.05504](https://arxiv.org/abs/2601.05504) (Jan 9 2026) | Agentic Chain (Cat 10) | "MINJA achieves over 95% injection success rate and 70% attack success rate under idealized conditions" — and proposes I/O moderation + memory sanitization defenses |
+| Pulipaka, Hlebik, Raghav, Abdelnabi, Raina, Sheth, Fritz — *Hidden in Memory: Sleeper Memory Poisoning* | [2605.15338](https://arxiv.org/abs/2605.15338) (May 14 2026) | Agentic + Multi-Turn (Cat 5, 10) | "poisoned memories were added up to 99.8% on GPT-5.5 and 95% on Kimi-K2.6 ... poisoned memories cause attacker-intended agentic actions in 60–89% of evaluations" |
+| Brodt, Feldman, **Schneier**, Nassi — *The Promptware Kill Chain* | [2601.09625](https://arxiv.org/abs/2601.09625) (Jan 14 2026) | Direct PI (Cat 2) | Introduces 7-stage kill chain (Initial Access → Privilege Escalation → Recon → Persistence → C2 → Lateral Movement → Actions). 21 documented attacks traverse 4+ stages |
+| Maloyan, Namiot — *Prompt Injection Attacks on Agentic Coding Assistants* | [2601.17548](https://arxiv.org/abs/2601.17548) (Jan 24 2026) | Direct PI + Agentic (Cat 2, 10) | "attack success rates against state-of-the-art defenses exceed 85% when adaptive strategies are employed" · 42 attack techniques, 18 defense evaluations |
+| Kadali, Papalexakis — *Jailbreaking Leaves a Trace* | [2602.11495](https://arxiv.org/abs/2602.11495) (Feb 12 2026) | Defense | "analyzes how internal representations differ between jailbreak and benign prompts" — interpretability-based detection |
+| Noheria, Yao — *Jailbreaks on VLM via Multimodal Reasoning* | [2601.22398](https://arxiv.org/abs/2601.22398) (Jan 29 2026) | Multimodal (Cat 9) | "CoT-guided stealth prompts + ReAct-driven adaptive image noising" — dual-strategy ASR improvement |
+| Cui, Y. Li, Wu, X. Ma, Erfani, Leckie, H. Huang — *UltraBreak: Universal Transferable VLM Jailbreak* | [2602.01025](https://arxiv.org/abs/2602.01025) (Feb 1 2026) | Multimodal (Cat 9) | "Vision-level regularisation + semantically guided textual supervision" — image-space attacks transfer across labs |
+| X. Huang, Q. Yang, Shen, Z. Ma, Y. Zheng — *Blindfold: Embodied LLM Action-Level Jailbreak* | [2603.01414](https://arxiv.org/abs/2603.01414) (Mar 2 2026) | Agentic Chain (Cat 10 — embodied sub-bucket) | "up to **53% higher attack success rates** than SOTA baselines" — evaluated on real **6DoF robotic arm** |
 
-These additions concentrate in **Cat 9 (Multimodal)** and **Cat 10 (Agentic Chain)** — the two categories under-represented in the 2024–2025 literature but most actively researched in 2026.
+Concentrate in **Cat 9 (Multimodal)** and **Cat 10 (Agentic Chain)** — categories under-represented in 2024–2025 literature, most actively researched in 2026.
+
+> **Audit methodology:** Each arxiv URL was fetched live on 2026-06-01 via direct HTTP. Quoted text is verbatim from the abstract. Where claims couldn't be confirmed in the abstract, they're flagged ⚠ UNVERIFIED. No claim in this table is interpolated from secondary sources (review papers, blog posts, news articles).
 
 ---
 
