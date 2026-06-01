@@ -4,23 +4,46 @@ All notable changes to this research repository are documented here.
 
 ---
 
-## [4.1.1] — June 2026 — Application Record
+## [4.2.0] — June 2026 — Analytical Depth: Findings, Defense Framework, Statistical Tests
 
-### Process / governance
-- **Anthropic External Researcher Access Program** application submitted on 2026-06-01,
-  requesting $1,000 in API credits to execute the Phase 2b live evaluation against
-  the June 2026 frontier model set.
-- **Correction email** sent to `researcheraccess@anthropic.com` on the same day at 23:13 IST
-  to correct the Organization ID. The original submission inadvertently provided the
-  `claude.ai` (Claude Max consumer) Organization ID rather than the Anthropic Console
-  (API) Organization ID. Correction filed before the next monthly evaluation cycle
-  (1st Monday of July).
-- Application record + correction timestamp documented in
-  [`findings/program_application_draft.md`](findings/program_application_draft.md).
+### Added — analytical artifacts
 
-### No code changes
-This is a process-only release. No simulation, harness, citation, or pattern data
-has changed since v4.1.0.
+- **Phase 2b Simulation Findings Report** ([`findings/v4_simulation_findings.md`](findings/v4_simulation_findings.md)): 7 structural findings extracted from the bootstrap simulation, with explicit acknowledgement of what the simulation does NOT yet claim (live-data territory). Includes the multi-turn benchmark gap quantification (~0.25 critical-bypass risk delta vs single-turn benchmarks).
+- **Phase 3 Defense Evaluation Framework** ([`paper/phase3_defense_framework.md`](paper/phase3_defense_framework.md)): specification of 15 defense interventions (D1–D15), DRR/FRR/NRG measurement schema, 4 specific experiments planned, separate ~$900 budget estimate.
+- **Anthropic Alignment Document** ([`paper/anthropic_alignment_with_taxonomy.md`](paper/anthropic_alignment_with_taxonomy.md)): explicit mapping of each of the 10 taxonomy categories to relevant Anthropic published work (Constitutional AI, Constitutional Classifiers v1/v2, Many-Shot Jailbreaking), with concrete value-add per category.
+
+### Added — statistical testing
+
+- **`scripts/statistical_tests.py`** — pure-stdlib implementation of:
+  - **Wilson 95% binomial CIs** on all 40 (model × category) cells
+  - **Pairwise McNemar's test** between all 6 model pairs on per-pattern bypass agreement
+  - **Cochran's Q** for k-way agreement per category
+  - **Cohen's h effect size** between model pairs
+- **`data/results/phase2b_statistical_tests.csv`** — full output: 40 Wilson CIs + 6 McNemar tests + 10 Cochran Q tests
+
+### Statistical findings on the simulation
+
+Cross-model differences are statistically significant for **5 of 10 categories**:
+
+| Category | Q | p |
+|---|---:|---:|
+| Role-Play | 19.65 | 0.00026 *** |
+| Multi-Turn Deception | 13.97 | 0.0031 ** |
+| LRM Autonomous | 12.00 | 0.0075 ** |
+| Multimodal Injection | 11.13 | 0.0111 * |
+| Agentic Chain | 10.24 | 0.0166 * |
+
+Categories where all models perform similarly badly (Fuzzing, GCG, PI, Context Manip, Sys-Prompt Extract) show no significant cross-model difference — matching literature predictions of model-family-invariant high ASR.
+
+### Updated — paper
+
+- **`paper/research-paper.md`** now includes an "Updates Since First Draft" section at the top with bootstrap CIs, McNemar p-values, and Cochran's Q results. Original Section 1–8 text preserved unchanged for historical continuity.
+
+### No personal / process data in this release
+
+Per the privacy boundary established earlier, no application-process metadata
+(Org IDs, submission timestamps, correction-email content) appears in any of
+the v4.2.0 artifacts. The release is purely technical.
 
 ---
 
