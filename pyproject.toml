@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-jailbreak-taxonomy"
+version = "4.1.0"
+description = "Mechanism-grounded taxonomy of 40 LLM jailbreak patterns across 10 categories, with reproducible evaluation harness for the June 2026 frontier model set."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Zakky", email = "zakky8+research@users.noreply.github.com" }
+]
+keywords = [
+    "ai-safety", "llm-security", "red-teaming", "jailbreak",
+    "adversarial-robustness", "prompt-injection", "alignment",
+    "constitutional-ai", "llm-evaluation"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security",
+]
+dependencies = [
+    "pandas>=2.0.0",
+    "matplotlib>=3.7.0",
+    "seaborn>=0.12.0",
+]
+
+[project.optional-dependencies]
+live = [
+    "anthropic>=0.40.0",
+    "openai>=1.40.0",
+    "google-generativeai>=0.7.0",
+]
+notebooks = [
+    "jupyter>=1.0.0",
+    "notebook>=7.0.0",
+    "nbconvert>=7.0.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.0",
+]
+
+[project.urls]
+Homepage    = "https://github.com/zakky8/llm-jailbreak-taxonomy"
+Repository  = "https://github.com/zakky8/llm-jailbreak-taxonomy"
+Issues      = "https://github.com/zakky8/llm-jailbreak-taxonomy/issues"
+Changelog   = "https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/CHANGELOG.md"
+Citation    = "https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/CITATION.cff"
+
+[project.scripts]
+jb-eval-mock = "evaluate_phase2b:main"
+
+[tool.setuptools]
+py-modules = ["evaluate_phase2b", "evaluate_live", "evaluate_judge", "export_sota"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q --strict-markers"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
