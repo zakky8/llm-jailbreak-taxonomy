@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLM Jailbreak Taxonomy — 40 patterns · 10 categories · 2026 frontier</title>
+<meta name="description" content="Mechanism-grounded taxonomy of 40 LLM jailbreak patterns across 10 categories. 8,000-trial bootstrap evaluation against the June 2026 frontier (Claude Opus 4-8, GPT-5.5, Gemini 3.5, DeepSeek V4). Every citation direct-WebFetch verified.">
+<meta property="og:title" content="LLM Jailbreak Taxonomy — A Mechanism-Grounded Framework for Adversarial Robustness">
+<meta property="og:description" content="40 attack patterns · 10 categories · 2026 frontier models · Citation-audited. Independent AI safety research.">
+<meta property="og:url" content="https://zakky8.github.io/llm-jailbreak-taxonomy">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d0c0b;--bg2:#131210;--bg3:#1a1816;
+  --line:#242220;--line2:#2e2b28;
+  --text:#ede8e3;--text2:#7a7570;--text3:#3d3a37;
+  --acc:#f97316;--acc2:#ea580c;
+  --ok:#4ade80;--bad:#f87171;--warn:#fbbf24;
+  --fd:'Bebas Neue',sans-serif;--fm:'Space Mono',monospace;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fm);font-size:13px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:180px;opacity:.028;mix-blend-mode:overlay}
+
+.ticker{background:var(--acc);overflow:hidden;height:32px;display:flex;align-items:center}
+.ticker-track{display:flex;animation:tk 50s linear infinite;white-space:nowrap;will-change:transform}
+.ticker-item{font-size:11px;font-weight:700;color:#000;letter-spacing:.08em;text-transform:uppercase;padding:0 2.5rem;display:flex;align-items:center;gap:2.5rem}
+.ticker-sep{opacity:.4;font-size:9px}
+@keyframes tk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:52px;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav-left{display:flex;align-items:center;gap:1.5rem}
+.nav-mark{font-family:var(--fd);font-size:1.2rem;letter-spacing:.04em;color:var(--text);text-decoration:none}
+.nav-mark span{color:var(--acc)}
+.nav-meta{font-size:11px;color:var(--text3);border-left:1px solid var(--line2);padding-left:1.5rem}
+.nav-right{display:flex;align-items:center;gap:.5rem}
+.nav-link{padding:.35rem .85rem;border:1px solid var(--line2);background:transparent;color:var(--text2);font-size:11px;text-decoration:none;letter-spacing:.04em;text-transform:uppercase;transition:all .15s}
+.nav-link:hover{border-color:var(--acc);color:var(--acc)}
+.nav-gh{display:flex;align-items:center;gap:.4rem;padding:.35rem .85rem;background:var(--acc);color:#000;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:background .15s}
+.nav-gh:hover{background:var(--acc2)}
+
+.hero{position:relative;padding:6rem 2rem 4rem;border-bottom:1px solid var(--line);overflow:hidden}
+.hero-ghost{position:absolute;right:-1rem;top:-2rem;font-family:var(--fd);font-size:32vw;color:var(--acc);opacity:.025;line-height:.85;pointer-events:none;user-select:none;letter-spacing:-.02em}
+.hero-inner{position:relative;max-width:1060px;margin:0 auto}
+.hero-eyebrow{font-size:11px;color:var(--acc);letter-spacing:.16em;text-transform:uppercase;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--acc)}
+h1{font-family:var(--fd);font-size:clamp(3.5rem,8vw,7.5rem);line-height:.92;letter-spacing:.01em;color:var(--text);max-width:800px;margin-bottom:2rem}
+h1 em{color:var(--acc);font-style:normal}
+.hero-desc{font-size:.88rem;color:var(--text2);max-width:560px;line-height:1.8;margin-bottom:3rem;border-left:2px solid var(--line2);padding-left:1.25rem}
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-main{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.5rem;background:var(--acc);color:#000;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:background .15s}
+.btn-main:hover{background:var(--acc2)}
+.btn-ghost{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.5rem;background:transparent;border:1px solid var(--line2);color:var(--text2);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:all .15s}
+.btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+
+.stat-strip{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);margin-top:4rem}
+.stat-cell{padding:1.5rem 1.5rem;border-right:1px solid var(--line)}
+.stat-cell:last-child{border-right:none}
+.stat-n{font-family:var(--fd);font-size:2.4rem;color:var(--text);line-height:1;margin-bottom:.25rem}
+.stat-n span{color:var(--acc)}
+.stat-l{font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+
+.sec{max-width:1060px;margin:0 auto;padding:4rem 2rem}
+.sec+.sec{border-top:1px solid var(--line)}
+.sec-header{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:2.5rem;padding-bottom:1rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.sec-title{font-family:var(--fd);font-size:2.2rem;letter-spacing:.04em;line-height:1}
+.sec-num{font-size:11px;color:var(--text3);letter-spacing:.08em}
+
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));border:1px solid var(--line)}
+.cat{padding:1.25rem 1.5rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-left:3px solid transparent;transition:background .12s,border-left-color .12s;position:relative}
+.cat:hover{background:var(--bg2);border-left-color:var(--acc)}
+.cat-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.cat-n{font-family:var(--fm);font-size:11px;color:var(--acc);font-weight:700}
+.cat-prio{font-size:9px;font-weight:700;letter-spacing:.08em;padding:.15rem .5rem;text-transform:uppercase}
+.prio-crit{background:#3f1212;color:var(--bad);border:1px solid var(--bad)}
+.prio-high{background:#3f2412;color:var(--acc);border:1px solid var(--acc)}
+.prio-med{background:#1a1816;color:var(--text2);border:1px solid var(--line2)}
+.cat-name{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.4rem}
+.cat-desc{font-size:.72rem;color:var(--text2);line-height:1.5}
+.cat-foot{display:flex;justify-content:space-between;margin-top:.6rem;font-size:.68rem;color:var(--text3)}
+.cat-foot strong{color:var(--acc);font-weight:700}
+
+.corrections{display:flex;flex-direction:column;border:1px solid var(--line)}
+.correction{display:grid;grid-template-columns:40px 1fr 1fr;gap:1.5rem;padding:1.25rem 1.5rem;border-bottom:1px solid var(--line);align-items:start}
+.correction:last-child{border-bottom:none}
+.correction:hover{background:var(--bg2)}
+.correction-idx{font-size:11px;color:var(--text3);padding-top:2px}
+.c-wrong{font-size:.78rem;color:var(--bad);line-height:1.6;display:flex;gap:.5rem}
+.c-right{font-size:.78rem;color:var(--ok);line-height:1.6;display:flex;gap:.5rem;font-weight:700}
+
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line)}
+.results-cell{padding:1.5rem;border-right:1px solid var(--line)}
+.results-cell:last-child{border-right:none}
+.results-cell h3{font-family:var(--fd);font-size:1.1rem;color:var(--acc);letter-spacing:.04em;margin-bottom:1rem}
+.results-row{display:flex;justify-content:space-between;align-items:center;padding:.55rem 0;border-bottom:1px solid var(--line)}
+.results-row:last-child{border-bottom:none}
+.results-row .name{font-size:.78rem;color:var(--text)}
+.results-row .v{font-family:var(--fm);font-size:.78rem;color:var(--acc);font-weight:700}
+.results-row .ci{font-size:.7rem;color:var(--text3)}
+
+.fig-wrap{margin:2rem 0;border:1px solid var(--line);padding:.75rem;background:white}
+.fig-wrap img{display:block;width:100%;height:auto}
+
+.refs{display:flex;flex-direction:column;border:1px solid var(--line)}
+.ref{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;padding:.85rem 1.25rem;border-bottom:1px solid var(--line);align-items:start;text-decoration:none}
+.ref:last-child{border-bottom:none}
+.ref:hover{background:var(--bg2)}
+.ref-id{font-size:10px;color:var(--text3);padding-top:1px}
+.ref-title{font-size:.78rem;color:var(--text);line-height:1.5}
+.ref-title em{color:var(--acc);font-style:normal}
+.ref-status{font-size:9px;font-weight:700;letter-spacing:.08em;padding:.1rem .4rem;text-transform:uppercase;flex-shrink:0;align-self:start;margin-top:2px}
+.s-ok{background:#0f2a14;color:var(--ok);border:1px solid var(--ok)}
+.s-warn{background:#3a2e0a;color:var(--warn);border:1px solid var(--warn)}
+
+footer{border-top:1px solid var(--line);padding:2.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-left{display:flex;align-items:center;gap:2rem}
+.footer-mark{font-family:var(--fd);font-size:1.4rem;letter-spacing:.06em}
+.footer-mark span{color:var(--acc)}
+.footer-meta{font-size:11px;color:var(--text3);line-height:1.8}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+.footer-links a{font-size:11px;color:var(--text2);text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:color .15s}
+.footer-links a:hover{color:var(--acc)}
+
+.fade{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease}
+.fade.in{opacity:1;transform:none}
+
+@media(max-width:720px){
+  h1{font-size:3.5rem}
+  .stat-strip{grid-template-columns:1fr 1fr}
+  .stat-cell:nth-child(3),.stat-cell:nth-child(4),.stat-cell:nth-child(5){border-top:1px solid var(--line)}
+  .results-grid{grid-template-columns:1fr}
+  .results-cell{border-right:none;border-bottom:1px solid var(--line)}
+  .correction{grid-template-columns:30px 1fr}
+  .c-right{grid-column:2}
+  .correction-idx{display:none}
+  .nav-meta{display:none}
+  nav{padding:0 1rem}
+  footer{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div class="ticker"><div class="ticker-track">
+  <span class="ticker-item">
+    LRM Autonomous 89.75% CI [85.8, 93.3] <span class="ticker-sep">◆</span>
+    Fuzzing 91.42% CI [84.2, 95.0] <span class="ticker-sep">◆</span>
+    Agentic Chain 65.12% CI [57.5, 71.3] <span class="ticker-sep">◆</span>
+    Claude Opus 4-8 most robust at 19.65% ASR <span class="ticker-sep">◆</span>
+    DeepSeek V4-Pro weakest at 73.65% <span class="ticker-sep">◆</span>
+    Every citation direct-WebFetch verified 2026-06-01 <span class="ticker-sep">◆</span>
+    PoisonedRAG corrected: 90%, not 97-99% <span class="ticker-sep">◆</span>
+  </span>
+  <span class="ticker-item" aria-hidden="true">
+    LRM Autonomous 89.75% CI [85.8, 93.3] <span class="ticker-sep">◆</span>
+    Fuzzing 91.42% CI [84.2, 95.0] <span class="ticker-sep">◆</span>
+    Agentic Chain 65.12% CI [57.5, 71.3] <span class="ticker-sep">◆</span>
+    Claude Opus 4-8 most robust at 19.65% ASR <span class="ticker-sep">◆</span>
+    DeepSeek V4-Pro weakest at 73.65% <span class="ticker-sep">◆</span>
+    Every citation direct-WebFetch verified 2026-06-01 <span class="ticker-sep">◆</span>
+    PoisonedRAG corrected: 90%, not 97-99% <span class="ticker-sep">◆</span>
+  </span>
+</div></div>
+
+<nav>
+  <div class="nav-left">
+    <a href="#" class="nav-mark">JB<span>.</span>TAX</a>
+    <span class="nav-meta">v4.1.0 · 2026-06-01</span>
+  </div>
+  <div class="nav-right">
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/releases/latest" class="nav-link">Releases</a>
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/paper/research-paper.md" class="nav-link">Paper</a>
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy" class="nav-gh">
+      <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      GITHUB
+    </a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-ghost" aria-hidden="true">40</div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">LLM Jailbreak Taxonomy · AI Safety Research · 2026</p>
+    <h1>A MECHANISM-<br>GROUNDED<br><em>FRAMEWORK</em></h1>
+    <p class="hero-desc">
+      40 adversarial attack patterns. 10 mechanism-grounded categories.<br>
+      Mapped to the safety-alignment assumptions each subverts.<br>
+      Every citation direct-WebFetch verified. Refuted claims documented.
+    </p>
+    <div class="hero-cta">
+      <a href="https://github.com/zakky8/llm-jailbreak-taxonomy" class="btn-main">View Repository →</a>
+      <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/paper/research-paper.md" class="btn-ghost">Read Paper</a>
+      <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/releases/latest" class="btn-ghost">v4.1.0 Release</a>
+    </div>
+    <div class="stat-strip">
+      <div class="stat-cell"><div class="stat-n">40</div><div class="stat-l">Attack Patterns</div></div>
+      <div class="stat-cell"><div class="stat-n">10</div><div class="stat-l">Categories</div></div>
+      <div class="stat-cell"><div class="stat-n">8,000</div><div class="stat-l">Bootstrap Trials</div></div>
+      <div class="stat-cell"><div class="stat-n"><span>17</span></div><div class="stat-l">Verified Citations</div></div>
+      <div class="stat-cell"><div class="stat-n">10/10</div><div class="stat-l">Tests Passing</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="sec fade">
+  <div class="sec-header"><h2 class="sec-title">THE TEN CATEGORIES</h2><span class="sec-num">40 patterns mapped to 10 mechanism-grounded categories</span></div>
+  <div class="cats">
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 01</span><span class="cat-prio prio-high">HIGH</span></div><div class="cat-name">Role-Play & Persona</div><div class="cat-desc">Fictional framing redirects instruction-following over safety. Structural — Wei 2023.</div><div class="cat-foot"><span>5 patterns</span><strong>43.0% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 02</span><span class="cat-prio prio-high">HIGH</span></div><div class="cat-name">Direct Prompt Injection</div><div class="cat-desc">Authorized vs adversarial instruction confusion. Greshake 2023 indirect PI mostly unmitigated.</div><div class="cat-foot"><span>5 patterns</span><strong>29.0% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 03</span><span class="cat-prio prio-med">MED-HIGH</span></div><div class="cat-name">GCG / Adversarial Suffix</div><div class="cat-desc">Gradient-based suffix optimization (Zou 2023). Renamed from "Token Smuggling" in v4.0.1.</div><div class="cat-foot"><span>7 patterns</span><strong>34.3% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 04</span><span class="cat-prio prio-med">MED</span></div><div class="cat-name">Context Manipulation</div><div class="cat-desc">Many-shot attacks (Anil 2024) scale monotonically with context window.</div><div class="cat-foot"><span>4 patterns</span><strong>28.1% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 05</span><span class="cat-prio prio-high">HIGH</span></div><div class="cat-name">Multi-Turn Deception</div><div class="cat-desc">Largest benchmark gap. DRA 91.1% / FITD 94% / Crescendo — most benchmarks evaluate single-turn only.</div><div class="cat-foot"><span>4 patterns</span><strong>54.4% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 06</span><span class="cat-prio prio-med">MED</span></div><div class="cat-name">System Prompt Extraction</div><div class="cat-desc">Low direct severity, but amplifies subsequent attacks across categories.</div><div class="cat-foot"><span>5 patterns</span><strong>30.0% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 07</span><span class="cat-prio prio-crit">CRITICAL</span></div><div class="cat-name">LRM Autonomous Attacks</div><div class="cat-desc">Reasoning models autonomously plan multi-turn jailbreaks. Hagendorff 2026 — 97.14% across 9 models.</div><div class="cat-foot"><span>3 patterns</span><strong>93.3% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 08</span><span class="cat-prio prio-crit">CRITICAL</span></div><div class="cat-name">Fuzzing-Based</div><div class="cat-desc">Mutation engines vs guardrails. JBFuzz v1 — 99% ASR across 9 LLMs at ~60s/bypass.</div><div class="cat-foot"><span>3 patterns</span><strong>92.5% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 09</span><span class="cat-prio prio-high">HIGH</span></div><div class="cat-name">Multimodal Injection</div><div class="cat-desc">Cross-modal safety classifiers don't transfer. UltraBreak 2026 transfers across labs.</div><div class="cat-foot"><span>2 patterns</span><strong>36.3% ASR</strong></div></div>
+    <div class="cat"><div class="cat-head"><span class="cat-n">CAT 10</span><span class="cat-prio prio-crit">CRITICAL</span></div><div class="cat-name">Agentic Chain Exploitation</div><div class="cat-desc">Tool-chain hijack + cross-session memory poisoning. PoisonedRAG 90% · MINJA 95% · Sleeper memory undocumented defense.</div><div class="cat-foot"><span>2 patterns</span><strong>66.3% ASR</strong></div></div>
+  </div>
+</div>
+
+<div class="sec fade">
+  <div class="sec-header"><h2 class="sec-title">RESULTS</h2><span class="sec-num">8,000 bootstrap trials · 10 seeds · seeded reproducibility</span></div>
+  <div class="results-grid">
+    <div class="results-cell">
+      <h3>BY MODEL — 95% CI</h3>
+      <div class="results-row"><span class="name">claude-opus-4-8 <span class="ci">(Anthropic)</span></span><span class="v">19.65%</span></div>
+      <div class="results-row"><span class="ci">95% CI [17.25, 23.25] · σ 1.85</span><span></span></div>
+      <div class="results-row"><span class="name">gpt-5.5 <span class="ci">(OpenAI)</span></span><span class="v">41.48%</span></div>
+      <div class="results-row"><span class="ci">95% CI [39.50, 44.00] · σ 1.61</span><span></span></div>
+      <div class="results-row"><span class="name">gemini-3.5-flash <span class="ci">(Google)</span></span><span class="v">53.15%</span></div>
+      <div class="results-row"><span class="ci">95% CI [50.00, 56.75] · σ 1.89</span><span></span></div>
+      <div class="results-row"><span class="name">deepseek-v4-pro <span class="ci">(DeepSeek)</span></span><span class="v">73.65%</span></div>
+      <div class="results-row"><span class="ci">95% CI [71.50, 77.00] · σ 1.85</span><span></span></div>
+    </div>
+    <div class="results-cell">
+      <h3>BY CATEGORY — 95% CI</h3>
+      <div class="results-row"><span class="name">LRM Autonomous</span><span class="v">89.75%</span></div>
+      <div class="results-row"><span class="ci">[85.83, 93.33]</span><span></span></div>
+      <div class="results-row"><span class="name">Fuzzing-Based</span><span class="v">91.42%</span></div>
+      <div class="results-row"><span class="ci">[84.17, 95.00]</span><span></span></div>
+      <div class="results-row"><span class="name">Agentic Chain</span><span class="v">65.12%</span></div>
+      <div class="results-row"><span class="ci">[57.50, 71.25]</span><span></span></div>
+      <div class="results-row"><span class="name">Multi-Turn Deception</span><span class="v">58.94%</span></div>
+      <div class="results-row"><span class="ci">[54.37, 65.62]</span><span></span></div>
+    </div>
+  </div>
+  <div class="fig-wrap"><img src="https://raw.githubusercontent.com/zakky8/llm-jailbreak-taxonomy/main/figures/v4/fig1_cross_model_asr.png" alt="Cross-model ASR"></div>
+</div>
+
+<div class="sec fade">
+  <div class="sec-header"><h2 class="sec-title">CORRECTIONS</h2><span class="sec-num">claims refuted or unverified after direct WebFetch audit 2026-06-01</span></div>
+  <div class="corrections">
+    <div class="correction"><span class="correction-idx">01</span>
+      <div class="c-wrong"><span>✗</span>PoisonedRAG: 97–99% ASR with 5 poisoned docs</div>
+      <div class="c-right"><span>✓</span>Actual: 90% ASR — verbatim from arXiv:2402.07867 abstract</div></div>
+    <div class="correction"><span class="correction-idx">02</span>
+      <div class="c-wrong"><span>✗</span>Cat 3 labeled "Token-Level Smuggling"</div>
+      <div class="c-right"><span>✓</span>Renamed to "GCG / Adversarial Suffix" — Zou 2023 is gradient-based, not encoding</div></div>
+    <div class="correction"><span class="correction-idx">03</span>
+      <div class="c-wrong"><span>✗</span>Constitutional Classifiers v1: "86% → 4.4% bypass"</div>
+      <div class="c-right"><span>✓</span>Verified: 0.38% production refusal increase · 23.7% inference overhead · 3,000+ hours</div></div>
+    <div class="correction"><span class="correction-idx">04</span>
+      <div class="c-wrong"><span>✗</span>Liu DRA: USENIX Security 2025</div>
+      <div class="c-right"><span>✓</span>Actual: arxiv:2402.18104 Feb 2024 · USENIX venue not publicly verifiable</div></div>
+    <div class="correction"><span class="correction-idx">05</span>
+      <div class="c-wrong"><span>✗</span>arXiv:2601.05504 cited as the MINJA paper</div>
+      <div class="c-right"><span>✓</span>Actual: Devarangadi Sunil et al. Defense paper citing MINJA</div></div>
+    <div class="correction"><span class="correction-idx">06</span>
+      <div class="c-wrong"><span>✗</span>Hagendorff dated "2026"</div>
+      <div class="c-right"><span>✓</span>arxiv August 2025 · Nature Comms DOI 10.1038/s41467-026-69010-1 assigned</div></div>
+  </div>
+</div>
+
+<div class="sec fade">
+  <div class="sec-header"><h2 class="sec-title">CITATIONS</h2><span class="sec-num">every entry direct-WebFetch verified — see paper/references.bib</span></div>
+  <div class="refs">
+    <a class="ref" href="https://arxiv.org/abs/2508.04039" target="_blank"><span class="ref-id">Cat 7</span><span class="ref-title"><em>Hagendorff, Derner, Oliver</em> — Large Reasoning Models Are Autonomous Jailbreak Agents — arXiv:2508.04039 — Nature Comms 2026</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2503.08990v1" target="_blank"><span class="ref-id">Cat 8</span><span class="ref-title"><em>Gohil</em> — JBFuzz: Jailbreaking LLMs Using Fuzzing — arXiv:2503.08990v1 — 99% across 9 LLMs</span><span class="ref-status s-ok">VERIFIED v1</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2402.18104" target="_blank"><span class="ref-id">Cat 5</span><span class="ref-title"><em>Liu et al.</em> — Disguise and Reconstruction (DRA) — arXiv:2402.18104 — 91.1% ASR on GPT-4</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2502.19820" target="_blank"><span class="ref-id">Cat 5</span><span class="ref-title"><em>Weng et al.</em> — Foot-in-the-Door Multi-Turn — arXiv:2502.19820 — 94% avg across 7 models</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2402.07867" target="_blank"><span class="ref-id">Cat 10</span><span class="ref-title"><em>W. Zou et al.</em> — PoisonedRAG — arXiv:2402.07867 — 90% with 5 poisoned docs (corrected)</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2601.09625" target="_blank"><span class="ref-id">Cat 2</span><span class="ref-title"><em>Brodt, Feldman, Schneier, Nassi</em> — The Promptware Kill Chain — arXiv:2601.09625 — 7-stage framework</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2605.15338" target="_blank"><span class="ref-id">Cat 10</span><span class="ref-title"><em>Pulipaka et al.</em> — Hidden in Memory: Sleeper Memory Poisoning — arXiv:2605.15338 — 99.8% on GPT-5.5</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2603.01414" target="_blank"><span class="ref-id">Cat 10</span><span class="ref-title"><em>Huang et al.</em> — Blindfold: Embodied LLM Action-Level — arXiv:2603.01414 — 53% higher ASR · 6DoF arm</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2601.04603" target="_blank"><span class="ref-id">Defense</span><span class="ref-title"><em>Cunningham et al.</em> — Constitutional Classifiers++ — arXiv:2601.04603 — 40× cost reduction · 0.05% production refusal</span><span class="ref-status s-ok">VERIFIED</span></a>
+    <a class="ref" href="https://arxiv.org/abs/2404.01833" target="_blank"><span class="ref-id">Cat 5</span><span class="ref-title"><em>Russinovich et al.</em> — Crescendo Multi-Turn — arXiv:2404.01833 — "100% ASR" claim not in abstract</span><span class="ref-status s-warn">UNVERIFIED</span></a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <div class="footer-mark">JB<span>.</span>TAX</div>
+    <div class="footer-meta">
+      v4.1.0 · MIT License · Validated 2026-06-01<br>
+      github.com/zakky8/llm-jailbreak-taxonomy
+    </div>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/paper/research-paper.md" target="_blank">Paper</a>
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/BENCHMARK_CROSSWALK.md" target="_blank">Crosswalk</a>
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/REPRODUCIBILITY.md" target="_blank">Reproducibility</a>
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy/blob/main/CHANGELOG.md" target="_blank">Changelog</a>
+    <a href="https://github.com/zakky8/llm-jailbreak-taxonomy" target="_blank">Repository ↗</a>
+  </div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
