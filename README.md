@@ -2,7 +2,7 @@
 
 ### A Mechanism-Grounded Framework for Adversarial Robustness — June 2026
 
-[![Version](https://img.shields.io/badge/Version-4.1.0-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
+[![Version](https://img.shields.io/badge/Version-4.1.1-blue?style=flat-square)](https://github.com/zakky8/llm-jailbreak-taxonomy)
 [![CI](https://img.shields.io/github/actions/workflow/status/zakky8/llm-jailbreak-taxonomy/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/zakky8/llm-jailbreak-taxonomy/actions)
 [![Tests](https://img.shields.io/badge/tests-10%20passing-success?style=flat-square)](tests/)
 [![Status](https://img.shields.io/badge/Status-Phase%202b%20Simulated-orange?style=flat-square)](RESEARCH.md)
