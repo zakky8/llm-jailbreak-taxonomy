@@ -1,0 +1,319 @@
+% References for "A Systematic Taxonomy of Jailbreak Techniques in Large Language Models"
+% Citation audit: 2026-06-01 — every entry verified via direct arxiv WebFetch.
+% Verbatim claim quotes documented in README.md citation table.
+
+% ─── Foundational ────────────────────────────────────────────────────────────
+@inproceedings{wei2023jailbroken,
+  title     = {Jailbroken: How Does {LLM} Safety Training Fail?},
+  author    = {Wei, Alexander and Haghtalab, Nika and Steinhardt, Jacob},
+  booktitle = {Advances in Neural Information Processing Systems 36 (NeurIPS)},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2307.02483},
+  note      = {Competing-objectives + mismatched-generalization analysis}
+}
+
+@inproceedings{perez2022redteam,
+  title     = {Red Teaming Language Models with Language Models},
+  author    = {Perez, Ethan and Huang, Saffron and Song, Francis and Cai, Trevor and
+               Ring, Roman and Aslanides, John and Glaese, Amelia and McAleese, Nat and Irving, Geoffrey},
+  booktitle = {Empirical Methods in Natural Language Processing (EMNLP)},
+  year      = {2022},
+  url       = {https://arxiv.org/abs/2202.03286}
+}
+
+@article{bai2022constitutional,
+  title  = {Constitutional {AI}: Harmlessness from {AI} Feedback},
+  author = {Bai, Yuntao and Kadavath, Saurav and Kundu, Sandipan and others},
+  year   = {2022},
+  eprint = {2212.08073},
+  archivePrefix = {arXiv}
+}
+
+% ─── Role-Play & Persona Attacks ──────────────────────────────────────────────
+@inproceedings{shen2024dan,
+  title     = {{``Do Anything Now''}: Characterizing and Evaluating In-the-Wild
+               Jailbreak Prompts on Large Language Models},
+  author    = {Shen, Xinyue and Chen, Zeyuan and Backes, Michael and Shen, Yun and Zhang, Yang},
+  booktitle = {ACM Conference on Computer and Communications Security (CCS)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2308.03825}
+}
+
+% ─── Direct Prompt Injection ──────────────────────────────────────────────────
+@inproceedings{greshake2023ipi,
+  title     = {Not What You've Signed Up For: Compromising Real-World {LLM}-Integrated
+               Applications with Indirect Prompt Injection},
+  author    = {Greshake, Kai and Abdelnabi, Sahar and Mishra, Shailesh and Endres, Christoph
+               and Holz, Thorsten and Fritz, Mario},
+  booktitle = {ACM Workshop on Artificial Intelligence and Security (AISec)},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2302.12173}
+}
+
+@article{brodt2026promptware,
+  title  = {The Promptware Kill Chain: How Prompt Injections Gradually Evolved into a
+            Multistep Malware Delivery Mechanism},
+  author = {Brodt, Oleg and Feldman, Elad and Schneier, Bruce and Nassi, Ben},
+  year   = {2026},
+  month  = {jan},
+  eprint = {2601.09625},
+  archivePrefix = {arXiv},
+  note   = {Seven-stage kill chain; 21 documented attacks traverse 4+ stages}
+}
+
+@article{maloyan2026codingpi,
+  title  = {Prompt Injection Attacks on Agentic Coding Assistants},
+  author = {Maloyan, Akhil and Namiot, Dmitry},
+  year   = {2026},
+  month  = {jan},
+  eprint = {2601.17548},
+  archivePrefix = {arXiv},
+  note   = {>85\% ASR against SOTA defenses under adaptive strategies}
+}
+
+% ─── GCG / Adversarial Suffix (Cat 3) ─────────────────────────────────────────
+@inproceedings{zou2023gcg,
+  title     = {Universal and Transferable Adversarial Attacks on Aligned Language Models},
+  author    = {Zou, Andy and Wang, Zifan and Carlini, Nicholas and Nasr, Milad and
+               Kolter, J. Zico and Fredrikson, Matt},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2307.15043},
+  note      = {GCG attack — gradient-based adversarial suffix optimization}
+}
+
+@inproceedings{deng2023multilingual,
+  title     = {Multilingual Jailbreak Challenges in Large Language Models},
+  author    = {Deng, Yue and Zhang, Wenxuan and Pan, Sinno Jialin and Bing, Lidong},
+  booktitle = {ICLR},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2310.06474}
+}
+
+% ─── Context Manipulation (Cat 4) ─────────────────────────────────────────────
+@techreport{anil2024manyshot,
+  title       = {Many-Shot Jailbreaking},
+  author      = {Anil, Cem and Durmus, Esin and Sharma, Mrinank and Benton, Joe and others},
+  institution = {Anthropic},
+  year        = {2024},
+  url         = {https://www.anthropic.com/research/many-shot-jailbreaking}
+}
+
+@inproceedings{shi2023distracted,
+  title     = {Large Language Models Can Be Easily Distracted by Irrelevant Context},
+  author    = {Shi, Freda and Chen, Xinyun and Misra, Kanishka and others},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2023},
+  url       = {https://arxiv.org/abs/2302.00093}
+}
+
+% ─── Multi-Turn Deception (Cat 5) ─────────────────────────────────────────────
+@inproceedings{russinovich2025crescendo,
+  title     = {{``Great, Now Write an Article About That''}: The Crescendo Multi-Turn
+               {LLM} Jailbreak Attack},
+  author    = {Russinovich, Mark and Salem, Ahmed and Eldan, Ronen},
+  booktitle = {USENIX Security},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2404.01833},
+  note      = {Verified: 29--71\% relative gain over baselines. ``100\% ASR'' claim UNVERIFIED in abstract}
+}
+
+@article{weng2025footindoor,
+  title   = {Foot-In-The-Door: A Multi-turn Jailbreak for {LLM}s},
+  author  = {Weng, Zihao and Jin, Kun and Jia, Cheng and Zhang, Xingyu},
+  year    = {2025},
+  month   = {feb},
+  eprint  = {2502.19820},
+  archivePrefix = {arXiv},
+  note    = {Verified: 94\% avg ASR across 7 models}
+}
+
+@article{liu2024dra,
+  title  = {Making Them Ask and Answer: Jailbreaking Large Language Models in Few
+            Queries via Disguise and Reconstruction},
+  author = {Liu, Tong and Zhang, Yingjie and Zhao, Zhe and Dong, Yinpeng and Meng, Guozhu and Chen, Kai},
+  year   = {2024},
+  month  = {feb},
+  eprint = {2402.18104},
+  archivePrefix = {arXiv},
+  note   = {Verified: 91.1\% ASR on GPT-4 chatbot. USENIX 2024 venue not confirmable via public sources}
+}
+
+% ─── LRM Autonomous Attacks (Cat 7) ───────────────────────────────────────────
+@article{hagendorff2025lrm,
+  title   = {Large Reasoning Models Are Autonomous Jailbreak Agents},
+  author  = {Hagendorff, Thilo and Derner, Erik and Oliver, Edgardo},
+  journal = {Nature Communications},
+  year    = {2026},
+  doi     = {10.1038/s41467-026-69010-1},
+  url     = {https://arxiv.org/abs/2508.04039},
+  note    = {arXiv preprint Aug 2025; Nature Comms DOI assigned for 2026 publication.
+             Verified: 97.14\% overall ASR across all model combinations.}
+}
+
+% ─── Fuzzing-Based Attacks (Cat 8) ────────────────────────────────────────────
+@article{gohil2025jbfuzz,
+  title   = {{JBFuzz}: Jailbreaking {LLM}s Efficiently and Effectively Using Fuzzing},
+  author  = {Gohil, Vasudev},
+  year    = {2025},
+  month   = {mar},
+  eprint  = {2503.08990v1},
+  archivePrefix = {arXiv},
+  note    = {Pinned to v1. Verified on v1: 99\% avg ASR across 9 LLMs, ~60s per bypass.
+             Note: later revisions diverge in scope/numbers --- cite v1 specifically.}
+}
+
+% ─── Multimodal Injection (Cat 9) ─────────────────────────────────────────────
+@article{noheria2026vlmcot,
+  title   = {Jailbreaks on Vision Language Model via Multimodal Reasoning},
+  author  = {Noheria, Aarush and Yao, Yuguang},
+  year    = {2026},
+  month   = {jan},
+  eprint  = {2601.22398},
+  archivePrefix = {arXiv},
+  note    = {CoT-guided stealth + ReAct-driven adaptive image noising}
+}
+
+@article{cui2026ultrabreak,
+  title   = {{UltraBreak}: Toward Universal and Transferable Jailbreak Attacks on
+             Vision-Language Models},
+  author  = {Cui, Hanxun and Li, Yuyuan and Wu, Yi and Ma, Xingjun and Erfani, Sarah
+             and Leckie, Christopher and Huang, Hanjie},
+  year    = {2026},
+  month   = {feb},
+  eprint  = {2602.01025},
+  archivePrefix = {arXiv}
+}
+
+% ─── Agentic Chain Exploitation (Cat 10) ──────────────────────────────────────
+@inproceedings{wzou2025poisonedrag,
+  title     = {{PoisonedRAG}: Knowledge Corruption Attacks to Retrieval-Augmented
+               Generation of Large Language Models},
+  author    = {Zou, Wei and Geng, Runpeng and Wang, Binghui and Jia, Jinyuan},
+  booktitle = {USENIX Security},
+  year      = {2025},
+  url       = {https://arxiv.org/abs/2402.07867},
+  note      = {Verified: 90\% ASR when injecting five malicious texts
+               (corrected from previously-claimed 97--99\%)}
+}
+
+@article{sunil2026memorypoison,
+  title   = {Memory Poisoning Attack and Defense on Memory Based {LLM}-Agents},
+  author  = {Devarangadi Sunil, M. and others},
+  year    = {2026},
+  month   = {jan},
+  eprint  = {2601.05504},
+  archivePrefix = {arXiv},
+  note    = {Cites MINJA: 95\% injection success, 70\% attack success under idealized conditions.
+             Proposes I/O moderation + memory sanitization defenses.}
+}
+
+@article{pulipaka2026sleeper,
+  title   = {Hidden in Memory: Sleeper Memory Poisoning in {LLM} Agents},
+  author  = {Pulipaka, V. and Hlebik, M. and Raghav, A. and Abdelnabi, S. and
+             Raina, A. and Sheth, A. and Fritz, M.},
+  year    = {2026},
+  month   = {may},
+  eprint  = {2605.15338},
+  archivePrefix = {arXiv},
+  note    = {Up to 99.8\% poisoning success on GPT-5.5; 60--89\% downstream agentic action triggering.
+             Independent corroboration of the gpt-5.5 model identifier.}
+}
+
+@article{huang2026blindfold,
+  title   = {{Blindfold}: Jailbreaking Embodied {LLM}s via Action-Level Manipulation},
+  author  = {Huang, X. and Yang, Q. and Shen, S. and Ma, Z. and Zheng, Y.},
+  year    = {2026},
+  month   = {mar},
+  eprint  = {2603.01414},
+  archivePrefix = {arXiv},
+  note    = {Up to 53\% higher ASR than SOTA baselines; evaluated on real 6DoF robotic arm.}
+}
+
+% ─── Defenses ─────────────────────────────────────────────────────────────────
+@article{sharma2025constitutional,
+  title   = {Constitutional Classifiers: Defending Against Universal Jailbreaks Across
+             Thousands of Hours of Red Teaming},
+  author  = {Sharma, Mrinank and others (Anthropic; 43 authors)},
+  year    = {2025},
+  month   = {jan},
+  eprint  = {2501.18837},
+  archivePrefix = {arXiv},
+  note    = {Verified: 0.38\% production refusal increase, 23.7\% inference overhead,
+             3,000+ hours red-teaming. Prior ``86\%/4.4\%'' figures were NOT verifiable in abstract.}
+}
+
+@article{cunningham2026constitutionalplus,
+  title   = {Constitutional Classifiers++},
+  author  = {Cunningham, Hoagy and others (Anthropic; 28 co-authors)},
+  year    = {2026},
+  month   = {jan},
+  eprint  = {2601.04603},
+  archivePrefix = {arXiv},
+  note    = {Verified: 40x computational cost reduction; 0.05\% refusal on production traffic;
+             1,700+ hours red-teaming}
+}
+
+@article{kadali2026trace,
+  title   = {Jailbreaking Leaves a Trace},
+  author  = {Kadali, S. and Papalexakis, E.},
+  year    = {2026},
+  month   = {feb},
+  eprint  = {2602.11495},
+  archivePrefix = {arXiv},
+  note    = {Hidden-state geometric signatures for jailbreak detection}
+}
+
+% ─── Benchmarks (for comparison) ──────────────────────────────────────────────
+@inproceedings{mazeika2024harmbench,
+  title     = {{HarmBench}: A Standardized Evaluation Framework for Automated Red Teaming
+               and Robust Refusal},
+  author    = {Mazeika, Mantas and Phan, Long and Yin, Xuwang and Zou, Andy and others},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2402.04249}
+}
+
+@inproceedings{chao2024jailbreakbench,
+  title     = {{JailbreakBench}: An Open Robustness Benchmark for Jailbreaking
+               Large Language Models},
+  author    = {Chao, Patrick and Debenedetti, Edoardo and Robey, Alexander and others},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2404.01318}
+}
+
+% ─── Adversarial ML Background ────────────────────────────────────────────────
+@inproceedings{goodfellow2015adv,
+  title     = {Explaining and Harnessing Adversarial Examples},
+  author    = {Goodfellow, Ian J. and Shlens, Jonathon and Szegedy, Christian},
+  booktitle = {ICLR},
+  year      = {2015},
+  url       = {https://arxiv.org/abs/1412.6572}
+}
+
+@inproceedings{carlini2017wagner,
+  title     = {Towards Evaluating the Robustness of Neural Networks},
+  author    = {Carlini, Nicholas and Wagner, David},
+  booktitle = {IEEE Symposium on Security and Privacy (S\&P)},
+  year      = {2017},
+  url       = {https://arxiv.org/abs/1608.04644}
+}
+
+@inproceedings{christiano2017rlhf,
+  title     = {Deep Reinforcement Learning from Human Preferences},
+  author    = {Christiano, Paul F. and Leike, Jan and Brown, Tom B. and Martic, Miljan
+               and Legg, Shane and Amodei, Dario},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2017},
+  url       = {https://arxiv.org/abs/1706.03741}
+}
+
+@article{ziegler2019finetune,
+  title  = {Fine-Tuning Language Models from Human Preferences},
+  author = {Ziegler, Daniel M. and Stiennon, Nisan and Wu, Jeffrey and Brown, Tom B.
+            and Radford, Alec and Amodei, Dario and Christiano, Paul and Irving, Geoffrey},
+  year   = {2019},
+  eprint = {1909.08593},
+  archivePrefix = {arXiv}
+}
