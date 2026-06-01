@@ -7,7 +7,7 @@ authors:
     alias: "zakky8"
     website: "https://github.com/zakky8"
 title: "A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment"
-version: 4.0.2
+version: 4.1.0
 date-released: 2026-06-01
 url: "https://github.com/zakky8/llm-jailbreak-taxonomy"
 repository-code: "https://github.com/zakky8/llm-jailbreak-taxonomy"
