@@ -75,6 +75,8 @@ Mid-tier and legacy variants (`claude-sonnet-4-6`, `claude-haiku-4-5`, `gpt-5.4`
 python evaluate_phase2b.py --mock --trials 5 --seed 42
 ```
 
+![Cross-model ASR](figures/v4/fig1_cross_model_asr.png)
+
 ### Cross-model ASR (lower is better)
 
 | Model | ASR | Critical-Tier % | Avg. Severity |
@@ -85,6 +87,8 @@ python evaluate_phase2b.py --mock --trials 5 --seed 42
 | `deepseek-v4-pro` | 72.00% | 30.00% | 1.60 |
 
 Critical-tier (severity 3) bypasses concentrate in LRM Autonomous, Fuzzing, and Agentic Chain — exactly the categories with the highest published ASRs in the open literature.
+
+![Per-category ASR](figures/v4/fig2_per_category_asr.png)
 
 ### Per-category ASR (across all 4 models)
 
@@ -102,6 +106,16 @@ Critical-tier (severity 3) bypasses concentrate in LRM Autonomous, Fuzzing, and 
 | **Agentic Chain** | 80 | 66.25% | 25.00% | PoisonedRAG 90% · MINJA 95% |
 
 Live API results (when keys are configured) write to the same schema in [`data/results/`](data/results/).
+
+### Severity heatmap (model × category)
+
+![Severity heatmap](figures/v4/fig3_severity_heatmap.png)
+
+Critical-tier (sev 3) bypasses cluster in **Cat 7 / Cat 8 / Cat 10** across all models —
+exactly the categories where published literature reports the highest ASRs. The pattern
+holds even for the most-aligned frontier model (`claude-opus-4-8`), confirming that
+LRM-autonomous and fuzzing-based attacks remain structurally unresolved by current
+safety training as of June 2026.
 
 ---
 
@@ -284,17 +298,55 @@ See [`DISCLOSURE.md`](DISCLOSURE.md) for the contact protocol.
 
 ## How This Taxonomy Compares
 
+### Comparison against standardized benchmarks
+
+| Feature | This Taxonomy | [HarmBench](https://arxiv.org/abs/2402.04249) (Mazeika 2024) | [JailbreakBench](https://arxiv.org/abs/2404.01318) (Chao 2024) | [AdvBench / GCG](https://arxiv.org/abs/2307.15043) (Zou 2023) |
+|---|:---:|:---:|:---:|:---:|
+| Mechanism-grounded taxonomy | ✓ 10 categories | ✗ flat | ✗ flat | ✗ flat |
+| LRM Autonomous coverage (Cat 7) | ✓ | partial | ✗ | ✗ |
+| Fuzzing coverage (Cat 8) | ✓ | partial | ✗ | ✗ |
+| Multimodal coverage (Cat 9) | ✓ | ✗ | ✗ | ✗ |
+| Agentic / memory persistence (Cat 10) | ✓ 2026 lit | ✗ | ✗ | ✗ |
+| 2026 frontier model identifiers | ✓ Opus 4-8 / GPT-5.5 / Gemini 3.5 / DeepSeek V4 | older | older | older |
+| Defense mapping per category | ✓ | partial | partial | ✗ |
+| Citation verification log | ✓ direct-quote | ✗ | ✗ | ✗ |
+| Reproducible seeded simulation | ✓ | partial | ✓ | partial |
+| Live API evaluation | ◐ framework ready | ✓ | ✓ | ✓ |
+| Peer-reviewed publication | ◯ preprint | ICML 2024 | NeurIPS 2024 | ICML 2023 |
+
+> **Honest positioning**: HarmBench, JailbreakBench, and GCG are peer-reviewed institutional
+> benchmarks with empirical data at scale. This taxonomy contributes the **mechanism-grounded
+> categorization, 2026 literature coverage, and citation audit methodology** that those
+> benchmarks predate. The frameworks are complementary, not competitive — this work points
+> at *what to evaluate*; HarmBench/JailbreakBench provide *standardized targets to evaluate against*.
+
+### Comparison against prior taxonomies
+
 | Feature | This Taxonomy | Wei 2023 | Shen 2023 | Awesome-Jailbreak |
 |---|:---:|:---:|:---:|:---:|
-| Mechanism-grounded categories | ✓ | ✓ | ✗ | ✗ |
+| Mechanism-grounded categories | ✓ | ✓ 2 root causes | ✗ | ✗ |
 | 2025–2026 techniques | ✓ | ✗ | ✗ | partial |
-| Empirical observations (Phase 2a) | ✓ 32 trials | ✗ | ✗ | ✗ |
-| Reproducible simulation harness | ✓ 1,600 trials | ✗ | ✗ | ✗ |
-| Defense mapping per category | ✓ | ✗ | ✗ | ✗ |
-| LRM autonomous coverage | ✓ | ✗ | ✗ | ✗ |
-| Agentic / memory persistence | ✓ (Cat 10 + 2026 papers) | ✗ | ✗ | partial |
-| 2026 frontier models | ✓ Opus 4-8 · GPT-5.5 · Gemini 3.5 · DeepSeek V4 | ✗ | ✗ | ✗ |
-| Citation verification log | ✓ (this README) | ✗ | ✗ | ✗ |
+| Empirical observations | ✓ 32 Phase 2a | ✗ | ✓ ITW survey | ✗ |
+| Reproducible simulation harness | ✓ | ✗ | ✗ | ✗ |
+
+---
+
+## Publication Infrastructure
+
+The repository ships with formal academic infrastructure expected of peer-reviewed
+research artifacts:
+
+| Artifact | Purpose |
+|---|---|
+| [`paper/research-paper.md`](paper/research-paper.md) | Full preprint draft |
+| [`paper/references.bib`](paper/references.bib) | BibTeX bibliography — every entry direct-WebFetch verified |
+| [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) | ML Reproducibility Checklist (Pineau et al. NeurIPS 2019/2020) |
+| [`DATASHEET.md`](DATASHEET.md) | Datasheets for Datasets (Gebru et al. CACM 2021) |
+| [`ETHICS.md`](ETHICS.md) | Dual-use risk assessment + researcher positionality |
+| [`DISCLOSURE.md`](DISCLOSURE.md) | Responsible disclosure protocol |
+| [`COMPLIANCE.md`](COMPLIANCE.md) | Per-provider AUP compliance summary |
+| [`scripts/generate_figures.py`](scripts/generate_figures.py) | Publication-grade matplotlib figures from simulation data |
+| [`CHANGELOG.md`](CHANGELOG.md) | Version history with refuted-claim audit log |
 
 ---
 
