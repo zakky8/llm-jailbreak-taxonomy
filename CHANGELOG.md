@@ -4,6 +4,26 @@ All notable changes to this research repository are documented here.
 
 ---
 
+## [4.1.1] — June 2026 — Application Record
+
+### Process / governance
+- **Anthropic External Researcher Access Program** application submitted on 2026-06-01,
+  requesting $1,000 in API credits to execute the Phase 2b live evaluation against
+  the June 2026 frontier model set.
+- **Correction email** sent to `researcheraccess@anthropic.com` on the same day at 23:13 IST
+  to correct the Organization ID. The original submission inadvertently provided the
+  `claude.ai` (Claude Max consumer) Organization ID rather than the Anthropic Console
+  (API) Organization ID. Correction filed before the next monthly evaluation cycle
+  (1st Monday of July).
+- Application record + correction timestamp documented in
+  [`findings/program_application_draft.md`](findings/program_application_draft.md).
+
+### No code changes
+This is a process-only release. No simulation, harness, citation, or pattern data
+has changed since v4.1.0.
+
+---
+
 ## [4.1.0] — June 2026 — Statistical Rigor + Engineering Infrastructure
 
 ### Added — statistical rigor
