@@ -4,6 +4,28 @@ All notable changes to this research repository are documented here.
 
 ---
 
+## [4.0.1] — June 2026 — Citation Re-Verification
+
+### Fixed (direct WebFetch audit, 2026-06-01)
+Every citation in v4.0.0 was independently re-verified via direct arxiv WebFetch — no subagent reports, no search snippets. Corrections:
+
+- **Paper #1 corrected**: arXiv:2601.05504 is NOT the original MINJA paper — it's *Memory Poisoning Attack and Defense on Memory Based LLM-Agents* by Devarangadi Sunil et al. (Jan 9 2026), which **cites** MINJA's 95%/70% prior results. Citation reframed accordingly.
+- **JBFuzz pin**: confirmed on v1 abstract (99% / 9 LLMs / 60s avg). Latest revision (v3, Dec 2025) describes different content — pinned to `arXiv:2503.08990v1`.
+- **Hagendorff date**: corrected arxiv submission to **August 2025** (not "2026"). Nature Comms DOI `10.1038/s41467-026-69010-1` is assigned — journal publication VERIFIED.
+- **Constitutional Classifiers v1**: replaced previously-cited "86% → 4.4%" (UNVERIFIED) with the actual abstract numbers: **0.38% absolute increase in production refusals · 23.7% inference overhead · 3,000+ hours red teaming**. 43 authors, Sharma first / Perez last.
+- **Constitutional Classifiers++** detail added: **40× computational cost reduction**, 1,700+ hours red-teaming, Cunningham + 28 co-authors.
+- **Liu DRA venue**: USENIX Security 2024 cannot be confirmed through public sources (USENIX presentation page returns 403). Citation reverted to arxiv only.
+- **Blindfold (embodied)**: added specific result — **up to 53% higher ASR than SOTA baselines** on real 6DoF robotic arm.
+- **Promptware Kill Chain**: highlighted Bruce Schneier as co-author.
+- **UltraBreak**: added framework name and full author roster (Cui, Li, Wu, Ma, Erfani, Leckie, Huang).
+- **Model name verification**: every API identifier (`claude-opus-4-8`, `gpt-5.5`, `gemini-3.5-flash`, `deepseek-v4-pro`) WebFetched against provider docs. Independent confirmation that `gpt-5.5` is in production use comes from arXiv:2605.15338 (Sleeper Memory Poisoning, May 2026) which evaluates against it.
+
+### Methodology
+- Citation table now includes a "Direct Quote" or "Verified Claim (abstract verbatim)" column instead of paraphrased summaries.
+- Audit methodology block added to README explaining the WebFetch process.
+
+---
+
 ## [4.0.0] — June 2026
 
 ### Added (June 2026 frontier model upgrade)
