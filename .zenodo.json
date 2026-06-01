@@ -1,0 +1,35 @@
+{
+  "title": "LLM Jailbreak Taxonomy: A Mechanism-Grounded Framework for Adversarial Robustness",
+  "description": "Mechanism-grounded taxonomy of 40 adversarial jailbreak attack patterns organized across 10 categories, mapped to the specific safety alignment assumptions each exploits. Includes a 1,600-trial reproducible simulation harness calibrated to literature-derived ASR distributions for the June 2026 frontier model set (Claude Opus 4-8, GPT-5.5, Gemini 3.5 Flash, DeepSeek V4 Pro). Every citation has been audit-verified via direct WebFetch of arxiv abstracts; refuted prior claims documented in the changelog.",
+  "creators": [
+    {
+      "name": "Zakky",
+      "affiliation": "Independent AI Safety Researcher"
+    }
+  ],
+  "keywords": [
+    "AI safety",
+    "LLM security",
+    "jailbreak attacks",
+    "adversarial robustness",
+    "red-teaming",
+    "prompt injection",
+    "constitutional AI",
+    "alignment",
+    "LLM evaluation"
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/zakky8/llm-jailbreak-taxonomy",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ],
+  "communities": [
+    {"identifier": "ai-safety"},
+    {"identifier": "ml-reproducibility"}
+  ]
+}
