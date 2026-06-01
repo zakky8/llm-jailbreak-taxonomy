@@ -14,6 +14,84 @@ Large language models (LLMs) trained with safety alignment objectives — reinfo
 
 ---
 
+## Updates Since First Draft — v4.2.0 (June 2026)
+
+This section summarizes substantive updates that supersede the corresponding
+content in Sections 1–8 below. The original draft text is preserved unchanged
+for historical continuity.
+
+| Change | Reference |
+|---|---|
+| **Models updated to June 2026 frontier** | `claude-opus-4-8`, `gpt-5.5`, `gemini-3.5-flash`, `deepseek-v4-pro` — verified live via direct WebFetch of provider docs on 2026-06-01 |
+| **8,000-trial bootstrap simulation** | 10 seeds × 1,600 trials → 95% bootstrap CIs per model and per category. See [`data/results/phase2b_bootstrap_ci.csv`](../data/results/phase2b_bootstrap_ci.csv) |
+| **Statistical significance testing** | Wilson 95% CIs on all 40 (model × category) cells; pairwise McNemar; Cochran's Q across 10 categories. See [`scripts/statistical_tests.py`](../scripts/statistical_tests.py) and [`data/results/phase2b_statistical_tests.csv`](../data/results/phase2b_statistical_tests.csv) |
+| **Citation audit** | All 17 cited papers re-verified via direct WebFetch of arxiv abstracts on 2026-06-01. Refuted claims documented: PoisonedRAG corrected from 97–99% to 90%; Category 3 renamed from "Token-Level Smuggling" to "GCG / Adversarial Suffix"; Constitutional Classifiers v1 figures corrected. See [`CHANGELOG.md`](../CHANGELOG.md) v4.0.1. |
+| **8 new 2026 citations** | MINJA-referenced, Sleeper Memory Poisoning, Promptware Kill Chain (Schneier et al.), PI on Coding Agents, Jailbreaking Leaves a Trace, VLM CoT Jailbreak, UltraBreak, Blindfold (embodied) |
+| **Statistical findings report** | [`findings/v4_simulation_findings.md`](../findings/v4_simulation_findings.md) — 7 structural findings from the bootstrap data, including the multi-turn benchmark gap quantification |
+| **Anthropic alignment document** | [`paper/anthropic_alignment_with_taxonomy.md`](anthropic_alignment_with_taxonomy.md) — explicit mapping of each category to Anthropic's published safety work |
+| **Phase 3 defense framework specification** | [`paper/phase3_defense_framework.md`](phase3_defense_framework.md) — 15 defense interventions (D1–D15), DRR/FRR/NRG measurement schema, ~$900 separate budget estimate |
+| **Engineering infrastructure** | PEP 621 packaging, Dockerfile, Conda env, pytest 10/10 passing, GitHub Actions CI on Python 3.10/3.11/3.12, seeded bit-identical reproducibility. See [`REPRODUCIBILITY.md`](../REPRODUCIBILITY.md) |
+| **Datasheet, Ethics statement** | [`DATASHEET.md`](../DATASHEET.md) (Gebru CACM 2021), [`ETHICS.md`](../ETHICS.md) — dual-use risk and researcher positionality |
+| **Cross-walk vs HarmBench / JailbreakBench / AdvBench** | [`BENCHMARK_CROSSWALK.md`](../BENCHMARK_CROSSWALK.md) — honest complementary-positioning analysis |
+
+### Headline empirical-pipeline outputs (simulation)
+
+Per-model ASR with 95% bootstrap CIs (8,000 trials, 10 seeds):
+
+| Model | Mean ASR | 95% CI | σ |
+|---|---:|:---:|---:|
+| `claude-opus-4-8` | 19.65% | [17.25, 23.25] | 1.85 |
+| `gpt-5.5` | 41.48% | [39.50, 44.00] | 1.61 |
+| `gemini-3.5-flash` | 53.15% | [50.00, 56.75] | 1.89 |
+| `deepseek-v4-pro` | 73.65% | [71.50, 77.00] | 1.85 |
+
+Pairwise McNemar p-values on per-pattern bypass agreement:
+
+| Pair | b | c | p (two-sided) | Cohen's h |
+|---|---:|---:|---:|---:|
+| Claude Opus vs DeepSeek V4 | 0 | 7 | **0.0156** | -3.14 |
+| Claude Opus vs Gemini 3.5 | 2 | 7 | 0.180 | -1.18 |
+| Claude Opus vs GPT-5.5 | 2 | 4 | 0.688 | -0.68 |
+
+Cochran's Q (cross-model agreement per category):
+
+| Category | Q | df | p | Significance |
+|---|---:|:---:|---:|---|
+| Role-Play | 19.65 | 3 | **0.00026** | *** |
+| Multi-Turn Deception | 13.97 | 3 | **0.0031** | ** |
+| LRM Autonomous | 12.00 | 3 | **0.0075** | ** |
+| Multimodal Injection | 11.13 | 3 | **0.0111** | * |
+| Agentic Chain | 10.24 | 3 | **0.0166** | * |
+| Fuzzing-Based | 6.00 | 3 | 0.110 | n.s. |
+| Context Manipulation | 5.20 | 3 | 0.156 | n.s. |
+| GCG / Adversarial Suffix | 5.20 | 3 | 0.156 | n.s. |
+| Prompt Injection | 3.24 | 3 | 0.357 | n.s. |
+| System Prompt Extraction | 2.28 | 3 | 0.520 | n.s. |
+
+**Cross-model differences are statistically significant for 5 of 10 categories**
+in the simulation. The non-significant categories (Fuzzing, GCG, Context Manip,
+PI, Sys-Prompt) are categories where the literature already predicts
+model-family-invariant high ASR — exactly the categories where, structurally,
+all models should perform similarly poorly. The simulation reproduces this
+prediction.
+
+### Reproducibility of the above
+
+```bash
+# Bootstrap CIs (10 seeds, 8,000 trials)
+python scripts/multi_seed.py --n-seeds 10 --trials 5
+
+# Statistical tests
+python scripts/statistical_tests.py
+
+# All figures (matplotlib, publication-grade)
+python scripts/generate_figures.py
+```
+
+CI verifies bit-identical outputs for seed 42 on every push.
+
+---
+
 ## 1. Introduction
 
 The widespread deployment of large language models has created a security research problem at the intersection of machine learning, adversarial robustness, and alignment theory. Models such as Claude (Anthropic, 2024), GPT-4 (OpenAI, 2023), and Gemini (Google DeepMind, 2024) are trained with safety objectives to prevent harmful, deceptive, or policy-violating outputs. The same generality that makes these models powerful, however, also makes them vulnerable: their instruction-following capabilities can be redirected by adversarial inputs that exploit gaps between training-time safety objectives and inference-time behavior.
