@@ -7,18 +7,21 @@ authors:
     alias: "zakky8"
     website: "https://github.com/zakky8"
 title: "A Systematic Taxonomy of Jailbreak Techniques in Large Language Models: Toward Robust Safety Alignment"
-version: 3.1.0
-date-released: 2026-03-21
+version: 4.0.0
+date-released: 2026-06-01
 url: "https://github.com/zakky8/llm-jailbreak-taxonomy"
 repository-code: "https://github.com/zakky8/llm-jailbreak-taxonomy"
 license: MIT
 abstract: >
   A mechanism-grounded taxonomy of 40 adversarial jailbreak attack patterns
   organized across 10 categories, each mapped to the specific safety alignment
-  assumption it exploits. Includes a full evaluation harness supporting
-  controlled multi-model empirical testing (evaluate_live.py), 10 experiment
-  notebooks, and structured responsible disclosure protocols. Phase 2b live
-  API evaluation pending compute access.
+  assumption it exploits. Version 4.0.0 upgrades the evaluation harness to the
+  June 2026 frontier model set (claude-opus-4-8, gpt-5.5, gemini-3.5-flash,
+  deepseek-v4-pro) and adds 8 new 2026 citations covering memory-injection,
+  embodied, and multimodal attack research. Includes 1,600-trial reproducible
+  simulation harness (evaluate_phase2b.py), live API harness (evaluate_live.py),
+  LLM-as-judge grader (evaluate_judge.py), 10 experiment notebooks, and
+  structured responsible disclosure protocols.
 keywords:
   - large language models
   - jailbreak attacks
