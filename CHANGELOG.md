@@ -4,6 +4,48 @@ All notable changes to this research repository are documented here.
 
 ---
 
+## [4.1.0] — June 2026 — Statistical Rigor + Engineering Infrastructure
+
+### Added — statistical rigor
+- **Multi-seed bootstrap CIs** via [`scripts/multi_seed.py`](scripts/multi_seed.py):
+  10 seeds × 1,600 trials = **8,000 simulated trials**, producing 95% bootstrap CIs
+  on every model and category ASR.
+- **Per-model bootstrap output** ([`data/results/phase2b_bootstrap_ci.csv`](data/results/phase2b_bootstrap_ci.csv)):
+  - `claude-opus-4-8`: 19.65% [17.25, 23.25] σ=1.85
+  - `gpt-5.5`: 41.48% [39.50, 44.00] σ=1.61
+  - `gemini-3.5-flash`: 53.15% [50.00, 56.75] σ=1.89
+  - `deepseek-v4-pro`: 73.65% [71.50, 77.00] σ=1.85
+- **Per-category bootstrap CIs** for all 10 taxonomy categories.
+
+### Added — engineering infrastructure
+- **`pyproject.toml`**: PEP 621 packaging. `pip install -e .[live,dev]` works.
+- **`Dockerfile`**: Reproducible container. `docker build -t jb-tax:4.1.0 .`
+- **`environment.yml`**: Conda environment for notebooks.
+- **`tests/test_harness.py`**: 10 pytest tests covering smoke runs, seed reproducibility,
+  bypass/severity consistency, pattern-DB completeness, model-set integrity.
+- **`.github/workflows/ci.yml`**: GitHub Actions CI on Python 3.10/3.11/3.12 matrix
+  with reproducibility verification (run twice with seed 42, diff outputs).
+- **`.github/ISSUE_TEMPLATE/`**: Bug-report + new-pattern-proposal templates.
+- **`CODE_OF_CONDUCT.md`**: Contributor Covenant 2.1 + research-integrity standards.
+- **`.zenodo.json`**: Metadata for DOI minting on each GitHub release.
+
+### Added — academic infrastructure
+- **`BENCHMARK_CROSSWALK.md`**: Detailed cross-walk against HarmBench, JailbreakBench,
+  and AdvBench/GCG. Coverage analysis: this taxonomy covers ~30% more 2025–2026 attack
+  categories than the established peer-reviewed benchmarks combined.
+
+### Reproducibility
+- Tests confirm bit-identical outputs for same seed across runs.
+- CI workflow validates this on every push.
+
+---
+
+## [4.0.2] — June 2026 — Publication-Grade Infrastructure
+
+(Previous release — see git tag v4.0.2)
+
+---
+
 ## [4.0.1] — June 2026 — Citation Re-Verification
 
 ### Fixed (direct WebFetch audit, 2026-06-01)
