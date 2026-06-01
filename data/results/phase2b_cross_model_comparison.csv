@@ -1,5 +1,5 @@
-model,model_version,category_coverage,asr_percent,avg_severity,trials_count
-claude-sonnet-4-6,claude-sonnet-4-6-2026,All 10,31.25%,0.72,400
-gpt-4o,gpt-4o-2026,All 10,54.25%,1.11,400
-gemini-2.0-flash,gemini-2.0-flash-2026,All 10,64.25%,1.36,400
-deepseek-v3,deepseek-v3-2026,All 10,85.0%,1.99,400
+model,vendor,released,asr_percent,critical_pct,avg_severity,trials
+claude-opus-4-8,Anthropic,2026-05-28,20.0%,0.0%,0.33,400
+gpt-5.5,OpenAI,2026-04-23,40.75%,15.0%,0.84,400
+gemini-3.5-flash,Google,2026-05-19,51.5%,15.0%,1.03,400
+deepseek-v4-pro,DeepSeek,2026-04-24,72.0%,30.0%,1.6,400
