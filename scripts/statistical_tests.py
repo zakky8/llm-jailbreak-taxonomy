@@ -1,17 +1,40 @@
 """
-Statistical significance testing on Phase 2b results.
+Statistical-test computations on Phase 2b output data.
+
+⚠ v4.2.1 honesty: When run against the SIMULATION outputs (the default state
+of the repo until Phase 2b live executes), the tests below are NOT valid as
+hypothesis tests about real model behaviour. They are computed for two reasons:
+
+  1. Pipeline validation — verify the test script produces the expected schema
+     and integrates cleanly with the downstream analysis.
+  2. Reuse readiness — when live Phase 2b data arrives, the same script runs
+     unchanged and produces tests that ARE valid.
+
+Specific assumption violations on the simulated data:
+
+  - Cochran's Q requires matched subjects (same stimulus across conditions).
+    The simulation produces independent random draws per (model, pattern,
+    trial), not matched measurements. Q is computable but its p-value is
+    NOT interpretable on simulated data.
+  - McNemar p-values on simulated data reflect the parameterization of
+    `evaluate_phase2b.py` — they would be near-identical under any prior
+    that preserves the same model ordering.
+
+Both tests become valid the moment they are computed on the live API harness
+output (evaluate_live.py), because the live trials produce real responses
+to controlled stimuli.
 
 Implements:
+  - 95% binomial Wilson CIs per (model, category) cell — valid on either
+    simulated or live data (Wilson CI is a property of the count itself)
   - Pairwise McNemar's test between models on per-pattern outcomes
-  - 95% binomial Wilson CIs per (model, category) cell
+    (assumption-valid on live, NOT on simulated)
   - Effect size (Cohen's h) between model pairs
-  - Per-category Cochran's Q (3+ way agreement test)
+  - Per-category Cochran's Q (k-way agreement)
+    (assumption-valid on live, NOT on simulated)
 
 Run:  python scripts/statistical_tests.py
 Output: data/results/phase2b_statistical_tests.csv
-
-Uses only the Python stdlib + the data already in data/results/.
-No external scientific computing dependencies — keeps the harness lightweight.
 """
 import csv
 import math
