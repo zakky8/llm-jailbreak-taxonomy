@@ -34,46 +34,55 @@ for historical continuity.
 | **Datasheet, Ethics statement** | [`DATASHEET.md`](../DATASHEET.md) (Gebru CACM 2021), [`ETHICS.md`](../ETHICS.md) — dual-use risk and researcher positionality |
 | **Cross-walk vs HarmBench / JailbreakBench / AdvBench** | [`BENCHMARK_CROSSWALK.md`](../BENCHMARK_CROSSWALK.md) — honest complementary-positioning analysis |
 
-### Headline empirical-pipeline outputs (simulation)
+### Pipeline outputs (predictive risk model — NOT empirical measurement)
 
-Per-model ASR with 95% bootstrap CIs (8,000 trials, 10 seeds):
+> ⚠ **v4.2.1 framing correction.** The numbers below are outputs of a
+> *parameterized risk model* whose priors (`MODEL_BASE_ASR`, `CATEGORY_MULTIPLIERS`
+> in `evaluate_phase2b.py`) were **hand-tuned to match published literature ASRs**.
+> They are NOT bootstrap confidence intervals on empirical measurements.
+> They are NOT statistical findings about real model alignment. The model
+> ranking and per-category shape are determined by the parameterization;
+> running the simulation re-states the prior under different random seeds.
 
-| Model | Mean ASR | 95% CI | σ |
+Predicted ASR under the literature-calibrated prior (10 seed runs; range is
+the min–max of seed means, not bootstrap CI):
+
+| Model | Predicted Mean ASR | Seed-mean range | σ across seeds |
 |---|---:|:---:|---:|
-| `claude-opus-4-8` | 19.65% | [17.25, 23.25] | 1.85 |
-| `gpt-5.5` | 41.48% | [39.50, 44.00] | 1.61 |
-| `gemini-3.5-flash` | 53.15% | [50.00, 56.75] | 1.89 |
-| `deepseek-v4-pro` | 73.65% | [71.50, 77.00] | 1.85 |
+| `claude-opus-4-8` | 19.65% | 17.25 – 23.25 | 1.85 |
+| `gpt-5.5` | 41.48% | 39.50 – 44.00 | 1.61 |
+| `gemini-3.5-flash` | 53.15% | 50.00 – 56.75 | 1.89 |
+| `deepseek-v4-pro` | 73.65% | 71.50 – 77.00 | 1.85 |
 
-Pairwise McNemar p-values on per-pattern bypass agreement:
+#### On the Tier-3 outcome for Claude Opus 4-8
 
-| Pair | b | c | p (two-sided) | Cohen's h |
-|---|---:|---:|---:|---:|
-| Claude Opus vs DeepSeek V4 | 0 | 7 | **0.0156** | -3.14 |
-| Claude Opus vs Gemini 3.5 | 2 | 7 | 0.180 | -1.18 |
-| Claude Opus vs GPT-5.5 | 2 | 4 | 0.688 | -0.68 |
+The simulation never produces a Tier-3 (critical) bypass for `claude-opus-4-8`.
+This is **arithmetic, not measurement**: `simulate_trial()` gates severity 3 on
+`effective_prob > 0.9`. Opus base ASR = 0.07; max multiplier = 9.0 (Fuzzing).
+Maximum possible `effective_prob = 0.07 × 9.0 = 0.63` — below the gate by
+construction. Earlier framings of this as "the simulation's most testable
+prediction" or "Opus's headline alignment property" are retracted in v4.2.1.
 
-Cochran's Q (cross-model agreement per category):
+### Statistical tests on the simulated data — methodology caveats
 
-| Category | Q | df | p | Significance |
-|---|---:|:---:|---:|---|
-| Role-Play | 19.65 | 3 | **0.00026** | *** |
-| Multi-Turn Deception | 13.97 | 3 | **0.0031** | ** |
-| LRM Autonomous | 12.00 | 3 | **0.0075** | ** |
-| Multimodal Injection | 11.13 | 3 | **0.0111** | * |
-| Agentic Chain | 10.24 | 3 | **0.0166** | * |
-| Fuzzing-Based | 6.00 | 3 | 0.110 | n.s. |
-| Context Manipulation | 5.20 | 3 | 0.156 | n.s. |
-| GCG / Adversarial Suffix | 5.20 | 3 | 0.156 | n.s. |
-| Prompt Injection | 3.24 | 3 | 0.357 | n.s. |
-| System Prompt Extraction | 2.28 | 3 | 0.520 | n.s. |
+We ran McNemar's and Cochran's Q tests on the simulation outputs
+([`scripts/statistical_tests.py`](../scripts/statistical_tests.py))
+**for pipeline-validation purposes only**. The tests are NOT interpretable as
+evidence about real model behaviour:
 
-**Cross-model differences are statistically significant for 5 of 10 categories**
-in the simulation. The non-significant categories (Fuzzing, GCG, Context Manip,
-PI, Sys-Prompt) are categories where the literature already predicts
-model-family-invariant high ASR — exactly the categories where, structurally,
-all models should perform similarly poorly. The simulation reproduces this
-prediction.
+- **Cochran's Q requires matched subjects** — the same stimulus measured across
+  conditions. The simulation produces *independent random draws* per
+  (model, pattern, trial), not matched measurements. Q is computable but its
+  p-value is not valid as a hypothesis test about inter-model agreement.
+- **McNemar p-values reflect the parameterization.** They would be near-identical
+  under any hand-tuned prior that preserves the ordering
+  `Opus < GPT < Gemini < DeepSeek`.
+
+Earlier versions of this paper presented these tests as "5 of 10 categories
+statistically significant" findings. **That claim is retracted in v4.2.1.**
+The script remains in the repo for reuse against live Phase 2b data, where the
+tests will be valid because the data will represent real model responses to
+controlled stimuli.
 
 ### Reproducibility of the above
 
