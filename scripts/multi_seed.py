@@ -1,9 +1,15 @@
 """
-Multi-seed bootstrap evaluation — generates 95% confidence intervals on Phase 2b results.
+Multi-seed range estimator for the Phase 2b PREDICTIVE RISK MODEL.
 
-Runs the simulation harness across N seeds, aggregates per-seed ASRs into
-non-parametric bootstrap distributions, and writes per-model and per-category
-CIs to data/results/phase2b_bootstrap_ci.csv.
+⚠ v4.2.1 honesty fix: Earlier versions of this script described its output
+as "95% bootstrap confidence intervals." It is NOT bootstrap CI — it is the
+min/max of seed means across N runs. The output column names retain the
+historical "ci_low / ci_high" labels for schema continuity, but they should be
+read as "seed_mean_min / seed_mean_max" semantically.
+
+Because the underlying simulation (evaluate_phase2b.py) is a parameterized
+risk model with hand-tuned priors, the seed-mean range reflects only
+sampling variance under the prior — not uncertainty about real model behaviour.
 
 Usage:
     python scripts/multi_seed.py --seeds 42,43,44,45,46 --trials 5
@@ -32,17 +38,24 @@ def run_seed(seed: int, trials: int) -> tuple[dict, dict]:
             per_cat[row['category']] = float(row['asr_percent'].rstrip('%'))
     return per_model, per_cat
 
-def ci95(values):
+def seed_range(values):
+    """Return (mean, min, max) of seed-level means.
+
+    Despite the legacy function name `ci95` in earlier versions, this is NOT
+    a bootstrap confidence interval. With N=10 seeds, the 2.5th / 97.5th
+    percentile indices reduce to min / max. The semantically honest reading
+    of the output is "range across seed runs," not "95% CI of any empirical
+    quantity." A real bootstrap CI requires either scipy.stats.bootstrap
+    with the full per-trial data or a hand-implemented BCa procedure.
+    """
     if len(values) < 2:
         return (values[0] if values else 0.0, 0.0, 0.0)
     mean = statistics.mean(values)
-    # Non-parametric percentile bootstrap CI: report observed range as proxy
-    # for small N; for proper bootstrap use scipy.stats.bootstrap when available.
     sorted_v = sorted(values)
-    n = len(sorted_v)
-    lo_idx = max(0, int(round(0.025 * (n-1))))
-    hi_idx = min(n-1, int(round(0.975 * (n-1))))
-    return (mean, sorted_v[lo_idx], sorted_v[hi_idx])
+    return (mean, sorted_v[0], sorted_v[-1])
+
+# Legacy alias so old call sites keep working
+ci95 = seed_range
 
 def main():
     p = argparse.ArgumentParser()
