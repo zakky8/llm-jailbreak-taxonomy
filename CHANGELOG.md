@@ -4,7 +4,74 @@ All notable changes to this research repository are documented here.
 
 ---
 
+## [4.2.1] — June 2026 — Honest Reframing: Simulation is Prior, Not Result
+
+### Why this release exists
+
+An adversarial peer-review pass of v4.2.0 identified four critical methodological
+errors in how simulation outputs were being presented. All four are real. This
+release applies the corrections.
+
+### Retracted claims from v4.2.0
+
+| Retraction | Issue |
+|---|---|
+| "Mean ASR" labels on simulation outputs | The simulation re-states a hand-tuned prior. Renamed to "Predicted ASR under literature-calibrated prior" everywhere. |
+| "95% bootstrap CIs" on the seed-level ranges | `scripts/multi_seed.py` `ci95()` returns min/max of seed means, not bootstrap CI. Renamed to `seed_range()`, output labeled accordingly. |
+| "Claude Opus 4-8 produces zero Tier-3 outcomes" presented as "the simulation's most testable prediction" | This is an arithmetic floor: severity-3 gate is `effective_prob > 0.9`; Opus max `effective_prob = 0.07 × 9.0 = 0.63` — impossible by construction. Reframed as an arithmetic property of the parameterization. |
+| "Cross-model differences statistically significant for 5 of 10 categories" | Cochran's Q requires matched subjects. The simulation produces independent random draws, not matched measurements. Test computable but not interpretable on simulated data. Claim retracted. |
+
+### Edits applied across the repo
+
+| File | Change |
+|---|---|
+| `README.md` | "Phase 2b Simulated Results" → "Phase 2b — Predictive Risk Model (NOT empirical results)" with prominent disclaimer block. Per-category table relabeled "Predicted ASR under prior" with "Calibrating Literature" column. |
+| `paper/research-paper.md` | "Headline empirical-pipeline outputs" section retracted and rewritten; statistical tests presented with explicit methodology caveats. |
+| `findings/v4_simulation_findings.md` | Original 7 findings retracted. Document rewritten as a retraction notice explaining what the simulation is and isn't. |
+| `paper/anthropic_alignment_with_taxonomy.md` | Editorial language ("biggest internal eval gap," "highest-leverage finding," "stress-test") removed. Rewritten as a neutral comparison stating only public Anthropic citations and what the live Phase 2b run would measure. |
+| `evaluate_phase2b.py` | Module docstring rewritten to lead with the parameterized-risk-model framing. |
+| `scripts/multi_seed.py` | Module docstring corrects the "bootstrap CI" overclaim. `ci95()` renamed to `seed_range()` with `ci95` kept as legacy alias. |
+| `scripts/statistical_tests.py` | Module docstring adds explicit assumption-violation caveats for Cochran's Q and McNemar when run against simulated data. Wilson CI noted as valid on either. |
+| `CHANGELOG.md` | This entry. |
+
+### Why retract publicly instead of silently rewriting
+
+Three reasons:
+
+1. **Transparency** — silent rewrites would erase the audit trail. Anyone
+   reading git log can see exactly what was claimed and what was retracted.
+2. **Research maturity** — the right reviewer-facing signal for an independent
+   researcher is "self-corrected under adversarial review," not "never made
+   a mistake."
+3. **Pattern reuse** — the same retraction discipline applies when live
+   Phase 2b data inevitably surfaces something different from the prior;
+   establishing the protocol now prevents drift later.
+
+### What is NOT changed
+
+- The 40-pattern taxonomy itself
+- The mechanism-to-alignment-assumption mapping
+- The 17 cited papers (verified-quotes table in README)
+- The engineering infrastructure (PEP 621, Docker, CI, tests)
+- The Phase 2b live harness (`evaluate_live.py`) — unaffected
+- The Phase 3 defense framework spec — unaffected
+- The Reproducibility checklist, Datasheet, Ethics statement
+
+### What this means for the live Phase 2b run
+
+The retractions strengthen the case for live execution rather than weaken it.
+What v4.2.0 mis-labeled as "findings" was actually a *predicted shape* derived
+from prior literature. The Phase 2b live run produces the empirical measurements
+that would either confirm the prior, reject it, or surface novel structure.
+That is the work the $1,000 credit request funds.
+
+---
+
 ## [4.2.0] — June 2026 — Analytical Depth: Findings, Defense Framework, Statistical Tests
+
+> ⚠ **Many claims in v4.2.0 were retracted in v4.2.1 after adversarial peer review
+> identified circular-simulation issues. See v4.2.1 entry above.**
+
 
 ### Added — analytical artifacts
 
