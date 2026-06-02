@@ -1,24 +1,39 @@
 """
-Phase 2b Controlled Evaluation Harness — LLM Jailbreak Taxonomy
+Phase 2b Predictive Risk Model — LLM Jailbreak Taxonomy
 ================================================================
 
-Runs the full Phase 2b evaluation in MOCK mode using literature-derived ASR
-distributions, or — when API keys are configured in `evaluate_live.py` —
-delegates to the live harness.
+⚠ IMPORTANT (v4.2.1 framing correction): This script is a PARAMETERIZED RISK
+MODEL, not an empirical evaluation. The constants `MODEL_BASE_ASR` and
+`CATEGORY_MULTIPLIERS` below are HAND-TUNED to match published 2025–2026
+literature ASRs. Running this script with --mock RE-STATES the prior under
+different random seeds — it does NOT measure model behaviour.
 
-MOCK distributions are calibrated to published 2025–2026 results:
+Legitimate uses:
+  1. Pipeline validation — does the harness produce the expected schema?
+  2. Compute budget sizing — extrapolating live-run cost from trial counts
+  3. Schema shake-out for downstream analysis (evaluate_judge.py, figures)
+
+NOT a legitimate use:
+  - Citing the outputs as evidence of any model's safety alignment
+  - Reporting cross-model differences as statistical findings
+  - Claiming bootstrap confidence intervals on empirical quantities
+
+The actual empirical Phase 2b run is in `evaluate_live.py`, which requires API
+keys. Until that runs, all numbers from THIS script are predictions under the
+literature prior, not measurements.
+
+Literature priors encoded below (calibration inputs, not findings):
   - Cat 7 (LRM Autonomous): Hagendorff et al. 2026 (arXiv:2508.04039) — 97.14% ASR
-  - Cat 8 (Fuzzing):         JBFuzz 2025 (arXiv:2503.08990)              — 99% ASR
-  - Cat 5 (Multi-Turn):      Crescendo USENIX 2025 (arXiv:2404.01833)    — high ASR
-                              Foot-in-Door 2025 (arXiv:2502.19820)        — 94% avg
-                              DRA USENIX 2024 (arXiv:2402.18104)          — 91.1% GPT-4
-  - Cat 10 (Agentic):        PoisonedRAG USENIX 2025 (arXiv:2402.07867)  — 90% w/ 5 docs
+  - Cat 8 (Fuzzing):         JBFuzz 2025 (arXiv:2503.08990v1)         — 99% ASR
+  - Cat 5 (Multi-Turn):      DRA 2024 (arXiv:2402.18104)              — 91.1% GPT-4
+                              Foot-in-Door 2025 (arXiv:2502.19820)     — 94% avg
+  - Cat 10 (Agentic):        PoisonedRAG USENIX 2025 (arXiv:2402.07867) — 90% w/ 5 docs
 
-Model identifiers updated to June 2026 frontier:
-  - claude-opus-4-8       (Anthropic flagship, released 2026-05-28)
-  - gpt-5.5               (OpenAI flagship, released 2026-04-23)
+Model identifiers (verified via direct provider doc fetch on 2026-06-01):
+  - claude-opus-4-8       (Anthropic flagship)
+  - gpt-5.5               (OpenAI flagship)
   - gemini-3.5-flash      (Google current GA flagship)
-  - deepseek-v4-pro       (DeepSeek preview, released 2026-04-24)
+  - deepseek-v4-pro       (DeepSeek preview)
 """
 import argparse
 import csv
